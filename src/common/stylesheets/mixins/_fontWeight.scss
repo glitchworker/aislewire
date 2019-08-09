@@ -1,0 +1,40 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_fontWeight.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@mixin fontWeight($fontWeight) {
+  @if $fontWeight == "Thin" {
+    font-weight: 100;
+  }
+  @else if $fontWeight == "ExtraLight" {
+    font-weight: 100;
+  }
+  @else if $fontWeight == "Light" {
+    font-weight: 300;
+  }
+  @else if $fontWeight == "DemiLight" {
+    font-weight: 350;
+  }
+  @else if $fontWeight == "Normal" {
+    font-weight: 350;
+  }
+  @else if $fontWeight == "Regular" {
+    font-weight: 400;
+  }
+  @else if $fontWeight == "Medium" {
+    font-weight: 500;
+  }
+  @else if $fontWeight == "SemiBold" {
+    font-weight: 600;
+  }
+  @else if $fontWeight == "Bold" {
+    font-weight: 700;
+  }
+  @else if $fontWeight == "Black" {
+    font-weight: 900;
+  }
+  @else if $fontWeight == "Heavy" {
+    font-weight: 900;
+  }
+}

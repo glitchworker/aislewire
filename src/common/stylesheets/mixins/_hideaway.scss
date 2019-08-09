@@ -1,0 +1,9 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_hideaway.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@mixin hideaway {
+  text-indent: -9999px;
+  overflow: hidden;
+}

@@ -1,0 +1,57 @@
+---
+layout: rp
+
+BODY_CLASS: index
+ADD_STYLES:
+ADD_SCRIPTS_HEADER:
+ADD_SCRIPTS_FOOTER:
+
+REDIRECT: false
+LANGUAGE: ja
+NAMESPACE: website
+META_CHARSET: UTF-8
+META_ROBOTS: index,follow
+META_VIEWPORT: width=device-width,initial-scale=1,minimum-scale=1,shrink-to-fit=no,viewport-fit=cover
+META_TITLE: これはタイトルです
+META_SHARE_TITLE:
+META_KEYWORDS: これはキーワードです
+META_DESCRIPTION: これはディスクリプションです
+META_SHARE_DESCRIPTION:
+META_AUTHOR:
+META_COPYRIGHT:
+META_APPLE_ICON: favicon.png
+META_ICON: favicon.png
+META_XHTML_ICON: favicon.ico
+META_FACEBOOK: true
+META_FACEBOOK_IMAGE: ogp_image.jpg
+META_FACEBOOK_LOCALE: ja_JP
+META_FACEBOOK_ID:
+META_TWITTER: true
+META_TWITTER_CARD: summary_large_image
+META_TWITTER_ACCOUNT:
+META_TWITTER_APP_ANDROID:
+META_TWITTER_APP_IPAD:
+META_TWITTER_APP_IPHONE:
+META_GOOGLE: false
+META_WINDOWS: false
+META_WINDOWS_IMAGE: tile_image.png
+META_WINDOWS_COLOR: #000000
+META_OLD_BROWSER: false
+META_PWA_MODE: false
+---
+
+<main id="section-contents">
+<!-- Components Object -->
+{{> components/exampleComponent }}
+<!-- Data -->
+<p>{{ data.example.text }}</p>
+{{!-- {{#each data.gsx.rows}}
+  <p>{{ @index }}-{{ @key }}__{{ this }}</p>
+  {{#each this}}
+  <p>{{ @index }}-{{ @key }}__{{ this }}</p>
+  {{/each}}
+{{/each}} --}}
+<p>{{ data.exampleThree.exampleThree.text }}</p>
+<p>{{ data.exampleFour.text }}</p>
+<p>{{ data.exampleFour.test.text }}</p>
+</main>

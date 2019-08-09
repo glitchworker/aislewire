@@ -1,0 +1,151 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_fontDecoration.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@mixin text_shadow($colorR, $colorG, $colorB, $dropShadowSize) {
+  filter: drop-shadow(0px 0px $dropShadowSize + px rgba($colorR, $colorG, $colorB, .7));
+}
+
+@mixin text_border($colorR, $colorG, $colorB) {
+  text-shadow: 0px 4px 1px rgb($colorR, $colorG, $colorB),
+              1px 3px 1px rgb($colorR, $colorG, $colorB),
+              2px 3px 1px rgb($colorR, $colorG, $colorB),
+              2px 2px 1px rgb($colorR, $colorG, $colorB),
+              3px 2px 1px rgb($colorR, $colorG, $colorB),
+              3px 1px 1px rgb($colorR, $colorG, $colorB),
+              4px 0px 1px rgb($colorR, $colorG, $colorB),
+              3px -1px 1px rgb($colorR, $colorG, $colorB),
+              3px -2px 1px rgb($colorR, $colorG, $colorB),
+              2px -2px 1px rgb($colorR, $colorG, $colorB),
+              2px -3px 1px rgb($colorR, $colorG, $colorB),
+              1px -3px 1px rgb($colorR, $colorG, $colorB),
+              0px -4px 1px rgb($colorR, $colorG, $colorB),
+              -1px -3px 1px rgb($colorR, $colorG, $colorB),
+              -2px -3px 1px rgb($colorR, $colorG, $colorB),
+              -2px -2px 1px rgb($colorR, $colorG, $colorB),
+              -3px -2px 1px rgb($colorR, $colorG, $colorB),
+              -3px -1px 1px rgb($colorR, $colorG, $colorB),
+              -4px 0px 1px rgb($colorR, $colorG, $colorB),
+              -3px 1px 1px rgb($colorR, $colorG, $colorB),
+              -3px 2px 1px rgb($colorR, $colorG, $colorB),
+              -2px 2px 1px rgb($colorR, $colorG, $colorB),
+              -2px 3px 1px rgb($colorR, $colorG, $colorB),
+              -1px 3px 1px rgb($colorR, $colorG, $colorB);
+}
+
+@mixin text_border_bold($colorR, $colorG, $colorB) {
+  text-shadow: 0px 6px 1.5px rgb($colorR, $colorG, $colorB),
+              1.5px 4.5px 1.5px rgb($colorR, $colorG, $colorB),
+              3px 4.5px 1.5px rgb($colorR, $colorG, $colorB),
+              3px 3px 1.5px rgb($colorR, $colorG, $colorB),
+              4.5px 3px 1.5px rgb($colorR, $colorG, $colorB),
+              4.5px 1.5px 1.5px rgb($colorR, $colorG, $colorB),
+              6px 0px 1.5px rgb($colorR, $colorG, $colorB),
+              4.5px -1.5px 1.5px rgb($colorR, $colorG, $colorB),
+              4.5px -3px 1.5px rgb($colorR, $colorG, $colorB),
+              3px -3px 1.5px rgb($colorR, $colorG, $colorB),
+              3px -4.5px 1.5px rgb($colorR, $colorG, $colorB),
+              1.5px -4.5px 1.5px rgb($colorR, $colorG, $colorB),
+              0px -6px 1.5px rgb($colorR, $colorG, $colorB),
+              -1.5px -4.5px 1.5px rgb($colorR, $colorG, $colorB),
+              -3px -4.5px 1.5px rgb($colorR, $colorG, $colorB),
+              -3px -3px 1.5px rgb($colorR, $colorG, $colorB),
+              -4.5px -3px 1.5px rgb($colorR, $colorG, $colorB),
+              -4.5px -1.5px 1.5px rgb($colorR, $colorG, $colorB),
+              -6px 0px 1.5px rgb($colorR, $colorG, $colorB),
+              -4.5px 1.5px 1.5px rgb($colorR, $colorG, $colorB),
+              -4.5px 3px 1.5px rgb($colorR, $colorG, $colorB),
+              -3px 3px 1.5px rgb($colorR, $colorG, $colorB),
+              -3px 4.5px 1.5px rgb($colorR, $colorG, $colorB),
+              -1.5px 4.5px 1.5px rgb($colorR, $colorG, $colorB);
+}
+
+@mixin text_border_half($colorR, $colorG, $colorB) {
+  text-shadow: 0px 2px .5px rgb($colorR, $colorG, $colorB),
+              .5px 1.5px .5px rgb($colorR, $colorG, $colorB),
+              1px 1.5px .5px rgb($colorR, $colorG, $colorB),
+              1px 1px .5px rgb($colorR, $colorG, $colorB),
+              1.5px 1px .5px rgb($colorR, $colorG, $colorB),
+              1.5px .5px .5px rgb($colorR, $colorG, $colorB),
+              2px 0px .5px rgb($colorR, $colorG, $colorB),
+              1.5px -.5px .5px rgb($colorR, $colorG, $colorB),
+              1.5px -1px .5px rgb($colorR, $colorG, $colorB),
+              1px -1px .5px rgb($colorR, $colorG, $colorB),
+              1px -1.5px .5px rgb($colorR, $colorG, $colorB),
+              .5px -1.5px .5px rgb($colorR, $colorG, $colorB),
+              0px -2px .5px rgb($colorR, $colorG, $colorB),
+              -.5px -1.5px .5px rgb($colorR, $colorG, $colorB),
+              -1px -1.5px .5px rgb($colorR, $colorG, $colorB),
+              -1px -1px .5px rgb($colorR, $colorG, $colorB),
+              -1.5px -1px .5px rgb($colorR, $colorG, $colorB),
+              -1.5px -.5px .5px rgb($colorR, $colorG, $colorB),
+              -2px 0px .5px rgb($colorR, $colorG, $colorB),
+              -1.5px .5px .5px rgb($colorR, $colorG, $colorB),
+              -1.5px 1px .5px rgb($colorR, $colorG, $colorB),
+              -1px 1px .5px rgb($colorR, $colorG, $colorB),
+              -1px 1.5px .5px rgb($colorR, $colorG, $colorB),
+              -.5px 1.5px .5px rgb($colorR, $colorG, $colorB);
+}
+
+@mixin textShadow($colorR, $colorG, $colorB, $shadowSize) {
+  &:before {
+    display: block;
+    content: attr(title);
+    @include text_shadow($colorR, $colorG, $colorB, $shadowSize);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+}
+
+@mixin textGradation($baseColor, $afterColor) {
+  color: $baseColor;
+  @supports (mask-image: linear-gradient(bottom, white, white)) or (-webkit-mask-image: -webkit-linear-gradient(bottom, white, white)) {
+    &:after {
+      display: block;
+      content: attr(title);
+      color: $afterColor;
+      -webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+  }
+  @supports not (-webkit-mask-image: -webkit-linear-gradient(bottom, white, white)) {
+    &:after {
+      display: block;
+      content: attr(title);
+      color: $afterColor;
+      background: -webkit-linear-gradient($afterColor, $baseColor);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+  }
+}
+
+@mixin placeholderColor($color) {
+  &:placeholder-shown {
+    color: $color;
+  }
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+  &:-moz-placeholder {
+    color: $color;
+    opacity: 1;
+  }
+  &::-moz-placeholder {
+    color: $color;
+    opacity: 1;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+}

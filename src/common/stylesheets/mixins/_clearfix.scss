@@ -1,0 +1,15 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_clearfix.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@mixin clearfix {
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+  *zoom: 1;
+}

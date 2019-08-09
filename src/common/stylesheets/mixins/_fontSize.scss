@@ -1,0 +1,17 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_fontSize.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@mixin fontSize($fontSize, $baseFontSize: $FONT_SIZE){
+  font-size: percentage($fontSize / $baseFontSize);
+}
+
+@function get_vw($size, $viewport: 750) {
+  @return $size / $viewport * 100 + vw;
+}
+
+@mixin fontSize_vw($font_size: 16) {
+  font-size: $font_size / 2 + px;
+  font-size: get_vw($font_size);
+}

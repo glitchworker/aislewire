@@ -1,0 +1,58 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_elementSize.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@function element_get_vw($size, $viewport: 750) {
+  @return $size / $viewport * 100 + vw;
+}
+
+@mixin elementSize_vw($elementSizeW, $elementSizeH) {
+  width: element_get_vw($elementSizeW);
+  height: element_get_vw($elementSizeH);
+}
+
+@mixin elementSize_cvw($elementSizeW, $elementSizeH, $viewport) {
+  width: element_get_vw($elementSizeW, $viewport);
+  height: element_get_vw($elementSizeH, $viewport);
+}
+
+@mixin padding_vw($paddingSizeT, $paddingSizeR, $paddingSizeB, $paddingSizeL) {
+  padding: get_vw($paddingSizeT) get_vw($paddingSizeR) get_vw($paddingSizeB) get_vw($paddingSizeL);
+}
+
+@mixin padding_top_vw($paddingSize) {
+  padding-top: get_vw($paddingSize);
+}
+
+@mixin padding_right_vw($paddingSize) {
+  padding-right: get_vw($paddingSize);
+}
+
+@mixin padding_bottom_vw($paddingSize) {
+  padding-bottom: get_vw($paddingSize);
+}
+
+@mixin padding_left_vw($paddingSize) {
+  padding-left: get_vw($paddingSize);
+}
+
+@mixin margin_vw($marginSizeT, $marginSizeR, $marginSizeB, $marginSizeL) {
+  margin: get_vw($marginSizeT) get_vw($marginSizeR) get_vw($marginSizeB) get_vw($marginSizeL);
+}
+
+@mixin margin_top_vw($marginSize) {
+  margin-top: get_vw($marginSize);
+}
+
+@mixin margin_right_vw($marginSize) {
+  margin-right: get_vw($marginSize);
+}
+
+@mixin margin_bottom_vw($marginSize) {
+  margin-bottom: get_vw($marginSize);
+}
+
+@mixin margin_left_vw($marginSize) {
+  margin-left: get_vw($marginSize);
+}

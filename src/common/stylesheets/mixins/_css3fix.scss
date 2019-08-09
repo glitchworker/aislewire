@@ -1,0 +1,9 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_css3fix.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@mixin css3fix() {
+  // backface-visibility: hidden;
+  will-change: transform;
+}

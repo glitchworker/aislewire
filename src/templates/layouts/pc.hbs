@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE }}" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# mixi: http://mixi-platform.com/ns# website: http://ogp.me/ns/{{ NAMESPACE }}#" class="no-js">
+<head>
+<meta charset="{{ META_CHARSET }}">
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<![endif]-->
+
+<title>{{ META_TITLE }}</title>
+
+<meta name="robots" content="{{ META_ROBOTS }}">
+<meta name="googlebot" content="{{ META_ROBOTS }}">
+<meta name="keywords" content="{{ META_KEYWORDS }}">
+<meta name="description" content="{{ META_DESCRIPTION }}">
+{{#if META_AUTHOR.length}}
+<meta name="author" content="{{ META_AUTHOR }}">
+{{/if}}
+{{#if META_COPYRIGHT.length}}
+<meta name="copyright" content="{{ META_COPYRIGHT }}">
+{{/if}}
+
+<link rel="index" href="{{ WEB_SITE_URL }}">
+<link rel="canonical" href="{{ WEB_SITE_URL }}{{ FILE_PATH }}">
+<link rel="alternate" media="only screen and (max-width: 640px)" href="{{ WEB_SITE_URL }}sp/{{ FILE_PATH }}">
+
+<!-- Viewportの設定 -->
+<meta name="viewport" content="{{ META_VIEWPORT }}">
+<meta name="format-detection" content="telephone=no,address=no,email=no">
+{{#if META_PWA_MODE}}
+
+<!-- iOS Safari & Chrome Android Full screen -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+{{/if}}
+{{#if META_FACEBOOK}}
+
+<!-- Facebook用OGP指定 -->
+<meta property="og:type" content="{{ NAMESPACE }}">
+<meta property="og:site_name" content="{{ WEB_SITE_NAME }}">
+{{#if META_SHARE_TITLE.length}}
+<meta property="og:title" content="{{ META_SHARE_TITLE }}">
+{{else}}
+<meta property="og:title" content="{{ META_TITLE }}">
+{{/if}}
+{{#if META_SHARE_DESCRIPTION.length}}
+<meta property="og:description" content="{{ META_SHARE_DESCRIPTION }}">
+{{else}}
+<meta property="og:description" content="{{ META_DESCRIPTION }}">
+{{/if}}
+<meta property="og:url" content="{{ WEB_SITE_URL }}{{ FILE_PATH }}">
+<meta property="og:image" content="{{ WEB_BASE_URL }}{{ ASSETS_DIR.COMMON }}common/images/{{ META_FACEBOOK_IMAGE }}">
+<meta property="og:locale" content="{{ META_FACEBOOK_LOCALE }}">
+{{#if META_FACEBOOK_ID.length}}
+<meta property="fb:app_id" content="{{ META_FACEBOOK_ID }}">
+{{/if}}
+{{/if}}
+{{#if META_TWITTER}}
+
+<!-- Twitter用CARD指定 -->
+<meta name="twitter:card" content="{{ META_TWITTER_CARD }}">
+<meta name="twitter:url" content="{{ WEB_SITE_URL }}{{ FILE_PATH }}">
+{{#if META_SHARE_TITLE.length}}
+<meta name="twitter:title" content="{{ META_SHARE_TITLE }}">
+{{else}}
+<meta name="twitter:title" content="{{ META_TITLE }}">
+{{/if}}
+{{#if META_SHARE_DESCRIPTION.length}}
+<meta name="twitter:description" content="{{ META_SHARE_DESCRIPTION }}">
+{{else}}
+<meta name="twitter:description" content="{{ META_DESCRIPTION }}">
+{{/if}}
+{{#if META_TWITTER_ACCOUNT.length}}
+<meta name="twitter:site" content="@{{ META_TWITTER_ACCOUNT }}">
+<meta name="twitter:creator" content="@{{ META_TWITTER_ACCOUNT }}">
+{{/if}}
+<meta name="twitter:image:src" content="{{ WEB_BASE_URL }}{{ ASSETS_DIR.COMMON }}common/images/{{ META_FACEBOOK_IMAGE }}">
+{{#if META_TWITTER_APP_ANDROID.length}}
+<meta name="twitter:app:android" content="{{ META_TWITTER_APP_ANDROID }}">
+{{/if}}
+{{#if META_TWITTER_APP_IPAD.length}}
+<meta name="twitter:app:id:ipad" content="{{ META_TWITTER_APP_IPAD }}">
+{{/if}}
+{{#if META_TWITTER_APP_IPHONE.length}}
+<meta name="twitter:app:id:iphone" content="{{ META_TWITTER_APP_IPHONE }}">
+{{/if}}
+{{/if}}
+{{#if META_GOOGLE}}
+
+<!-- Google+用CARD指定 -->
+{{#if META_SHARE_TITLE.length}}
+<meta itemprop="name" content="{{ META_SHARE_TITLE }}">
+{{else}}
+<meta itemprop="name" content="{{ META_TITLE }}">
+{{/if}}
+{{#if META_SHARE_DESCRIPTION.length}}
+<meta itemprop="description" content="{{ META_SHARE_DESCRIPTION }}">
+{{else}}
+<meta itemprop="description" content="{{ META_DESCRIPTION }}">
+{{/if}}
+<meta itemprop="image" content="{{ WEB_BASE_URL }}{{ ASSETS_DIR.COMMON }}common/images/{{ META_FACEBOOK_IMAGE }}">
+{{/if}}
+{{#if META_WINDOWS}}
+
+<!-- Windows用ピン指定 -->
+<meta name="application-name" content="{{ WEB_SITE_NAME }}">
+<meta name="msapplication-tooltip" content="{{ META_TITLE }}">
+<meta name="msapplication-starturl" content="{{ WEB_SITE_URL }}{{ FILE_PATH }}">
+<meta name="msapplication-TileImage" content="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/images/{{ META_WINDOWS_IMAGE }}">
+<meta name="msapplication-TileColor" content="{{ META_WINDOWS_COLOR }}">
+{{/if}}
+
+<!-- アイコン指定(iOS/Android込) -->
+{{#if META_FACEBOOK}}
+<link rel="image_src" href="{{ WEB_BASE_URL }}{{ ASSETS_DIR.COMMON }}common/images/{{ META_FACEBOOK_IMAGE }}">
+{{/if}}
+<link rel="apple-touch-icon-precomposed" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/images/{{ META_APPLE_ICON }}">
+<link rel="shortcut icon" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/images/{{ META_XHTML_ICON }}" type="image/x-icon">
+<link rel="icon" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/images/{{ META_ICON }}" type="image/png">
+
+<!-- スタイルシート指定 -->
+<link rel="stylesheet" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.PC }}css/app.css">
+{{#if ADD_STYLES.length}}
+{{#each ADD_STYLES}}
+<link rel="stylesheet" href="{{ this }}">
+{{/each}}
+{{/if}}
+
+<!-- JavaScript指定 -->
+{{#if META_OLD_BROWSER}}
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/jquery-1.12.4.min.js"></script>
+{{else}}
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/jquery-3.4.0.min.js"></script>
+{{/if}}
+{{#if META_OLD_BROWSER}}
+<!--[if lt IE 9]>
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/html5shiv.min.js"></script>
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/selectivizr.min.js"></script>
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/polyfill.js"></script>
+<![endif]-->
+{{/if}}
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/common.js"></script>
+{{#if REDIRECT}}
+<script>redirectSP("{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}sp/{{ CURRENT_DIR }}{{ FILE_PATH }}");</script>
+{{/if}}
+{{#if ADD_SCRIPTS_HEADER.length}}
+{{#each ADD_SCRIPTS_HEADER}}
+<script src="{{ this }}"></script>
+{{/each}}
+{{/if}}
+</head>
+
+<body class="page-{{ BODY_CLASS }}">
+
+<div id="section-wrapper">
+{{> partials/header }}
+
+{{ body }}
+
+{{> partials/footer }}
+</div>
+<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.PC }}js/app.js"></script>
+{{#if ADD_SCRIPTS_FOOTER.length}}
+{{#each ADD_SCRIPTS_FOOTER}}
+<script src="{{ this }}"></script>
+{{/each}}
+{{/if}}
+</body>
+</html>

@@ -1,0 +1,14 @@
+// ------------------------------------------- SASS Information
+//  Name:      utils/_padding.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+$padding: 0;
+
+@while $padding <= 100{
+  .pt#{$padding} { padding-top: #{$padding}px!important; }
+  .pr#{$padding} { padding-right: #{$padding}px!important; }
+  .pb#{$padding} { padding-bottom: #{$padding}px!important; }
+  .pl#{$padding} { padding-left: #{$padding}px!important; }
+  $padding: $padding+5
+}

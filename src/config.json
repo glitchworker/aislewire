@@ -1,0 +1,22 @@
+{
+  "WEB_SITE_NAME": "これはサイト名です",
+  "WEB_AUTHOR": "これは作成者です",
+  "WEB_MODIFIER": "これは編集者です",
+  "SITE_URL": {
+    "DEV": "http://dev.hoge.com/",
+    "STG": "http://stg.hoge.com/",
+    "PROD": "http://prod.hoge.com/"
+  },
+  "CURRENT_DIR": "",
+  "ABSOLUTE_DIR": false,
+  "ASSETS_DIR": {
+    "COMMON": "assets/",
+    "PC": "assets/",
+    "SP": ""
+  },
+  "LOCAL_SERVER": {
+    "API": false,
+    "GIT": false,
+    "GSX": false
+  }
+}

@@ -1,0 +1,14 @@
+// ------------------------------------------- SASS Information
+//  Name:      utils/_margin.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+$margin: 0;
+
+@while $margin <= 100{
+  .mt#{$margin} { margin-top: #{$margin}px!important; }
+  .mr#{$margin} { margin-right: #{$margin}px!important; }
+  .mb#{$margin} { margin-bottom: #{$margin}px!important; }
+  .ml#{$margin} { margin-left: #{$margin}px!important; }
+  $margin: $margin+5
+}

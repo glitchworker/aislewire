@@ -1,0 +1,193 @@
+// ------------------------------------------- SASS Information
+//  Name:      _reset.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+html, body,
+h1, h2, h3, h4, h5, h6,
+a, p, span,
+em, small, strong,
+sub, sup,
+mark, del, ins, strike,
+abbr, dfn,
+blockquote, q, cite,
+code, pre,
+ol, ul, li, dl, dt, dd,
+div, section, article,
+main, aside, nav,
+header, hgroup, footer,
+img, figure, figcaption,
+address, time,
+audio, video,
+canvas, iframe,
+details, summary,
+fieldset, form, label, legend,
+table, caption,
+tbody, tfoot, thead,
+tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+// applet, object,
+// acronym, big,
+// kbd, s, samp,
+// tt, var,
+// b, u, i, center,
+// embed, menu, ruby {
+
+// }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, menu, nav, section {
+  display: block;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
+body {
+  line-height: 1;
+  // iPhone text fix
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  font-weight: normal;
+}
+
+img {
+  border-style: none;
+  vertical-align: bottom;
+}
+
+img, video {
+  max-width: 100%;
+}
+
+ol, ul {
+  list-style: none;
+  list-style-type: none;
+}
+
+blockquote, q {
+  &:before, &:after {
+    content: '';
+    content: none;
+  }
+  quotes: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input {
+  &::-webkit-search-decoration {
+    display: none;
+  }
+  &:focus {
+    outline-offset: -2px;
+  }
+}
+
+select {
+  &::-ms-expand {
+    display: none;
+  }
+  &::-webkit-search-decoration {
+    display: none;
+  }
+  &:focus {
+    outline-offset: -2px;
+  }
+}
+
+button {
+  background-color: transparent;
+}
+
+textarea {
+  resize: none;
+  &::-webkit-search-decoration {
+    display: none;
+  }
+  &:focus {
+    outline-offset: -2px;
+  }
+}
+
+// input, select, button, textarea {
+//   appearance: none;
+//   border: none;
+//   border-radius: 0;
+//   outline: none;
+//   border: 1px solid #000;
+//   // padding: 0;
+//   // margin: 0;
+// }
+
+@include RESPONSIVE('PRINT', $MAX_WIDTH) {
+  width: $MAX_WIDTH;
+  transform: scale(.8);
+  transform-origin: 0 0;
+}
+
+// .iphoneX {
+//   padding-top: constant(safe-area-inset-top);
+//   padding-bottom: constant(safe-area-inset-bottom);
+//   padding-left: constant(safe-area-inset-left);
+//   padding-right: constant(safe-area-inset-right);
+
+//   padding-top: env(safe-area-inset-top);
+//   padding-bottom: env(safe-area-inset-bottom);
+//   padding-left: env(safe-area-inset-left);
+//   padding-right: env(safe-area-inset-right);
+// }
+
+// UIWebkit では上記が聞かないので 使用する場合はコメントアウト解除
+//
+// @media screen and (orientation: portrait) {
+//   .iphoneX {
+//     padding-top: 44px;
+//     padding-bottom: 34px;
+//     padding-left: 0px;
+//     padding-right: 0px;
+//   }
+// }
+//
+// @media screen and (orientation: landscape) {
+//   .iphoneX {
+//     padding-top: 0px;
+//     padding-bottom: 21px;
+//     padding-left: 44px;
+//     padding-right: 44px;
+//   }
+// }
+
+.clearfix {
+  @include clearfix;
+}
+
+// .inlinefix {
+//   @include inlinefix;
+// }

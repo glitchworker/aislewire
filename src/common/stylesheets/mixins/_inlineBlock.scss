@@ -1,0 +1,10 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_inlineBlock.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@mixin inline-block {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
