@@ -556,6 +556,33 @@ META_PWA_MODE: false
 	│   └── js
 	└── sp
 
+## ✨ Import Copy Data
+
+> ```/src/_modules/import/``` にファイルを設置し、  
+同ディレクトリの ```data.json``` を編集することによって  
+指定した先にコピーしてくれる機能です、外部ソースを取り込む時など  
+重宝するのでご利用ください。
+
+```json
+[
+  {
+    "TYPE": "dir",
+    "DATA": "hoge",
+    "OUTPUT": "assets/hoge/"
+  },
+  {
+    "TYPE": "file",
+    "DATA": "hoge.json",
+    "OUTPUT": "assets/hoge"
+  }
+]
+```
+
+例えば、上記の様に設定するとフォルダの場合は  
+```assets/hoge/``` の中に ```hoge``` 内のデータがコピーされます。  
+ファイルの場合は
+```assets/``` に ```hoge.json``` がコピーされます。
+
 ## ✨ API Mock Server
 
 ```config.json``` の ```LOCAL_SERVER``` の ```API``` を有効にすると起動します。
@@ -565,14 +592,14 @@ META_PWA_MODE: false
 対応しているメソッドは GET / POST / PUT / DELETE さらに PATCH もサポートしています。  
 JSONP または CORS に対応していますのでクロスドメインでも使えるようになっています。
 
-```/src/api/``` 以下に JSON ファイルを設置することによって  
+```/src/_modules/api/``` 以下に JSON ファイルを設置することによって  
 そのファイルを API としてレスポンスが返されるようになります。  
 ※ファイル数に制限は無く配下にいくつでも JSON ファイルを設置することが出来ます。  
 デフォルトのポート番号は 9000 番に設定されているので  
 http://localhost:9000/api/ 等でアクセスする事が可能です。  
 ```/api/db``` にアクセスするとディレクトリ内全ての JSON が結合したデータを取得出来ます。
 
-例として以下のような ```/src/api/data.json``` を配置しています。
+例として以下のような ```/src/_modules/api/data.json``` を配置しています。
 
 ```json
 {
@@ -741,5 +768,5 @@ http://localhost:5000/api?columns=false
 - 開発スタート
 
 ## 📝 License
-Copyright (c) 2016-2019 GlitchWorker (http://loxis.jp/)  
+Copyright (c) 2019 GlitchWorker (http://loxis.jp/)  
 Licensed under the MIT license.
