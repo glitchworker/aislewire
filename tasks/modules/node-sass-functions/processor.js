@@ -1,5 +1,5 @@
 const fs = require('fs');
-let path = require('path');
+const path = require('path');
 const url = require('url');
 
 const mime = require('mime');
@@ -12,6 +12,7 @@ const Processor = function(options) {
     images_path: 'src/images',
     http_images_path: '../images',
   };
+  let path;
   for(path in this.paths) {
     if(this.options[path]) {
       this.paths[path] = this.options[path];
