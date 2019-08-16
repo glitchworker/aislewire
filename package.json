@@ -1,7 +1,7 @@
 {
   "name": "aislewire",
   "description": "AisleWire StarterKit for front-end website.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/glitchworker/aislewire#readme",
   "author": "GlitchWorker (http://loxis.jp/)",
   "license": "MIT",
@@ -30,6 +30,9 @@
     "template",
     "build"
   ],
+  "engines" : {
+    "node" : ">=8.3.0"
+  },
   "scripts": {
     "start": "gulp",
     "setup": "gulp setup",

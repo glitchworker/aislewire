@@ -11,7 +11,7 @@ gulp / handlebars / scss / webpack (babel)
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
 - npm v6.9.0 over
-- node v10.16.0 over
+- node v8.3.0 over
 
 ## 🔰 Usage
 
@@ -758,6 +758,13 @@ http://localhost:5000/api?columns=false
 現在は重要なお知らせはありません。
 
 ## 🆙 Version History
+
+### v0.0.2（2019年8月16日）
+
+- Webpack 4.38.0 を 4.39.1 へ更新
+- package.json にて Node.js の Engine を 8.3.x 以上に変更
+- 上記に伴い .node-version を Git に含まないように変更
+- README.md の変更
 
 ### v0.0.1（2019年8月10日）
 
