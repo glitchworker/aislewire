@@ -17,14 +17,16 @@ module.exports = function(options) {
         done(new sass.types.String('url(\'' + dataUrl + '\')'));
       });
     },
-    'image-width($filename)': function(filename, done) {
+    'image-width($filename, $prefix: true)': function(filename, prefix, done) {
       processor.image_width(filename.getValue(), function(image_width) {
-        done(new sass.types.Number(image_width, 'px'));
+        let string = prefix.getValue() ? 'px' : '';
+        done(new sass.types.Number(image_width, string));
       });
     },
-    'image-height($filename)': function(filename, done) {
+    'image-height($filename, $prefix: true)': function(filename, prefix, done) {
       processor.image_height(filename.getValue(), function(image_height) {
-        done(new sass.types.Number(image_height, 'px'));
+        let string = prefix.getValue() ? 'px' : '';
+        done(new sass.types.Number(image_height, string));
       });
     },
     'image-width-ratio($filename)': function(filename, done) {

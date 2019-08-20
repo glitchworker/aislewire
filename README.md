@@ -759,6 +759,12 @@ http://localhost:5000/api?columns=false
 
 ## 🆙 Version History
 
+### v0.0.3（2019年8月20日）
+
+- node-sass-functions の一部ロジックの改修
+- package.json の更新（directory-tree, gulp-changed, webpack,webpack-cli）
+- README.md の変更
+
 ### v0.0.2（2019年8月16日）
 
 - Webpack 4.38.0 を 4.39.1 へ更新
