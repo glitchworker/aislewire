@@ -759,6 +759,12 @@ http://localhost:5000/api?columns=false
 
 ## 🆙 Version History
 
+### v0.0.4（2019年9月15日）
+
+- webpack.config.js のオプションに cacheDirectory: true を追加
+- package.json の更新（@babel/core, @babel/preset-env, del, handlebars, webpack, webpack-cli, webpack-merge）
+- README.md の変更
+
 ### v0.0.3（2019年8月20日）
 
 - node-sass-functions の一部ロジックの改修

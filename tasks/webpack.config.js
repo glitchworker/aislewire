@@ -62,7 +62,8 @@ const config = {
               presets: ['@babel/preset-env'],
               plugins: [
                 ['@babel/plugin-transform-classes', { 'loose': true }] // ES6 を ES5 に変換
-              ]
+              ],
+              cacheDirectory: true
             }
           }
         ]
