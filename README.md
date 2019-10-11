@@ -759,6 +759,14 @@ http://localhost:5000/api?columns=false
 
 ## 🆙 Version History
 
+### v0.0.5（2019年10月11日）
+
+- handlebars にて if を拡張するヘルパー関数を追加（if_eq）
+- HTMLで使用してない要素のスタイルを自動で削除してくれる機能を追加
+- package.json に追加（gulp-purgecss）
+- package.json の更新（@babel/core, @babel/preset-env, autoprefixer, gulp-changed, handlebars, image-size, webpack, webpack-cli）
+- README.md の変更
+
 ### v0.0.4（2019年9月15日）
 
 - webpack.config.js のオプションに cacheDirectory: true を追加

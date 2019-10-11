@@ -10,6 +10,7 @@ const postcss = require('gulp-postcss'); // PostCSS 本体
 const header = require('gulp-header'); // 先頭に記述を追加
 const changed = require('gulp-changed'); // ファイルの変更点を監視
 const gulpIf = require('gulp-if'); // pipe 内で条件分岐
+const purgecss = require('gulp-purgecss') // 未使用の CSS を削除
 
 // PostCSS Modules
 const sass = require('postcss-node-sass'); // SCSS を使用可能にする
@@ -140,6 +141,16 @@ const paths = {
       src: `${rootDir.src}/stylesheets/sp/app.scss`,
       watch: [`${rootDir.src}/common/stylesheets/**/*.scss`, `${rootDir.src}/stylesheets/sp/**/*.scss`],
       dest: `${rootDir.htdocs}/${rootDir.assets.sp}css/`
+    },
+    purge: {
+      pc: {
+        src: `${rootDir.htdocs}/${rootDir.assets.pc}css/app.css`,
+        dest: `${rootDir.htdocs}/**/*.html`
+      },
+      sp: {
+        src: `${rootDir.htdocs}/${rootDir.assets.sp}css/app.css`,
+        dest: `${rootDir.htdocs}/sp/**/*.html`
+      }
     }
   },
   javascripts: {
@@ -540,6 +551,28 @@ const imagesSP = () =>
   .pipe(changed(paths.images.sp.dest, { hasChanged: changed.compareContents }))
   .pipe(dest(paths.images.sp.dest))
 
+// Purge CSS
+const purgeCSSpc = () =>
+  src(paths.stylesheets.purge.pc.src)
+  .pipe(
+    purgecss({
+      content: [paths.stylesheets.purge.pc.dest]
+    })
+  )
+  .pipe(concat('app.purge.css'))
+  .pipe(dest(paths.stylesheets.pc.dest))
+
+  // Purge CSS
+const purgeCSSsp = () =>
+  src(paths.stylesheets.purge.sp.src)
+  .pipe(
+    purgecss({
+      content: [paths.stylesheets.purge.sp.dest]
+    })
+  )
+  .pipe(concat('app.purge.css'))
+  .pipe(dest(paths.stylesheets.sp.dest))
+
 //------------------------------------------------------
 // Local & API & Git server Settings
 // ローカル & API & Git サーバー設定
@@ -633,10 +666,10 @@ const watchAPI = () => watch(paths.modules.api.watch, apiDirectory)
 //------------------------------------------------------
 
 // task setting
-const buildTaskPC = series(importData, libraryCopy, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images)
+const buildTaskPC = series(importData, libraryCopy, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, purgeCSSpc)
 const watchTaskPC = parallel(browserSyncInit, watchLibraryCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages)
 
-const buildTaskSP = series(importData, libraryCopy, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP)
+const buildTaskSP = series(importData, libraryCopy, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP, purgeCSSpc, purgeCSSsp)
 const watchTaskSP = parallel(browserSyncInit, watchLibraryCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages, watchStylesheetsSP, watchJavascriptsSP, watchImagesSP)
 
 // task if else
@@ -650,10 +683,16 @@ exports.build = buildTask
 exports.clean = series(removeDirectory)
 
 // clean git task
-exports.cleanGit = series(removeGit);
+exports.cleanGit = series(removeGit)
 
 // import task
 exports.import = series(importData)
+
+// purgecss task
+exports.purgeCSSpc = series(purgeCSSpc)
+
+// purgecss task
+exports.purgeCSSsp = series(purgeCSSsp)
 
 // setup task
 if (webConfig.LOCAL_SERVER.GIT) {
