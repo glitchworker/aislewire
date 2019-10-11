@@ -6,6 +6,13 @@
 
 gulp / handlebars / scss / webpack (babel)
 
+## 🤔 AisleWire ?
+
+AisleWire（アイルワイヤー）  
+Aisle は座席列間の```《通路》```やラテン語で```《翼》```を意味し  
+Wire は```《線》```や```《網》```などを意味します。  
+あらゆるモノへの```《繋がり》```と```《強さ》```を表しています。
+
 ## 📌 Require
 
 - Windows or Mac or Linux ( Verified )
