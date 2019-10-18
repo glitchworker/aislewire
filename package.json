@@ -47,7 +47,7 @@
     "@babel/core": "^7.6.4",
     "@babel/plugin-transform-classes": "^7.5.5",
     "@babel/preset-env": "^7.6.3",
-    "autoprefixer": "^9.6.4",
+    "autoprefixer": "^9.6.5",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
     "connect-ssi": "^1.1.1",
@@ -82,7 +82,7 @@
     "slash": "^3.0.0",
     "through2": "^3.0.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.41.0",
+    "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
     "webpack-merge": "^4.2.2",
     "webpack-stream": "^5.2.1"
