@@ -766,6 +766,11 @@ http://localhost:5000/api?columns=false
 
 ## 🆙 Version History
 
+### v0.0.6（2019年11月11日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, glob, handlebars, webpack-cli）
+- README.md の変更
+
 ### v0.0.5（2019年10月11日）
 
 - handlebars にて if を拡張するヘルパー関数を追加（if_eq）
