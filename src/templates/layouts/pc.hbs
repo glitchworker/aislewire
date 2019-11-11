@@ -20,8 +20,10 @@
 {{/if}}
 
 <link rel="index" href="{{ WEB_SITE_URL }}">
-<link rel="canonical" href="{{ WEB_SITE_URL }}{{ FILE_PATH }}">
+<link rel="canonical" href="{{ WEB_BASE_URL }}{{ FILE_PATH }}">
+{{#unless RESPONSIVE}}
 <link rel="alternate" media="only screen and (max-width: 640px)" href="{{ WEB_SITE_URL }}sp/{{ FILE_PATH }}">
+{{/unless}}
 
 <!-- Viewportの設定 -->
 <meta name="viewport" content="{{ META_VIEWPORT }}">

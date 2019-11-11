@@ -119,14 +119,15 @@ Wire は```《線》```や```《網》```などを意味します。
 
 ```yaml
 ---
-layout: rp
+layout: pc
+RESPONSIVE: true
+REDIRECT: false
 
 BODY_CLASS: index
 ADD_STYLES:
 ADD_SCRIPTS_HEADER:
 ADD_SCRIPTS_FOOTER:
 
-REDIRECT: false
 LANGUAGE: ja
 NAMESPACE: website
 META_CHARSET: UTF-8
@@ -215,11 +216,11 @@ META_PWA_MODE: false
 | {{ META_TWITTER }} | twitterのmetaタグ |
 | {{ META_WINDOWS }} | windowsのmetaタグ |
 
-> また ```layout``` の項目を ```rp``` or ```pc``` or ```sp``` どれかに変更すれば  
+> また ```layout``` の項目を ```pc``` or ```sp``` に変更すれば  
 ```/src/templates/layouts/*.hcb``` にあるファイルをひな形として  
 共通テンプレートとして読み込むことが出来ます。  
-つまりレスポンシブ対応をしない場合、 ```pc``` または ```sp``` を利用すれば   
-レイアウトやページの出し分けが可能になるということです。
+レスポンシブ対応をしない場合、 ```RESPONSIVE``` の項目を ```true``` に変更すれば   
+レイアウトやページの出し分けが可能になります。
 >
 > 出力先に関しては ```/src/templates/pages/``` に任意で配置された  
 ディレクトリ構成のまま ```/htdocs/``` に書き出されるようにしているので  
@@ -476,7 +477,6 @@ META_PWA_MODE: false
 	│       │   └── exampleComponent.hbs
 	│       ├── layouts
 	│       │   ├── pc.hbs
-	│       │   ├── rp.hbs
 	│       │   └── sp.hbs
 	│       ├── pages
 	│       │   ├── hoge
@@ -731,7 +731,7 @@ http://localhost:5000/api?columns=false
 ```/src/templates/pages/*.hbs``` の中の ``META_OLD_BROWSER`` を ```true``` にすると   
 ```Internet Explorer 7``` までの旧ブラウザにも対応する事が出来ます。  
 上記の場合は一部 Polyfill を使用していますが ``Internet Explorer 8`` までは  
-レスポンシブには非対応になっています。 ``rp`` は使用せず ``pc`` を使用するか  
+レスポンシブには非対応になっています。 ```RESPONSIVE``` 項目を ``false`` にするか  
 ``css3-mediaqueries`` などの Fallback を使用してご利用ください。
 
 ## 📱 PWA mode (Mobile Only)
@@ -768,6 +768,7 @@ http://localhost:5000/api?columns=false
 
 ### v0.0.6（2019年11月11日）
 
+- テンプレートに ```RESPONSIVE``` の項目を追加（これにより ```rp.hbs``` は廃止）
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, glob, handlebars, webpack-cli）
 - README.md の変更
 
