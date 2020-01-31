@@ -766,6 +766,11 @@ http://localhost:5000/api?columns=false
 
 ## 🆙 Version History
 
+### v0.0.7（2020年1月31日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, css-declaration-sorter, front-matter, gulp-purgecss, handlebars, webpack）
+- README.md の変更
+
 ### v0.0.6（2019年11月11日）
 
 - テンプレートに ```RESPONSIVE``` の項目を追加（これにより ```rp.hbs``` は廃止）
