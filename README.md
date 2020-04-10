@@ -766,6 +766,13 @@ http://localhost:5000/api?columns=false
 
 ## 🆙 Version History
 
+### v0.0.8（2020年4月10日）
+
+- handlebars の拡張関数から if_eq を削除し、汎用型ヘルパー関数を追加（and, or, not, eq, ne, lt, eqlt, gt, eqgt）```※書式：{{#if (演算子 値1 値2) }} / 例：layout == 'pc' の場合 {{#if (eq layout 'pc') }}``` のように指定が可能
+- package.json から if-webpack-plugin を削除しローカルモジュールに組み込み
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, babel-loader, css-declaration-sorter, gulp-purgecss, handlebars, minimist, node-git-server, webpack, webpack-cli）
+- README.md の変更
+
 ### v0.0.7（2020年1月31日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, css-declaration-sorter, front-matter, gulp-purgecss, handlebars, webpack）

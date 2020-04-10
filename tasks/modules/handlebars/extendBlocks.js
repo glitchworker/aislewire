@@ -16,12 +16,49 @@ module.exports = function(hbs) {
     return val;
   });
 
-  hbs.registerHelper('if_eq', function(a, b, opts) {
-    if (a == b) {
-      return opts.fn(this);
-    } else {
-      return opts.inverse(this);
-    }
+  // &&
+  hbs.registerHelper('and', function(value1, value2) {
+    return value1 && value2;
+  });
+
+  // ||
+  hbs.registerHelper('or', function(value1, value2) {
+    return value1 || value2;
+  });
+
+  // !
+  hbs.registerHelper('not', function(value) {
+    return !value;
+  });
+
+  // ==
+  hbs.registerHelper('eq', function(value1, value2) {
+    return value1 == value2;
+  });
+
+  // !=
+  hbs.registerHelper('ne', function(value1, value2) {
+    return value1 != value2;
+  });
+
+  // <
+  hbs.registerHelper('lt', function(value1, value2) {
+    return value1 < value2;
+  });
+
+  // <=
+  hbs.registerHelper('eqlt', function(value1, value2) {
+    return value1 <= value2;
+  });
+
+  // >
+  hbs.registerHelper('gt', function(value1, value2) {
+    return value1 > value2;
+  });
+
+  // <=
+  hbs.registerHelper('eqgt', function(value1, value2) {
+    return value1 >= value2;
   });
 
   return hbs;
