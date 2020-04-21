@@ -15,3 +15,11 @@
   font-size: $font_size / 2 + px;
   font-size: get_vw($font_size);
 }
+
+@mixin lineHeight($size: 32, $font_size: 16) {
+  line-height: $size / $font_size;
+}
+
+@mixin letterSpacing($size: 80) {
+  letter-spacing: $size / 1000 + em;
+}

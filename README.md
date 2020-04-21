@@ -698,19 +698,6 @@ http://localhost:9000/api/users?name_like=hoge
 ```q``` を使用して全てのデータから検索することが出来ます。  
 http://localhost:9000/api/users?q=fuga
 
-## ✨ GSX Server
-
-```config.json``` の ```LOCAL_SERVER``` の ```GSX``` を有効にすると起動します。
-
-> 機能としては GoogleSpreadsheet のシートを用意すれば API のリクエストを受け取り、  
-または返してくれるシンプルな RESTful API サーバーを用意することが出来ます。  
-> ※シートに関しては、```ウェブに公開``` を選択して外から閲覧出来る状態にしてください。
->
-> GSX Server をブラウザで開くと ```/src/_modules/data/``` に ```gsx.json``` という  
-ファイルが生成され、テンプレート内の共通変数としても呼び出す事が可能になります。  
-スプレッドシートを更新した場合、 ```gsx.json``` を更新したい場合は、同じように  
-ブラウザで開くと上書きされ、 watch が働くのでテンプレートには即座に自動で反映されます。
-
 #### Filter
 
 ```id``` に任意のシートIDを指定するとそのシートをパースしてくれます。  
@@ -725,6 +712,19 @@ http://localhost:5000/api?rows=false
 ```columns``` を true または false にすると項目の表示/非表示が可能になります。  
 http://localhost:5000/api?columns=false
 
+## ✨ GSX Server
+
+```config.json``` の ```LOCAL_SERVER``` の ```GSX``` を有効にすると起動します。
+
+> 機能としては GoogleSpreadsheet のシートを用意すれば API のリクエストを受け取り、  
+または返してくれるシンプルな RESTful API サーバーを用意することが出来ます。  
+> ※シートに関しては、```ウェブに公開``` を選択して外から閲覧出来る状態にしてください。
+>
+> GSX Server をブラウザで開くと ```/src/_modules/data/``` に ```gsx.json``` という  
+ファイルが生成され、テンプレート内の共通変数としても呼び出す事が可能になります。  
+スプレッドシートを更新した場合、 ```gsx.json``` を更新したい場合は、同じように  
+ブラウザで開くと上書きされ、 watch が働くのでテンプレートには即座に自動で反映されます。
+
 ## 🚿 Browsers support
 
 通常の設定では比較的新しいブラウザで機能するようになっています。  
@@ -738,6 +738,120 @@ http://localhost:5000/api?columns=false
 
 ```/src/templates/pages/*.hbs``` の中の ```META_PWA_MODE``` を ```true``` にすると   
 ホーム追加時にフルスクリーンで立ち上がるWebAppモードを有効にすることが出来ます。
+
+## 🤔 What you can do with templates ?
+
+本テンプレートでブラックボックス化している機能の詳細を   
+以下に随時記述していきますのでご参考ください。
+
+#### 繰り返しの要素を handlebars に出力したい場合
+
+```html
+<li class="list0">リスト1：テキスト1</li>
+<li class="list1">リスト2：テキスト2</li>
+<li class="list2">リスト3：テキスト3</li>
+<li class="list3">リスト4：テキスト4</li>
+<li class="list4">リスト5：テキスト5</li>
+```
+
+```/src/_modules/data/``` 配下にファイルを配置し hbs で読み取れる状態にします。   
+例として ```/src/_modules/data/example.json``` という名前で作成した場合
+
+```json
+{
+  "rows": [
+    {
+      "リスト1": "テキスト1",
+      "リスト2": "テキスト2",
+      "リスト3": "テキスト3",
+      "リスト3": "テキスト5"
+    }
+  ]
+}
+```
+
+hbs 上に以下の記述を書くことによって出力することが可能です。   
+※もちろんその他の配列でも同様に呼び出す事が可能です。
+
+```hbs
+{{#each data.example.rows}}
+  {{#each this}}
+  <li class="list{{ @index }}">{{ @key }}：{{ this }}</li>
+  {{/each}}
+{{/each}}
+```
+
+#### SCSS で画像パスを取得する方法
+
+node-sass の functions 機能を使い様々な関数を利用することが可能です。   
+※ /tasks/modules/node-sass-functions/ から読み込んでいます。   
+
+例えば以下のような記述をすると、 ```/images/``` 配下の画像のURLを取得し   
+さらに高さと横幅を取得し、自動的に出力する事が可能です。   
+
+※出力先は /htdocs/assets/images/ からの相対パス   
+※出力元は /src/images/ からの相対パス（基本的に ```pc/``` または ```sp/``` を指定）
+
+```scss
+$image: '（出力先）ディレクトリ名/ファイルパス';
+$source: '（出力元）ディレクトリ名/';
+$width: image-width($source + $image, true);
+$height: image-height($source + $image, true);
+
+background-image: image-url($image);
+width: $width;
+height: $height;
+```
+
+また、 ```true``` を ```false``` に変更すると ```px``` を省く数字のみ取得が可能になるので   
+以下のようなレスポンシブスタイルを作る事も出来ます。   
+※ ```elementSize_vw``` は ```/src/common/stylesheets/mixins/``` から include しています。
+
+```scss
+$image: '（出力先）ディレクトリ名/ファイルパス';
+$source: '（出力元）ディレクトリ名/';
+$width: image-width($source + $image, false);
+$height: image-height($source + $image, false);
+
+background-image: image-url($image);
+background-size: contain;
+@include elementSize_vw($width, $height);
+```
+
+#### SCSS でフォントサイズや余白のレスポンシブ対応
+
+mixin の内容は ```/src/common/stylesheets/mixins/``` を見れば分かりますが   
+SP サイトなどを作成する際は、以下のように include する事で   
+デザインの ```px``` や ```weight``` を上手いことレスポンシブ対応してくれます。
+
+```scss
+$size: 26;
+@include fontSize_vw($size);
+@include fontWeight('Medium');
+@include lineHeight(44, $size);
+@include letterSpacing(80);
+```
+
+また、 ```margin``` や ```padding``` も同様で以下のように指定が可能です。   
+上記と同じくデザインの ```px``` の数値を入力するだけで大丈夫です。
+
+```scss
+// 一括の場合
+@include margin_vw(10, 20, 30, 40);
+// それぞれの場合
+@include margin_top_vw(10);
+@include margin_right_vw(20);
+@include margin_bottom_vw(30);
+@include margin_left_vw(40);
+
+// 一括の場合
+@include padding_vw(10, 20, 30, 40);
+// それぞれの場合
+@include padding_top_vw(10);
+@include padding_right_vw(20);
+@include padding_bottom_vw(30);
+@include padding_left_vw(40);
+```
 
 ## 🎉 Dependencies
 
@@ -765,6 +879,11 @@ http://localhost:5000/api?columns=false
 現在は重要なお知らせはありません。
 
 ## 🆙 Version History
+
+### v0.0.9（2020年4月21日）
+
+- _fontSize.scss に mixin 関数追加（lineHeight, letterSpacing）
+- README.md の変更（テンプレートの使い方を追加）
 
 ### v0.0.8（2020年4月10日）
 
