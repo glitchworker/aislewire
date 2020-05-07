@@ -10,8 +10,12 @@
 
 <meta name="robots" content="{{ META_ROBOTS }}">
 <meta name="googlebot" content="{{ META_ROBOTS }}">
+{{#if META_KEYWORDS.length}}
 <meta name="keywords" content="{{ META_KEYWORDS }}">
+{{/if}}
+{{#if META_DESCRIPTION.length}}
 <meta name="description" content="{{ META_DESCRIPTION }}">
+{{/if}}
 {{#if META_AUTHOR.length}}
 <meta name="author" content="{{ META_AUTHOR }}">
 {{/if}}

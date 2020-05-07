@@ -880,6 +880,12 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.1.0（2020年5月7日）
+
+- gulpfile.js の修正（AUTHOR の値が継承出来ていなかったのを修正）
+- package.json の更新（@babel/core, @babel/preset-env, gulp-purgecss, mime, webpack）
+- README.md の変更
+
 ### v0.0.9（2020年4月21日）
 
 - _fontSize.scss に mixin 関数追加（lineHeight, letterSpacing）

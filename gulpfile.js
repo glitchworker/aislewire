@@ -241,7 +241,7 @@ const colors = {
 const commentsCss = [
   '/* --------------------------------------------------------',
   ' Name:      <%= pkg.WEB_SITE_NAME %> - <%= filename %>',
-  ' Author:    <%= pkg.AUTHOR %>',
+  ' Author:    <%= pkg.WEB_AUTHOR %>',
   ' Info:      <%= pkg.WEB_SITE_NAME %>',
   '----------------------------------------------------------- */',
   ''
@@ -251,7 +251,7 @@ const commentsJs = [
   '/*!',
   ' * <%= pkg.WEB_SITE_NAME %> - <%= filename %>',
   ' * --------------------',
-  ' * @author <%= pkg.AUTHOR %>',
+  ' * @author <%= pkg.WEB_AUTHOR %>',
   ` * @link ${webConfig.WEB_SITE_URL}`,
   ' * --------------------',
   ' */',
