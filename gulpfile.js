@@ -39,7 +39,7 @@ const gitServer = require('node-git-server'); // ローカル Git を作成
 // Webpack Module
 const webpack = require('webpack'); // Webpack 読み込み
 const webpackStream = require('webpack-stream'); // Gulp で Webpack を読み込む
-const webpackMerge = require('webpack-merge'); // 共通の Webpack 設定をマージ
+const { merge } = require('webpack-merge'); // 共通の Webpack 設定をマージ
 
 //------------------------------------------------------
 // Load original module
@@ -318,7 +318,7 @@ const postcssConfig = isProduction ? [
 //------------------------------------------------------
 
 // Webpack Common 設定
-const webpackCommon = webpackMerge(webpackConfig, {
+const webpackCommon = merge(webpackConfig, {
   output: {
     filename: paths.common.javascripts.concat,
     sourceMapFilename: !isProduction ? 'common.map' : undefined
@@ -326,7 +326,7 @@ const webpackCommon = webpackMerge(webpackConfig, {
 })
 
 // Webpack Default 設定
-const webpackDefault = webpackMerge(webpackConfig, {
+const webpackDefault = merge(webpackConfig, {
   output: {
     filename: paths.javascripts.concat,
     sourceMapFilename: !isProduction ? 'app.map' : undefined
@@ -334,12 +334,13 @@ const webpackDefault = webpackMerge(webpackConfig, {
 })
 
 // Webpack SP 設定
-const webpackSP = webpackMerge(webpackConfig, {
+const webpackSP = merge(webpackConfig, {
   output: {
     filename: paths.javascripts.concat,
     sourceMapFilename: !isProduction ? 'app.map' : undefined
   }
 })
+
 //------------------------------------------------------
 // BrowserSync Settings
 // BrowserSync 設定

@@ -880,6 +880,14 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.1.1（2020年10月15日）
+
+- gulpfile.js の修正（webpack-merge アップデート対応）
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, browser-sync, del, directory-tree, front-matter, gulp-purgecss, gulp-postcss, image-size, js-yaml, mime, through2, webpack, webpack-cli, webpack-merge, webpack-stream）
+- package.json から非推奨になった uglifyjs-webpack-plugin を削除し後継プラグインの terser-webpack-plugin を追加
+- 上記にともない webpack.config.js の UglifyJSPlugin を TerserPlugin に置き換え
+- README.md の変更
+
 ### v0.1.0（2020年5月7日）
 
 - gulpfile.js の修正（AUTHOR の値が継承出来ていなかったのを修正）

@@ -6,7 +6,7 @@
 const { webpack } = require('webpack-stream'); // Webpack 読み込み
 const minimist = require('minimist'); // Gulp で引数を解析
 const IfPlugin = require('./modules/if-webpack-plugin'); // Webpack の 条件分岐
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin'); // Webpack の minify 設定
+const TerserPlugin = require('terser-webpack-plugin'); // Webpack の minify 設定
 const HardSourcePlugin = require('hard-source-webpack-plugin'); // 中間キャッシュでビルド時間を短縮
 
 //------------------------------------------------------
@@ -87,8 +87,8 @@ const config = {
     minimizer: [
       new IfPlugin(
         isProduction,
-        new UglifyJSPlugin({
-          uglifyOptions: {
+        new TerserPlugin({
+          terserOptions: {
             cache: true,
             parallel: true,
             output: {
