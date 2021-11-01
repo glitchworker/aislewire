@@ -88,6 +88,8 @@ const config = {
       new IfPlugin(
         isProduction,
         new TerserPlugin({
+          // LICENSE.txt を出力させない
+          extractComments: false,
           terserOptions: {
             cache: true,
             parallel: true,
