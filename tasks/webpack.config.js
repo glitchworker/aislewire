@@ -46,6 +46,7 @@ if (isProduction) {
 //------------------------------------------------------
 
 const config = {
+  target: ['web', 'es5'],  // Webpack 5 からの ES5 ( IE11 等 ) 向け設定
   mode: isMode,
   devtool: !isProduction ? 'inline-source-map' : undefined,
   resolve: {
@@ -91,8 +92,8 @@ const config = {
           // LICENSE.txt を出力させない
           extractComments: false,
           terserOptions: {
-            cache: true,
-            parallel: true,
+            // cache: true, // v5 から廃止された
+            // parallel: true, // v5 から廃止された
             output: {
               // Licence 表記を消さない
               comments: /^\**!|@preserve|@license|@cc_on/

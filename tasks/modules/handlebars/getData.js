@@ -12,16 +12,30 @@ const requireUncached = (module) => {
 
 const createDataObj = (files, obj = {}) => {
   files.forEach((file) => {
-    if (file.type == 'directory') {
-      obj[file.name] = createDataObj(file.children);
-    } else if (file.extension === '.json' || file.extension === '.js') {
+    // directoryTree の仕様変更（？）で取得できなくなった
+    // if (file.type == 'directory') {
+    //   obj[file.name] = createDataObj(file.children);
+    // } else if (file.extension === '.json' || file.extension === '.js') {
+    //   try {
+    //     obj[basename(file.name, extname(file.name))] = requireUncached(resolve(file.path));
+    //   } catch (err) {
+    //     return errorMessage(err, file);
+    //   }
+    // } else if (file.extension === '.yml') {
+    //   obj[basename(file.name, extname(file.name))] = yaml.safeLoad(fs.readFileSync(file.path));
+    // }
+
+    // 標準メソッドを使ってファイル名から拡張子を取得し振り分けるように変更
+    if(file.name.split('.').pop() === 'json' || file.name.split('.').pop() === 'js') {
       try {
         obj[basename(file.name, extname(file.name))] = requireUncached(resolve(file.path));
       } catch (err) {
         return errorMessage(err, file);
       }
-    } else if (file.extension === '.yml') {
-      obj[basename(file.name, extname(file.name))] = yaml.safeLoad(fs.readFileSync(file.path));
+    } else if (file.name.split('.').pop() === 'yml') {
+      obj[basename(file.name, extname(file.name))] = yaml.load(fs.readFileSync(file.path));
+    } else {
+      obj[file.name] = createDataObj(file.children);
     }
   });
   return obj;
