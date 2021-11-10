@@ -880,8 +880,8 @@ $size: 26;
 
 ### v0.1.3（2021年11月10日）
 
-- package.json の更新（autoprefixer, css-declaration-sorter, cssnano）
-- package.json の追加（node-sass, postcss）
+- package.json の更新（autoprefixer, css-declaration-sorter, cssnano, terser-webpack-plugin, webpack）
+- package.json へ追加（node-sass, postcss）
 - package.json から postcss-node-sass を削除し内部モジュールに組み込み
 - 上記に伴い各種 PostCSS 8 へのバージョンアップ対応
 - README.md の変更
