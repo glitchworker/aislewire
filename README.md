@@ -878,6 +878,14 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.1.3（2021年11月10日）
+
+- package.json の更新（autoprefixer, css-declaration-sorter, cssnano）
+- package.json の追加（node-sass, postcss）
+- package.json から postcss-node-sass を削除し内部モジュールに組み込み
+- 上記に伴い各種 PostCSS 8 へのバージョンアップ対応
+- README.md の変更
+
 ### v0.1.2（2021年11月8日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, babel-loader, browser-sync, directory-tree, glob, gulp-changed, gulp-purgecss, gulp-postcss, handlebars, image-size, js-yaml, mime, terser-webpack-plugin, webpack, webpack-cli, webpack-merge, webpack-stream）
