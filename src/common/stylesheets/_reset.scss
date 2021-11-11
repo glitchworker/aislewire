@@ -1,7 +1,9 @@
-// ------------------------------------------- SASS Information
-//  Name:      _reset.scss
-//  Author:    GlitchWorker
-// -----------------------------------------------------------
+@use "sass:math";
+@use "config";
+
+/* ------------------------------------------- SASS Information
+ Name:      _reset.scss
+----------------------------------------------------------- */
 
 html, body,
 h1, h2, h3, h4, h5, h6,
@@ -146,46 +148,8 @@ textarea {
 //   // margin: 0;
 // }
 
-@include RESPONSIVE('PRINT', $MAX_WIDTH) {
-  width: $MAX_WIDTH;
-  transform: scale(.8);
-  transform-origin: 0 0;
-}
-
-// .iphoneX {
-//   padding-top: constant(safe-area-inset-top);
-//   padding-bottom: constant(safe-area-inset-bottom);
-//   padding-left: constant(safe-area-inset-left);
-//   padding-right: constant(safe-area-inset-right);
-
-//   padding-top: env(safe-area-inset-top);
-//   padding-bottom: env(safe-area-inset-bottom);
-//   padding-left: env(safe-area-inset-left);
-//   padding-right: env(safe-area-inset-right);
-// }
-
-// UIWebkit では上記が聞かないので 使用する場合はコメントアウト解除
-//
-// @media screen and (orientation: portrait) {
-//   .iphoneX {
-//     padding-top: 44px;
-//     padding-bottom: 34px;
-//     padding-left: 0px;
-//     padding-right: 0px;
-//   }
-// }
-//
-// @media screen and (orientation: landscape) {
-//   .iphoneX {
-//     padding-top: 0px;
-//     padding-bottom: 21px;
-//     padding-left: 44px;
-//     padding-right: 44px;
-//   }
-// }
-
 .clearfix {
-  @include clearfix;
+  @include config.clearfix;
 }
 
 // .inlinefix {

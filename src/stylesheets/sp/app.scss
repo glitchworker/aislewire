@@ -8,29 +8,32 @@
   COMMON: config
 ----------------------------------------------------------- */
 
-@import '../../common/stylesheets/config';
+@use '../../common/stylesheets/config';
+@use '../../common/stylesheets/reset';
 
 /* -----------------------------------------------------------
   STYLES: layouts
 ----------------------------------------------------------- */
 
-@import 'layouts/default';
-@import 'layouts/**/!(_default)*';
+@use 'layouts/default';
+@use 'layouts/wrapper';
+@use 'layouts/content';
 
 /* -----------------------------------------------------------
   STYLES: partials
 ----------------------------------------------------------- */
 
-@import 'partials/**/*';
+@use 'partials/header';
+@use 'partials/footer';
 
 /* -----------------------------------------------------------
   STYLES: pages
 ----------------------------------------------------------- */
 
-@import 'pages/**/*';
+@use 'pages/index';
+@use 'pages/hoge';
+@use 'pages/hoge_fuga';
 
 /* -----------------------------------------------------------
   STYLES: components
 ----------------------------------------------------------- */
-
-@import 'components/**/*';

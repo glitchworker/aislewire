@@ -1,13 +1,8 @@
-/**
- * POSTCSS-NODE-SASS
- * A PostCSS plugin to parse styles with node-sass
- */
-
 let postcss = require('postcss');
-let defaultNodeSass = require('node-sass');
+let defaultNodeSass = require('sass');
 
 module.exports = opt => ({
-  postcssPlugin: 'postcss-node-sass',
+  postcssPlugin: 'postcss-dart-sass',
   Once (root, { result }) {
     let sass = opt.sass || defaultNodeSass;
     let map = typeof result.opts.map === 'object' ? result.opts.map : {}

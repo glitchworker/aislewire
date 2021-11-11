@@ -237,6 +237,9 @@ META_PWA_MODE: false
 > gulpfile.js に gulp-header を利用して渡しているので  
 ```#{$WEB_SITE_URL}``` 等で参照できます。
 
+> ※ v0.1.4 では NodeSass から DartSass への移行中のため  
+上記は app.scss でしか現在参照出来ません。
+
 #### Javascriptの場合
 
 | 記述 | 説明 |
@@ -499,10 +502,12 @@ META_PWA_MODE: false
 	    │   │   ├── index.js
 	    │   │   ├── registerPartials.js
 	    │   │   └── render.js
-	    │   ├── node-sass-functions
+	    │   ├── dart-sass-functions
 	    │   │   ├── index.js
 	    │   │   └── processor.js
-	    │   └── node-sass-glob
+	    │   ├── dart-sass-glob
+	    │   │   └── index.js
+	    │   └── postcss-dart-sass
 	    │       └── index.js
 	    └── webpack.config.js
 
@@ -781,8 +786,8 @@ hbs 上に以下の記述を書くことによって出力することが可能�
 
 #### SCSS で画像パスを取得する方法
 
-node-sass の functions 機能を使い様々な関数を利用することが可能です。   
-※ /tasks/modules/node-sass-functions/ から読み込んでいます。   
+dart-sass の functions 機能を使い様々な関数を利用することが可能です。   
+※ /tasks/modules/dart-sass-functions/ から読み込んでいます。   
 
 例えば以下のような記述をすると、 ```/images/``` 配下の画像のURLを取得し   
 さらに高さと横幅を取得し、自動的に出力する事が可能です。   
@@ -793,8 +798,8 @@ node-sass の functions 機能を使い様々な関数を利用することが�
 ```scss
 $image: '（出力先）ディレクトリ名/ファイルパス';
 $source: '（出力元）ディレクトリ名/';
-$width: image-width($source + $image, true);
-$height: image-height($source + $image, true);
+$width: math.div(image-width($source + $image, true), 1);
+$height: math.div(image-height($source + $image, true), 1);
 
 background-image: image-url($image);
 width: $width;
@@ -808,12 +813,12 @@ height: $height;
 ```scss
 $image: '（出力先）ディレクトリ名/ファイルパス';
 $source: '（出力元）ディレクトリ名/';
-$width: image-width($source + $image, false);
-$height: image-height($source + $image, false);
+$width: math.div(image-width($source + $image, false), 2);
+$height: math.div(image-height($source + $image, false), 2);
 
 background-image: image-url($image);
 background-size: contain;
-@include elementSize_vw($width, $height);
+@include config.elementSize_vw($width, $height);
 ```
 
 #### SCSS でフォントサイズや余白のレスポンシブ対応
@@ -874,9 +879,24 @@ $size: 26;
 
 ## 🚀 Important Notices
 
-現在は重要なお知らせはありません。
+#### v0.1.4 で node-sass から dart-sass に移行
+
+2019年10月から ```Sass``` に ```Built-In Modules``` という大きな機能追加が行われました。   
+大きな変更は ```@import``` に置き換わる ```@use``` を用いたファイルの読み込み方法になり   
+別ファイルの変数などを使いたい場合 ```@import``` で出来ていたグローバルスコープは使えなくなり   
+```@use``` ではファイルスコープへと変化した事により、ファイル単位で毎回呼び出す事が必要になりました。   
+2022年10月には ```@import``` の完全廃止されサポートが終了してしまうので移行にいたりました。   
+しかし厳格化されたことにより ```glob``` は実質不可 ```外部変数呼び出し``` 等が厳しくなったので   
+現在はそのあたりをどう仕組みで運用していくべきか試行錯誤中です。
 
 ## 🆙 Version History
+
+### v0.1.4（2021年11月11日）
+
+- node-sass から dart-sass に完全移行
+- package.json から node-sass を削除し sass ( Dart Sass ) を追加
+- 上記に伴い DartSass の仕様変更に基づき記述を全て見直し修正 ( Built-In Modules 対応 )
+- README.md の変更
 
 ### v0.1.3（2021年11月10日）
 

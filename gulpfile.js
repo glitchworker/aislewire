@@ -13,9 +13,9 @@ const gulpIf = require('gulp-if'); // pipe 内で条件分岐
 const purgecss = require('gulp-purgecss') // 未使用の CSS を削除
 
 // PostCSS Modules
-const sass = require('./tasks/modules/postcss-node-sass'); // SCSS を使用可能にする
-const sassGlob = require('./tasks/modules/node-sass-glob'); // node-sass に glob 機能を追加
-const sassFunctions = require('./tasks/modules/node-sass-functions'); // node-sass に function 機能を追加
+const sass = require('./tasks/modules/postcss-dart-sass'); // SCSS を使用可能にする
+const sassGlob = require('./tasks/modules/dart-sass-glob'); // dart-sass に glob 機能を追加
+const sassFunctions = require('./tasks/modules/dart-sass-functions'); // dart-sass に function 機能を追加
 const autoprefixer = require('autoprefixer'); // プレフィックスを付与
 const sorter = require('css-declaration-sorter'); // CSS をソートする
 const mqpacker = require('css-mqpacker'); // MediaQuery を 1 つにまとめる
