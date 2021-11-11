@@ -228,17 +228,18 @@ META_PWA_MODE: false
 
 | 記述 | 説明 |
 |----|---|
-| #{$WEB_BASE_URL} | サイトURL |
-| #{$WEB_SITE_URL} | サイトURL（カレントディレクトリを含む） |
-| #{$WEB_SITE_NAME} | サイト名 |
-| #{$WEB_AUTHOR} | サイト制作者 |
-| #{$WEB_MODIFIER} | サイト編集者 |
+| #{config.$WEB_BASE_URL} | サイトURL |
+| #{config.$WEB_SITE_URL} | サイトURL（カレントディレクトリを含む） |
+| #{config.$WEB_SITE_NAME} | サイト名 |
+| #{config.$WEB_AUTHOR} | サイト制作者 |
+| #{config.$WEB_MODIFIER} | サイト編集者 |
 
 > gulpfile.js に gulp-header を利用して渡しているので  
 ```#{$WEB_SITE_URL}``` 等で参照できます。
 
 > ※ v0.1.4 では NodeSass から DartSass への移行中のため  
-上記は app.scss でしか現在参照出来ません。
+上記は app.scss でしか参照出来ません。  
+※ v0.1.5 以降では参照することが可能になりました。
 
 #### Javascriptの場合
 
@@ -385,6 +386,7 @@ META_PWA_MODE: false
 	│   │   │       └── selectivizr.min.js
 	│   │   └── stylesheets
 	│   │       ├── _config.scss
+	│   │       ├── _global.scss
 	│   │       ├── _reset.scss
 	│   │       ├── mixins
 	│   │       │   ├── _clearfix.scss
@@ -410,7 +412,8 @@ META_PWA_MODE: false
 	│   │       │   └── _width.scss
 	│   │       └── vars
 	│   │           ├── _color.scss
-	│   │           └── _easing.scss
+	│   │           ├── _easing.scss
+	│   │           └── _variable.scss
 	│   ├── config.json
 	│   ├── images
 	│   │   ├── pc
@@ -879,6 +882,14 @@ $size: 26;
 
 ## 🚀 Important Notices
 
+#### v0.1.5 以降 dart-sass で config.json の変数が参照可能になりました
+
+Sass の function を使う方法は、やはり依存してしまうので今回も避けて   
+```_global.scss``` ファイルと ```config.json``` の変数を合わせたものを   
+```_variable.scss``` というファイルで出力し ```_config.scss``` から   
+参照出来るようにシンプルな構造で実装しました。   
+これにて他の変数と同じく ```config``` から呼び出すことが可能になりました。
+
 #### v0.1.4 で node-sass から dart-sass に移行
 
 2019年10月から ```Sass``` に ```Built-In Modules``` という大きな機能追加が行われました。   
@@ -890,6 +901,12 @@ $size: 26;
 現在はそのあたりをどう仕組みで運用していくべきか試行錯誤中です。
 
 ## 🆙 Version History
+
+### v0.1.5（2021年11月12日）
+
+- gulpfile.js に DartSass 用の共通スタイルシートを出力するタスクを追加
+- 上記に伴い _global.scss ファイルと共通変数を合わせたものを _variable.scss に出力し参照出来るように変更
+- README.md の変更
 
 ### v0.1.4（2021年11月11日）
 

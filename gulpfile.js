@@ -102,6 +102,11 @@ const rootDir = {
 
 const paths = {
   common: {
+    stylesheets: {
+      src: `${rootDir.src}/common/stylesheets/_global.scss`,
+      watch: [`${rootDir.src}/common/stylesheets/_global.scss`],
+      dest: `${rootDir.src}/common/stylesheets/vars/`
+    },
     javascripts: {
       concat: 'common.js',
       src: `${rootDir.src}/common/scripts/javascript/**/!(_)*.js`,
@@ -469,6 +474,13 @@ const libraryCopy = () =>
   .pipe(changed(paths.common.libraryCopy.dest))
   .pipe(dest(paths.common.libraryCopy.dest))
 
+// Stylesheets common settings
+const stylesheetsCommon = () =>
+  src(paths.common.stylesheets.src)
+  .pipe(header(stylesheetsConfig))
+  .pipe(concat('_variable.scss'))
+  .pipe(dest(paths.common.stylesheets.dest))
+
 // javascripts common settings
 const javascriptsCommon = () =>
   src(paths.common.javascripts.src)
@@ -628,6 +640,9 @@ const repositoryHiddenCopy = () =>
 // 監視タスク
 //------------------------------------------------------
 
+// watch stylesheets common
+const watchStylesheetsCommon = () => watch(paths.common.stylesheets.watch, stylesheetsCommon)
+
 // watch javascripts common
 const watchJavascriptsCommon = () => watch(paths.common.javascripts.watch, javascriptsCommon)
 
@@ -667,11 +682,11 @@ const watchAPI = () => watch(paths.modules.api.watch, apiDirectory)
 //------------------------------------------------------
 
 // task setting
-const buildTaskPC = series(importData, libraryCopy, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, purgeCSSpc)
-const watchTaskPC = parallel(browserSyncInit, watchLibraryCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages)
+const buildTaskPC = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, purgeCSSpc)
+const watchTaskPC = parallel(browserSyncInit, watchLibraryCommon, watchStylesheetsCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages)
 
-const buildTaskSP = series(importData, libraryCopy, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP, purgeCSSpc, purgeCSSsp)
-const watchTaskSP = parallel(browserSyncInit, watchLibraryCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages, watchStylesheetsSP, watchJavascriptsSP, watchImagesSP)
+const buildTaskSP = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP, purgeCSSpc, purgeCSSsp)
+const watchTaskSP = parallel(browserSyncInit, watchLibraryCommon, watchStylesheetsCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages, watchStylesheetsSP, watchJavascriptsSP, watchImagesSP)
 
 // task if else
 const buildTask = webConfig.ASSETS_DIR.SP.length ? buildTaskSP : buildTaskPC
