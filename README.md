@@ -829,10 +829,10 @@ SP サイトなどを作成する際は、以下のように include する事�
 
 ```scss
 $size: 26;
-@include fontSize_vw($size);
-@include fontWeight('Medium');
-@include lineHeight(44, $size);
-@include letterSpacing(80);
+@include config.fontSize_vw($size);
+@include config.fontWeight('Medium');
+@include config.lineHeight(44, $size);
+@include config.letterSpacing(80);
 ```
 
 また、 ```margin``` や ```padding``` も同様で以下のように指定が可能です。   
@@ -840,20 +840,20 @@ $size: 26;
 
 ```scss
 // 一括の場合
-@include margin_vw(10, 20, 30, 40);
+@include config.margin_vw(10, 20, 30, 40);
 // それぞれの場合
-@include margin_top_vw(10);
-@include margin_right_vw(20);
-@include margin_bottom_vw(30);
-@include margin_left_vw(40);
+@include config.margin_top_vw(10);
+@include config.margin_right_vw(20);
+@include config.margin_bottom_vw(30);
+@include config.margin_left_vw(40);
 
 // 一括の場合
-@include padding_vw(10, 20, 30, 40);
+@include config.padding_vw(10, 20, 30, 40);
 // それぞれの場合
-@include padding_top_vw(10);
-@include padding_right_vw(20);
-@include padding_bottom_vw(30);
-@include padding_left_vw(40);
+@include config.padding_top_vw(10);
+@include config.padding_right_vw(20);
+@include config.padding_bottom_vw(30);
+@include config.padding_left_vw(40);
 ```
 
 ## 🎉 Dependencies
