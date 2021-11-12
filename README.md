@@ -237,6 +237,8 @@ META_PWA_MODE: false
 > gulpfile.js に gulp-header を利用して渡しているので  
 ```#{$WEB_SITE_URL}``` 等で参照できます。
 
+<u>**v0.1.4 から NodeSass から DartSass 変更しました。**</u>
+
 > ※ v0.1.4 では NodeSass から DartSass への移行中のため  
 上記は app.scss でしか参照出来ません。  
 ※ v0.1.5 以降では参照することが可能になりました。
@@ -882,23 +884,25 @@ $size: 26;
 
 ## 🚀 Important Notices
 
-#### v0.1.5 以降 dart-sass で config.json の変数が参照可能になりました
+<u>**v0.1.5 以降 dart-sass で config.json の変数が参照可能になりました**</u>
 
-Sass の function を使う方法は、やはり依存してしまうので今回も避けて   
+> Sass の function を使う方法は、やはり依存してしまうので今回も避けて   
 ```_global.scss``` ファイルと ```config.json``` の変数を合わせたものを   
 ```_variable.scss``` というファイルで出力し ```_config.scss``` から   
-参照出来るようにシンプルな構造で実装しました。   
+参照出来るようにシンプルな設計で可能なように実装しました。   
 これにて他の変数と同じく ```config``` から呼び出すことが可能になりました。
 
-#### v0.1.4 で node-sass から dart-sass に移行
+<u>**v0.1.4 で node-sass から dart-sass に移行**</u>
 
-2019年10月から ```Sass``` に ```Built-In Modules``` という大きな機能追加が行われました。   
-大きな変更は ```@import``` に置き換わる ```@use``` を用いたファイルの読み込み方法になり   
-別ファイルの変数などを使いたい場合 ```@import``` で出来ていたグローバルスコープは使えなくなり   
-```@use``` ではファイルスコープへと変化した事により、ファイル単位で毎回呼び出す事が必要になりました。   
-2022年10月には ```@import``` の完全廃止されサポートが終了してしまうので移行にいたりました。   
+> 2019年10月から ```Sass``` に [Sass Module System](https://sass-lang.com/blog/the-module-system-is-launched#future-plans) という機能追加が行われました。   
+大きな変更は ```@import``` に置き換わる [@use](https://sass-lang.com/blog/the-module-system-is-launched#use-the-heart-of-the-module-system) や [@forward](https://sass-lang.com/blog/the-module-system-is-launched#forward-for-library-authors) を用いたファイルの読み込み方法になり   
+別ファイルの変数などを使いたい場合 ```@import``` で可能だったグローバルスコープは使えなくなり   
+```@use``` ではファイルスコープへ変更され、ファイル単位で毎回呼び出す事が必要になりました。   
+2021年10月から ```@import``` は既に[非推奨](https://sass-lang.com/blog/libsass-is-deprecated)になっており ```LibSass``` はまだサポートされているが   
+公式が推奨している ```DartSass``` からは機能が廃止されている。   
+2022年10月には ```@import``` の完全廃止されサポートが終了してしまうので移行しました。   
 しかし厳格化されたことにより ```glob``` は実質不可 ```外部変数呼び出し``` 等が厳しくなったので   
-現在はそのあたりをどう仕組みで運用していくべきか試行錯誤中です。
+現在はそのあたりをどういう仕組みで運用していくべきか試行錯誤中です。
 
 ## 🆙 Version History
 
