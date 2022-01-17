@@ -878,6 +878,13 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.1.4（2022年1月17日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, css-declaration-sorter, cssnano, directory-tree, gulp-purgecss, image-size, postcss, terser-webpack-plugin, webpack）
+- package.json から css-mqpacker を削除し node-css-mqpacker を追加（非推奨でバージョンが止まっていた為）
+- 上記対応のため gulpfile.js の微修正
+- README.md の変更
+
 ### v0.1.3（2021年11月10日）
 
 - package.json の更新（autoprefixer, css-declaration-sorter, cssnano, terser-webpack-plugin, webpack）

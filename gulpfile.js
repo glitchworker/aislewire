@@ -18,7 +18,7 @@ const sassGlob = require('./tasks/modules/node-sass-glob'); // node-sass に glo
 const sassFunctions = require('./tasks/modules/node-sass-functions'); // node-sass に function 機能を追加
 const autoprefixer = require('autoprefixer'); // プレフィックスを付与
 const sorter = require('css-declaration-sorter'); // CSS をソートする
-const mqpacker = require('css-mqpacker'); // MediaQuery を 1 つにまとめる
+const mqpacker = require('node-css-mqpacker'); // MediaQuery を 1 つにまとめる
 const cssNano = require('cssnano'); // CSS を圧縮する
 
 // Task Debugger Module
