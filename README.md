@@ -878,6 +878,11 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.1.5（2022年2月25日）
+
+- package.json の更新（@babel/core, @babel/preset-env, cssnano, directory-tree, fancy-log, node-sass, postcss, terser-webpack-plugin, webpack, webpack-cli）
+- README.md の変更
+
 ### v0.1.4（2022年1月17日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, css-declaration-sorter, cssnano, directory-tree, gulp-purgecss, image-size, postcss, terser-webpack-plugin, webpack）
