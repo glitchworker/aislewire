@@ -906,6 +906,12 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.1.7（2022年3月14日）
+
+- package.json の更新（browser-sync, cssnano, postcss, webpack）
+- dart-sass-functions の inline_image 関数の mime 修正（ バージョン2 から lookup() が廃止され getType() に変更になりエラーが出ていた為 ）
+- README.md の変更
+
 ### v0.1.6（2022年2月25日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, css-declaration-sorter, node-css-mqpacker, cssnano, directory-tree, fancy-log, gulp-purgecss, image-size, postcss, sass, terser-webpack-plugin, webpack, webpack-cli）

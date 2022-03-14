@@ -82,7 +82,7 @@ Processor.prototype.image_height_ratio = function(filepath, done) {
 
 Processor.prototype.inline_image = function(filepath, mime_type, done) {
   const src = this.real_path(filepath, 'images');
-  mime_type = mime_type || mime.lookup(src);
+  mime_type = mime_type || mime.getType(src);
   const data = fs.readFileSync(src);
   done('data:' + mime_type + ';base64,' + data.toString('base64'));
 };
