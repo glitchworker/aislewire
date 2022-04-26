@@ -118,7 +118,7 @@
 <link rel="icon" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/images/{{ META_ICON }}" type="image/png">
 
 <!-- スタイルシート指定 -->
-<link rel="stylesheet" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.SP }}css/app.css">
+<link rel="stylesheet" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.SP }}css/app.css{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}">
 {{#if ADD_STYLES.length}}
 {{#each ADD_STYLES}}
 <link rel="stylesheet" href="{{ this }}">
@@ -127,7 +127,7 @@
 
 <!-- JavaScript指定 -->
 <script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/jquery-3.4.0.min.js"></script>
-<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/common.js"></script>
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/common.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
 {{#if REDIRECT}}
 <script>redirectPC("{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ CURRENT_DIR }}{{ FILE_PATH }}");</script>
 {{/if}}
@@ -147,7 +147,12 @@
 
 {{> partials/footer }}
 </div>
-<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.SP }}js/app.js"></script>
+{{#if WEBPACK_ENTRIES}}
+<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.SP }}js/common.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
+<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.SP }}js/{{ BODY_CLASS }}.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
+{{else}}
+<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.SP }}js/app.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
+{{/if}}
 {{#if ADD_SCRIPTS_FOOTER.length}}
 {{#each ADD_SCRIPTS_FOOTER}}
 <script src="{{ this }}"></script>
