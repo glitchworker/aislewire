@@ -124,7 +124,7 @@
 <link rel="icon" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/images/{{ META_ICON }}" type="image/png">
 
 <!-- スタイルシート指定 -->
-<link rel="stylesheet" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.PC }}css/app.css">
+<link rel="stylesheet" href="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.PC }}css/app.css{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}">
 {{#if ADD_STYLES.length}}
 {{#each ADD_STYLES}}
 <link rel="stylesheet" href="{{ this }}">
@@ -144,7 +144,7 @@
 <script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/polyfill.js"></script>
 <![endif]-->
 {{/if}}
-<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/common.js"></script>
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/common.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
 {{#if REDIRECT}}
 <script>redirectSP("{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}sp/{{ CURRENT_DIR }}{{ FILE_PATH }}");</script>
 {{/if}}
@@ -164,7 +164,12 @@
 
 {{> partials/footer }}
 </div>
-<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.PC }}js/app.js"></script>
+{{#if WEBPACK_ENTRIES}}
+<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.PC }}js/common.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
+<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.PC }}js/{{ BODY_CLASS }}.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
+{{else}}
+<script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.PC }}js/app.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
+{{/if}}
 {{#if ADD_SCRIPTS_FOOTER.length}}
 {{#each ADD_SCRIPTS_FOOTER}}
 <script src="{{ this }}"></script>

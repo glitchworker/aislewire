@@ -81,7 +81,11 @@ Wire は```《線》```や```《網》```などを意味します。
     "API": false,
     "GIT": false,
     "GSX": false
-  }
+  },
+  "ASSETS_HOST": "",
+  "CACHE_VERSION": "",
+  "HTTPS_SERVER": false,
+  "WEBPACK_ENTRIES": false
 }
 ```
 
@@ -906,9 +910,14 @@ $size: 26;
 
 ## 🆙 Version History
 
-### v0.1.7（2022年3月14日）
+### v0.1.7（2022年4月27日）
 
-- package.json の更新（browser-sync, cssnano, postcss, webpack）
+- package.json の更新（@babel/core, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, glob, minimist, postcss, webpack）
+- config.json に WEBPACK_ENTRIES の項目を追加（true で js ファイルを単体出力出来るようになります）
+- config.json に HTTPS_SERVER の項目を追加（SSL 環境が必要な場合に true にすると HTTPS でアクセスが可能になる）
+- config.json に ASSETS_HOST の項目を追加（CSS 内のパスを別ドメインに向ける場合フルパスで入力する）
+- config.json に CACHE_VERSION の項目を追加（キャッシュ対策をするために数字を入力 20220426 みたいな感じをいれると ?v= パラメータとして付与される）
+- gulpfile.js に上記の機能実装を追加＆整理
 - dart-sass-functions の inline_image 関数の mime 修正（ バージョン2 から lookup() が廃止され getType() に変更になりエラーが出ていた為 ）
 - README.md の変更
 

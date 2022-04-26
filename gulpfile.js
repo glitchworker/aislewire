@@ -40,6 +40,7 @@ const gitServer = require('node-git-server'); // ローカル Git を作成
 const webpack = require('webpack'); // Webpack 読み込み
 const webpackStream = require('webpack-stream'); // Gulp で Webpack を読み込む
 const { merge } = require('webpack-merge'); // 共通の Webpack 設定をマージ
+const glob = require('glob'); // Glob でディレクトリ検索
 
 //------------------------------------------------------
 // Load original module
@@ -161,11 +162,13 @@ const paths = {
   javascripts: {
     concat: 'app.js',
     pc: {
+      entries: `${rootDir.src}/javascripts/pc`,
       src: `${rootDir.src}/javascripts/pc/**/!(_)*.js`,
       watch: `${rootDir.src}/javascripts/pc/**/!(_)*.js`,
       dest: `${rootDir.htdocs}/${rootDir.assets.pc}js/`
     },
     sp: {
+      entries: `${rootDir.src}/javascripts/sp`,
       src: `${rootDir.src}/javascripts/sp/**/!(_)*.js`,
       watch: `${rootDir.src}/javascripts/sp/**/!(_)*.js`,
       dest: `${rootDir.htdocs}/${rootDir.assets.sp}js/`
@@ -291,12 +294,12 @@ const stylesheetsConfig = (
 const assetConfig = {
   images_path: `${rootDir.src}/images`,
   http_images_path: '../images',
-  // asset_host: function(http_path, done){
-  //   done('http://example.com');
-  // },
-  // asset_cache_buster: function(http_path, real_path, done){
-  //   done('v=201901010000');
-  // }
+  asset_host: (http_path, done) => {
+    webConfig.ASSETS_HOST.length ? done(`${webConfig.ASSETS_HOST}`) : done('');
+  },
+  asset_cache_buster: (http_path, real_path, done) => {
+    webConfig.CACHE_VERSION.length ? done(`v=${webConfig.CACHE_VERSION}`) : done('');
+  }
 }
 
 //------------------------------------------------------
@@ -322,6 +325,22 @@ const postcssConfig = isProduction ? [
 // Javascripts 設定
 //------------------------------------------------------
 
+// Webpack Entries 設定
+const defaultEntries = {}
+const spEntries = {}
+glob.sync('**/*.js', {
+  ignore: '**/_*.js',
+  cwd: paths.javascripts.pc.entries
+}).map((key) => {
+  defaultEntries[key] = path.resolve(paths.javascripts.pc.entries, key)
+})
+glob.sync('**/*.js', {
+  ignore: '**/_*.js',
+  cwd: paths.javascripts.sp.entries
+}).map((key) => {
+  spEntries[key] = path.resolve(paths.javascripts.sp.entries, key)
+})
+
 // Webpack Common 設定
 const webpackCommon = merge(webpackConfig, {
   output: {
@@ -332,16 +351,18 @@ const webpackCommon = merge(webpackConfig, {
 
 // Webpack Default 設定
 const webpackDefault = merge(webpackConfig, {
+  entry: !webConfig.WEBPACK_ENTRIES ? undefined : defaultEntries,
   output: {
-    filename: paths.javascripts.concat,
+    filename: !webConfig.WEBPACK_ENTRIES ? paths.javascripts.concat : '[name]',
     sourceMapFilename: !isProduction ? 'app.map' : undefined
   }
 })
 
 // Webpack SP 設定
 const webpackSP = merge(webpackConfig, {
+  entry: !webConfig.WEBPACK_ENTRIES ? undefined : spEntries,
   output: {
-    filename: paths.javascripts.concat,
+    filename: !webConfig.WEBPACK_ENTRIES ? paths.javascripts.concat : '[name]',
     sourceMapFilename: !isProduction ? 'app.map' : undefined
   }
 })
@@ -353,6 +374,7 @@ const webpackSP = merge(webpackConfig, {
 
 const browserSyncConfig = {
   server: {
+    https: webConfig.HTTPS_SERVER,
     baseDir: rootDir.htdocs,
     middleware: [
       ssi({
@@ -369,7 +391,7 @@ const browserSyncConfig = {
   startPath: webConfig.CURRENT_DIR
 }
 
-const browserSyncCallbacks = function(err, bs) {
+const browserSyncCallbacks = (err, bs) => {
   // サーバー URL 取得
   const baseURL = bs.getOption('urls');
   const localURL = url.parse(baseURL.get('local', false));
@@ -401,11 +423,11 @@ const browserSyncCallbacks = function(err, bs) {
       autoCreate: true
     });
     const port = process.env.PORT || paths.modules.git.port;
-    repos.on('push', (push) => {
+    repos.on('push', push => {
       console.log(`[${colors.yellow('Node Git Server')}] PUSH: ${colors.magenta(`${push.repo} / ${push.commit} ( ${push.branch} )`)}`);
       push.accept();
     });
-    repos.on('fetch', (fetch) => {
+    repos.on('fetch', fetch => {
       console.log(`[${colors.yellow('Node Git Server')}] FETCH: ${colors.magenta(`${fetch.repo} / ${fetch.commit}`)}`);
       fetch.accept();
     });
@@ -440,7 +462,7 @@ const apiServerConfig = {
 // Plumber でエラーが出た時に止めないようにする
 //------------------------------------------------------
 
-const plumberConfig = function(error) {
+const plumberConfig = error => {
   console.log(error)
   this.emit('end')
 }
@@ -451,9 +473,9 @@ const plumberConfig = function(error) {
 //------------------------------------------------------
 
 // import settings
-const importData = function(done) {
+const importData = done => {
   const jsonData = JSON.parse(fs.readFileSync(paths.modules.import.json));
-  jsonData.forEach(function(page, i) {
+  jsonData.forEach((page, i) => {
     if (page.TYPE === 'dir') {
       jsonDataPath = `${paths.modules.import.src}/${page.DATA}/**/*`
     } else {
@@ -601,7 +623,7 @@ const apiServerInit = () => apiServer = jsonServer.create(apiServerConfig)
 const apiDirectory = () => src(paths.modules.api.watch).pipe(apiServer.pipe())
 
 // gsxServer init
-const gsxServerInit = function(done) {
+const gsxServerInit = done => {
   exec(`node ./${rootDir.tasks}/modules/gsx2json/app.js`, (err, stdout, stderr) => {
     if (err) {
       console.error(err);
