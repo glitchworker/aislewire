@@ -17,8 +17,8 @@ Wire は```《線》```や```《網》```などを意味します。
 
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
-- npm v7.6.0 over
-- node v12.0.0 over
+- npm v7.10.0 over
+- node v16.0.0 over
 
 ## 🔰 Usage
 
@@ -381,7 +381,7 @@ META_PWA_MODE: false
 	│   │   │   └── lib
 	│   │   │       ├── html5shiv.min.js
 	│   │   │       ├── jquery-1.12.4.min.js
-	│   │   │       ├── jquery-3.4.0.min.js
+	│   │   │       ├── jquery-3.6.3.min.js
 	│   │   │       ├── polyfill.js
 	│   │   │       └── selectivizr.min.js
 	│   │   └── stylesheets
@@ -881,6 +881,13 @@ $size: 26;
 現在は重要なお知らせはありません。
 
 ## 🆙 Version History
+
+### v0.1.8（2023年2月13日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, directory-tree, glob, gulp-purgecss, image-size, minimist, node-git-server, node-sass, postcss, terser-webpack-plugin, webpack, webpack-cli）
+- handlebars にて変数定義を拡張するヘルパー関数を追加（include）
+- jQuery のバージョンを最新の 3.6.3 に変更
+- README.md の変更
 
 ### v0.1.7（2022年4月27日）
 
