@@ -9,6 +9,16 @@ module.exports = function(hbs) {
     block.push(context.fn(this));
   });
 
+  hbs.registerHelper('include', function(options) {
+    var context = {},
+      mergeContext = function(obj) {
+        for(var k in obj)context[k]=obj[k];
+      };
+    mergeContext(this);
+    mergeContext(options.hash);
+    return options.fn(context);
+  });
+
   hbs.registerHelper('block', function(name) {
     var val = (blocks[name] || []).join('\n');
     // clear the block
