@@ -305,13 +305,19 @@ const assetConfig = {
 const postcssConfig = isProduction ? [
   sass({ functions: sassFunctions(assetConfig), indentWidth: 2, importer: [sassGlob] }),
   autoprefixer({ overrideBrowserslist: ['> 0%'] }),
-  sorter({ order: 'smacss' }),
+  sorter({
+    order: 'smacss',
+    keepOverrides: true
+  }),
   mqpacker,
   cssNano
 ] : [
   sass({ functions: sassFunctions(assetConfig), indentWidth: 2, importer: [sassGlob] }),
   autoprefixer({ overrideBrowserslist: ['> 0%'] }),
-  sorter({ order: 'smacss' }),
+  sorter({
+    order: 'smacss',
+    keepOverrides: true
+  }),
   mqpacker
 ]
 
