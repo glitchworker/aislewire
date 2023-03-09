@@ -40,7 +40,7 @@ const gitServer = require('node-git-server'); // ローカル Git を作成
 const webpack = require('webpack'); // Webpack 読み込み
 const webpackStream = require('webpack-stream'); // Gulp で Webpack を読み込む
 const { merge } = require('webpack-merge'); // 共通の Webpack 設定をマージ
-const glob = require('glob'); // Glob でディレクトリ検索
+const { glob, globSync, globStream, globStreamSync, Glob } = require('glob'); // Glob でディレクトリ検索
 
 //------------------------------------------------------
 // Load original module
@@ -310,13 +310,19 @@ const assetConfig = {
 const postcssConfig = isProduction ? [
   sass({ functions: sassFunctions(assetConfig), indentWidth: 2, importer: [sassGlob] }),
   autoprefixer({ overrideBrowserslist: ['> 0%'] }),
-  sorter({ order: 'smacss' }),
+  sorter({
+    order: 'smacss',
+    keepOverrides: true
+  }),
   mqpacker,
   cssNano
 ] : [
   sass({ functions: sassFunctions(assetConfig), indentWidth: 2, importer: [sassGlob] }),
   autoprefixer({ overrideBrowserslist: ['> 0%'] }),
-  sorter({ order: 'smacss' }),
+  sorter({
+    order: 'smacss',
+    keepOverrides: true
+  }),
   mqpacker
 ]
 
@@ -328,13 +334,13 @@ const postcssConfig = isProduction ? [
 // Webpack Entries 設定
 const defaultEntries = {}
 const spEntries = {}
-glob.sync('**/*.js', {
+globSync('**/*.js', {
   ignore: '**/_*.js',
   cwd: paths.javascripts.pc.entries
 }).map((key) => {
   defaultEntries[key] = path.resolve(paths.javascripts.pc.entries, key)
 })
-glob.sync('**/*.js', {
+globSync('**/*.js', {
   ignore: '**/_*.js',
   cwd: paths.javascripts.sp.entries
 }).map((key) => {

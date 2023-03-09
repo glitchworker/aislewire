@@ -910,6 +910,13 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.1.9（2023年3月9日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, browser-sync, cssnano, glob, sass, terser-webpack-plugin, webpack）
+- glob の仕様が変更されたので gulpfile.js と registerPartial.js を更新
+- css-declaration-sorter のソートの影響で一部の CSS3 が有効にならない場合があったので gulpfile.js の設定項目に keepOverrides を追加
+- README.md の変更
+
 ### v0.1.8（2023年2月13日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, directory-tree, glob, gulp-purgecss, image-size, minimist, node-git-server, postcss, sass, terser-webpack-plugin, webpack, webpack-cli）

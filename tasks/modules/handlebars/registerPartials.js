@@ -1,6 +1,6 @@
 const fs = require('fs');
 const slash = require('slash');
-const glob = require('glob');
+const { glob, globSync, globStream, globStreamSync, Glob } = require('glob');
 const { join, extname } = require('path');
 const hbs = require('handlebars');
 const extend = require('./extendBlocks');
@@ -10,7 +10,7 @@ const errorMessage = require('./errorMessage');
 const hbsExtend = extend(hbs);
 
 const createPartial = (paths, path = '') => {
-  const files = glob.sync(`${paths}/**/*.{${allowedExtensions.join()}}`);
+  const files = globSync(`${paths}/**/*.{${allowedExtensions.join()}}`);
   files.forEach((file) => {
     const basePath = file.split(`${paths}/`)[1];
     const partialName = slash(join(path,`${basePath.split(extname(basePath))[0]}`));
