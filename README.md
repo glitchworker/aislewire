@@ -910,6 +910,12 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.2.0（2023年3月23日）
+
+- package.json の更新（@babel/core, autoprefixer, browser-sync, glob, sass, webpack）
+- 2022年末頃から Twitter のシェア機能にて share を使った場合 Android の公式アプリが立ち上がらなくなる事象が起きているので intent/tweet を使用する方向性に暫定対応（src/common/scripts/javascript/common.js）
+- README.md の変更
+
 ### v0.1.9（2023年3月9日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, browser-sync, cssnano, glob, sass, terser-webpack-plugin, webpack）
