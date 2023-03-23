@@ -219,7 +219,9 @@
       if (document.querySelector(i_target) !== null) {
         document.querySelector(i_target).addEventListener('click', (function(e) {
           e.preventDefault();
-          let url = 'http://twitter.com/share?url=';
+          // Android for Twitter App Bug fix.
+          // let url = 'http://twitter.com/share?url=';
+          let url = 'http://twitter.com/intent/tweet?url=';
           url += encodeURIComponent(i_url);
           url += `&text=${encodeURIComponent(i_text)}`;
           window.open(url, 'share', [
