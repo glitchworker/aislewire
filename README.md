@@ -17,8 +17,8 @@ Wire は```《線》```や```《網》```などを意味します。
 
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
-- npm v7.10.0 over
-- node v16.0.0 over
+- npm v8.19.4 over
+- node v16.20.0 over
 
 ## 🔰 Usage
 
@@ -146,7 +146,7 @@ META_APPLE_ICON: favicon.png
 META_ICON: favicon.png
 META_XHTML_ICON: favicon.ico
 META_FACEBOOK: true
-META_FACEBOOK_IMAGE: ogp_image.jpg
+META_FACEBOOK_IMAGE: ogp_image.png
 META_FACEBOOK_LOCALE: ja_JP
 META_FACEBOOK_ID:
 META_TWITTER: true
@@ -376,7 +376,7 @@ META_PWA_MODE: false
 	│   │   ├── images
 	│   │   │   ├── favicon.ico
 	│   │   │   ├── favicon.png
-	│   │   │   ├── ogp_image.jpg
+	│   │   │   ├── ogp_image.png
 	│   │   │   └── tile_image.png
 	│   │   ├── scripts
 	│   │   │   ├── javascript
@@ -387,7 +387,7 @@ META_PWA_MODE: false
 	│   │   │   └── lib
 	│   │   │       ├── html5shiv.min.js
 	│   │   │       ├── jquery-1.12.4.min.js
-	│   │   │       ├── jquery-3.6.3.min.js
+	│   │   │       ├── jquery-3.6.4.min.js
 	│   │   │       ├── polyfill.js
 	│   │   │       └── selectivizr.min.js
 	│   │   └── stylesheets
@@ -909,6 +909,14 @@ $size: 26;
 現在はそのあたりをどういう仕組みで運用していくべきか試行錯誤中です。
 
 ## 🆙 Version History
+
+### v0.2.1（2023年4月24日）
+
+- package.json の更新（@babel/core, @babel/preset-env, css-declaration-sorter, cssnano, del, glob, postcss, sass, webpack, webpack-cli）
+- パッケージ更新に伴い node を v16.20.0 npm を v8.19.4 以上に変更
+- jQuery のバージョンを最新の 3.6.4 に変更
+- OGP 画像を jpg から png に変更
+- README.md の変更
 
 ### v0.2.0（2023年3月23日）
 
