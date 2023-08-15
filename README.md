@@ -381,7 +381,7 @@ META_PWA_MODE: false
 	│   │   │   └── lib
 	│   │   │       ├── html5shiv.min.js
 	│   │   │       ├── jquery-1.12.4.min.js
-	│   │   │       ├── jquery-3.6.4.min.js
+	│   │   │       ├── jquery-3.7.0.min.js
 	│   │   │       ├── polyfill.js
 	│   │   │       └── selectivizr.min.js
 	│   │   └── stylesheets
@@ -881,6 +881,12 @@ $size: 26;
 現在は重要なお知らせはありません。
 
 ## 🆙 Version History
+
+### v0.2.2（2023年8月15日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, handlebars, node-sass, postcss, terser-webpack-plugin, webpack, webpack-cli, webpack-merge）
+- jQuery のバージョンを最新の 3.7.0 に変更
+- README.md の変更
 
 ### v0.2.1（2023年4月24日）
 
