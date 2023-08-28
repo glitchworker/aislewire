@@ -882,6 +882,12 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.2.3（2023年8月28日）
+
+- package.json の更新（@babel/core, postcss）
+- 一部 Windows でファイルパスが Undefined になっていたため registerPartial.js を更新
+- README.md の変更
+
 ### v0.2.2（2023年8月15日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, handlebars, node-sass, postcss, terser-webpack-plugin, webpack, webpack-cli, webpack-merge）

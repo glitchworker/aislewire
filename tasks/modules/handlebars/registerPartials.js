@@ -12,7 +12,7 @@ const hbsExtend = extend(hbs);
 const createPartial = (paths, path = '') => {
   const files = glob.sync(`${paths}/**/*.{${allowedExtensions.join()}}`);
   files.forEach((file) => {
-    const basePath = file.split(`${paths}/`)[1];
+    const basePath = slash(file).split(`${paths}/`)[1];
     const partialName = slash(join(path,`${basePath.split(extname(basePath))[0]}`));
     const content = fs.readFileSync(file, 'utf8');
     hbsExtend.registerPartial(partialName, content);
