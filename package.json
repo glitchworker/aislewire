@@ -34,6 +34,11 @@
     "node": ">=16.20.0",
     "npm": ">=8.19.4"
   },
+  "volta": {
+    "node": "16.20.2",
+    "npm": "8.19.4",
+    "yarn": "1.22.19"
+  },
   "scripts": {
     "start": "gulp",
     "setup": "gulp setup",
