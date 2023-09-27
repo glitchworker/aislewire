@@ -126,7 +126,7 @@
 {{/if}}
 
 <!-- JavaScript指定 -->
-<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/jquery-3.7.0.min.js"></script>
+<script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/lib/jquery-3.7.1.min.js"></script>
 <script src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.COMMON }}common/js/common.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
 {{#if REDIRECT}}
 <script>redirectPC("{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ CURRENT_DIR }}{{ FILE_PATH }}");</script>

@@ -387,7 +387,7 @@ META_PWA_MODE: false
 	│   │   │   └── lib
 	│   │   │       ├── html5shiv.min.js
 	│   │   │       ├── jquery-1.12.4.min.js
-	│   │   │       ├── jquery-3.7.0.min.js
+	│   │   │       ├── jquery-3.7.1.min.js
 	│   │   │       ├── polyfill.js
 	│   │   │       └── selectivizr.min.js
 	│   │   └── stylesheets
@@ -909,6 +909,12 @@ $size: 26;
 現在はそのあたりをどういう仕組みで運用していくべきか試行錯誤中です。
 
 ## 🆙 Version History
+
+### v0.2.4（2023年9月27日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, ss-declaration-sorter, glob, postcss, sass）
+- jQuery のバージョンを最新の 3.7.1 に変更
+- README.md の変更
 
 ### v0.2.3（2023年8月28日）
 
