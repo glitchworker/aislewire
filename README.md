@@ -85,7 +85,8 @@ Wire は```《線》```や```《網》```などを意味します。
   "ASSETS_HOST": "",
   "CACHE_VERSION": "",
   "HTTPS_SERVER": false,
-  "WEBPACK_ENTRIES": false
+  "WEBPACK_ENTRIES": false,
+	"PURGE_CSS": false
 }
 ```
 
@@ -909,6 +910,12 @@ $size: 26;
 現在はそのあたりをどういう仕組みで運用していくべきか試行錯誤中です。
 
 ## 🆙 Version History
+
+### v0.2.5（2024年2月8日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, browser-sync, css-declaration-sorter, cssnano, image-size, postcss, sass, terser-webpack-plugin, webpack, webpack-merge）
+- config.json に PURGE_CSS の項目を追加（true で HTML 上で使用されていないスタイルを CSS ファイルから削除したものを出力することが出来るようになります。元々 true で書き出されていたが、デフォルトは false に変更され任意で設定が出来るように変更）
+- README.md の変更
 
 ### v0.2.4（2023年9月27日）
 

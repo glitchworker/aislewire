@@ -22,5 +22,6 @@
   "ASSETS_HOST": "",
   "CACHE_VERSION": "",
   "HTTPS_SERVER": false,
-  "WEBPACK_ENTRIES": false
+  "WEBPACK_ENTRIES": false,
+  "PURGE_CSS": false
 }

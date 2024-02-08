@@ -710,10 +710,14 @@ const watchAPI = () => watch(paths.modules.api.watch, apiDirectory)
 //------------------------------------------------------
 
 // task setting
-const buildTaskPC = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, purgeCSSpc)
+if(webConfig.PURGE_CSS) {
+  buildTaskPC = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, purgeCSSpc)
+  buildTaskSP = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP, purgeCSSpc, purgeCSSsp)
+} else {
+  buildTaskPC = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images)
+  buildTaskSP = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP)
+}
 const watchTaskPC = parallel(browserSyncInit, watchLibraryCommon, watchStylesheetsCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages)
-
-const buildTaskSP = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP, purgeCSSpc, purgeCSSsp)
 const watchTaskSP = parallel(browserSyncInit, watchLibraryCommon, watchStylesheetsCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages, watchStylesheetsSP, watchJavascriptsSP, watchImagesSP)
 
 // task if else
