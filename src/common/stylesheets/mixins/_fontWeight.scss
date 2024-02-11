@@ -4,11 +4,11 @@
 // -----------------------------------------------------------
 
 @mixin fontWeight($fontWeight) {
-  @if $fontWeight == "Thin" {
+  @if $fontWeight == "Thin" or $fontWeight == "Hairline" {
     font-weight: 100;
   }
-  @else if $fontWeight == "ExtraLight" {
-    font-weight: 100;
+  @else if $fontWeight == "ExtraLight" or $fontWeight == "UltraLight" {
+    font-weight: 200;
   }
   @else if $fontWeight == "Light" {
     font-weight: 300;
@@ -16,25 +16,25 @@
   @else if $fontWeight == "DemiLight" {
     font-weight: 350;
   }
-  @else if $fontWeight == "Normal" {
-    font-weight: 350;
-  }
-  @else if $fontWeight == "Regular" {
+  @else if $fontWeight == "Normal" or $fontWeight == "Regular" {
     font-weight: 400;
   }
   @else if $fontWeight == "Medium" {
     font-weight: 500;
   }
-  @else if $fontWeight == "SemiBold" {
+  @else if $fontWeight == "SemiBold" or $fontWeight == "DemiBold" {
     font-weight: 600;
   }
   @else if $fontWeight == "Bold" {
     font-weight: 700;
   }
-  @else if $fontWeight == "Black" {
+  @else if $fontWeight == "ExtraBold" or $fontWeight == "UltraBold" {
+    font-weight: 800;
+  }
+  @else if $fontWeight == "Black" or $fontWeight == "Heavy" {
     font-weight: 900;
   }
-  @else if $fontWeight == "Heavy" {
-    font-weight: 900;
+  @else if $fontWeight == "ExtraBlack" or $fontWeight == "UltraBlack" {
+    font-weight: 950;
   }
 }

@@ -1,9 +1,9 @@
-const PluginError = require('plugin-error');
-const log = require('fancy-log');
+import PluginError from 'plugin-error'
+import log from 'fancy-log'
 
 const errorMessage = (message, file, name = 'handlebars') => {
-  const filePath = file ? { fileName: file.path } : null;
-  return log(new PluginError(name, message, filePath).toString());
-};
+  const filePath = file ? { fileName: file.path } : null
+  return log(new PluginError(name, message, filePath).toString())
+}
 
-module.exports = errorMessage;
+export default errorMessage

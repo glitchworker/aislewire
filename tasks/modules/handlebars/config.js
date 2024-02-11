@@ -1,4 +1,2 @@
-module.exports = {
-  allowedExtensions: ['hbs', 'handlebars', 'html'],
-  allowedDataExtensions: ['json', 'js', 'yml']
-};
+export const allowedExtensions = ['hbs', 'handlebars', 'html']
+export const allowedDataExtensions = ['json', 'yml']

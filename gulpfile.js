@@ -4,52 +4,53 @@
 //------------------------------------------------------
 
 // Gulp Modules
-const { src, dest, series, parallel, watch } = require('gulp'); // Gulp 本体
-const concat = require('gulp-concat'); // 複数ファイルの結合
-const postcss = require('gulp-postcss'); // PostCSS 本体
-const header = require('gulp-header'); // 先頭に記述を追加
-const changed = require('gulp-changed'); // ファイルの変更点を監視
-const gulpIf = require('gulp-if'); // pipe 内で条件分岐
-const purgecss = require('gulp-purgecss') // 未使用の CSS を削除
+import gulp from 'gulp'
+const { src, dest, series, parallel, watch } = gulp // Gulp 本体
+import concat from 'gulp-concat' // 複数ファイルの結合
+import postcss from 'gulp-postcss' // PostCSS 本体
+import header from 'gulp-header' // 先頭に記述を追加
+import changed, { compareContents } from 'gulp-changed' // ファイルの変更点を監視
+import gulpIf from 'gulp-if' // pipe 内で条件分岐
+import purgecss from 'gulp-purgecss' // 未使用の CSS を削除
 
 // PostCSS Modules
-const sass = require('./tasks/modules/postcss-node-sass'); // SCSS を使用可能にする
-const sassGlob = require('./tasks/modules/node-sass-glob'); // node-sass に glob 機能を追加
-const sassFunctions = require('./tasks/modules/node-sass-functions'); // node-sass に function 機能を追加
-const autoprefixer = require('autoprefixer'); // プレフィックスを付与
-const sorter = require('css-declaration-sorter'); // CSS をソートする
-const mqpacker = require('node-css-mqpacker'); // MediaQuery を 1 つにまとめる
-const cssNano = require('cssnano'); // CSS を圧縮する
+import sass from './tasks/modules/postcss-dart-sass/index.js' // SCSS を使用可能にする
+import sassGlob from './tasks/modules/dart-sass-glob/index.js' // dart-sass に glob 機能を追加
+import sassFunctions from './tasks/modules/dart-sass-functions/index.js' // dart-sass に function 機能を追加
+import autoprefixer from 'autoprefixer' // プレフィックスを付与
+import sorter from 'css-declaration-sorter' // CSS をソートする
+import mqpacker from 'node-css-mqpacker' // MediaQuery を 1 つにまとめる
+import cssNano from 'cssnano' // CSS を圧縮する
 
 // Task Debugger Module
-const path = require('path'); // パス解析
-const url = require('url'); // URL をパースする
-const minimist = require('minimist'); // 引数を解析
-const plumber = require('gulp-plumber'); // エラー回避
-const fs = require('fs'); // ファイル / ディレクトリ操作
-const del =require('del'); // ファイル / ディレクトリ削除
-const exec = require('child_process').exec; // コマンド実行
+import path from 'path' // パス解析
+import url from 'url' // URL をパースする
+import minimist from 'minimist' // 引数を解析
+import plumber from 'gulp-plumber' // エラー回避
+import { readFileSync } from 'node:fs' // ファイル / ディレクトリ操作
+import { deleteAsync } from 'del' // ファイル / ディレクトリ削除
 
 // WebServer Module
-const bs = require('browser-sync').create(); // Web サーバー作成
-const ssi = require('connect-ssi'); // SSI を有効化
-const jsonServer = require('gulp-json-srv'); // API サーバー作成
-const gitServer = require('node-git-server'); // ローカル Git を作成
+import browserSync from 'browser-sync'
+const bs = browserSync.create() // Web サーバー作成
+import ssi from 'connect-ssi' // SSI を有効化
+import jsonServer from 'gulp-json-srv' // API サーバー作成
+import gitServer from 'node-git-server' // ローカル Git を作成
 
 // Webpack Module
-const webpack = require('webpack'); // Webpack 読み込み
-const webpackStream = require('webpack-stream'); // Gulp で Webpack を読み込む
-const { merge } = require('webpack-merge'); // 共通の Webpack 設定をマージ
-const glob = require('glob'); // Glob でディレクトリ検索
+import webpack from 'webpack' // Webpack 読み込み
+import webpackStream from 'webpack-stream' // Gulp で Webpack を読み込む
+import { merge } from 'webpack-merge' // 共通の Webpack 設定をマージ
+import { glob, globSync, globStream, globStreamSync, Glob } from 'glob' // Glob でディレクトリ検索
 
 //------------------------------------------------------
 // Load original module
 // 独自モジュール読み込み
 //------------------------------------------------------
 
-const webConfig = require('./src/config'); // サイト共通設定
-const handlebars = require('./tasks/modules/handlebars'); // Handlebars 拡張
-const webpackConfig = require('./tasks/webpack.config'); // Webpack 共通設定
+import webConfig from './src/config.json' assert { type: 'json' } // サイト共通設定
+import handlebars from './tasks/modules/handlebars/index.js' // Handlebars 拡張
+import webpackConfig from './tasks/webpack.config.js' // Webpack 共通設定
 
 //------------------------------------------------------
 // Development & Production Environment Branch processing
@@ -69,6 +70,8 @@ const isStaging = options.env === 'staging' ? true : false
 // Additional settings of webConfig
 // webConfig の追加設定
 //------------------------------------------------------
+
+let WEB_SITE_URL;
 
 if (isProduction) {
   if (isStaging) {
@@ -103,6 +106,11 @@ const rootDir = {
 
 const paths = {
   common: {
+    stylesheets: {
+      src: `${rootDir.src}/common/stylesheets/_global.scss`,
+      watch: [`${rootDir.src}/common/stylesheets/_global.scss`],
+      dest: `${rootDir.src}/common/stylesheets/vars/`
+    },
     javascripts: {
       concat: 'common.js',
       src: `${rootDir.src}/common/scripts/javascript/**/!(_)*.js`,
@@ -216,7 +224,7 @@ const paths = {
 // console.log の色設定
 //------------------------------------------------------
 
-const logStyle = col => str => `\u001b[${col}m${str}\u001b[0m`;
+const logStyle = col => str => `\u001b[${col}m${str}\u001b[0m`
 
 const typeface = {
   bold: logStyle('1'),
@@ -248,7 +256,7 @@ const commentsCss = [
   ' Info:      <%= pkg.WEB_SITE_NAME %>',
   '----------------------------------------------------------- */',
   ''
-].join('\n');
+].join('\n')
 
 const commentsJs = [
   '/*!',
@@ -259,7 +267,7 @@ const commentsJs = [
   ' * --------------------',
   ' */',
   ''
-].join('\n');
+].join('\n')
 
 //------------------------------------------------------
 // Handlebars Settings
@@ -290,10 +298,10 @@ const assetConfig = {
   images_path: `${rootDir.src}/images`,
   http_images_path: '../images',
   asset_host: (http_path, done) => {
-    webConfig.ASSETS_HOST.length ? done(`${webConfig.ASSETS_HOST}`) : done('');
+    webConfig.ASSETS_HOST.length ? done(`${webConfig.ASSETS_HOST}`) : done('')
   },
   asset_cache_buster: (http_path, real_path, done) => {
-    webConfig.CACHE_VERSION.length ? done(`v=${webConfig.CACHE_VERSION}`) : done('');
+    webConfig.CACHE_VERSION.length ? done(`v=${webConfig.CACHE_VERSION}`) : done('')
   }
 }
 
@@ -305,13 +313,19 @@ const assetConfig = {
 const postcssConfig = isProduction ? [
   sass({ functions: sassFunctions(assetConfig), indentWidth: 2, importer: [sassGlob] }),
   autoprefixer({ overrideBrowserslist: ['> 0%'] }),
-  sorter({ order: 'smacss' }),
+  sorter({
+    order: 'smacss',
+    keepOverrides: true
+  }),
   mqpacker,
   cssNano
 ] : [
   sass({ functions: sassFunctions(assetConfig), indentWidth: 2, importer: [sassGlob] }),
   autoprefixer({ overrideBrowserslist: ['> 0%'] }),
-  sorter({ order: 'smacss' }),
+  sorter({
+    order: 'smacss',
+    keepOverrides: true
+  }),
   mqpacker
 ]
 
@@ -323,42 +337,45 @@ const postcssConfig = isProduction ? [
 // Webpack Entries 設定
 const defaultEntries = {}
 const spEntries = {}
-glob.sync('**/*.js', {
-  ignore: '**/_*.js',
-  cwd: paths.javascripts.pc.entries
-}).map((key) => {
-  defaultEntries[key] = path.resolve(paths.javascripts.pc.entries, key)
-})
-glob.sync('**/*.js', {
-  ignore: '**/_*.js',
-  cwd: paths.javascripts.sp.entries
-}).map((key) => {
-  spEntries[key] = path.resolve(paths.javascripts.sp.entries, key)
-})
+
+if(webConfig.WEBPACK_ENTRIES) {
+  globSync('**/*.js', {
+    ignore: '**/_*.js',
+    cwd: paths.javascripts.pc.entries
+  }).map((key) => {
+    defaultEntries[key] = path.resolve(paths.javascripts.pc.entries, key)
+  })
+  globSync('**/*.js', {
+    ignore: '**/_*.js',
+    cwd: paths.javascripts.sp.entries
+  }).map((key) => {
+    spEntries[key] = path.resolve(paths.javascripts.sp.entries, key)
+  })
+}
 
 // Webpack Common 設定
 const webpackCommon = merge(webpackConfig, {
   output: {
     filename: paths.common.javascripts.concat,
-    sourceMapFilename: !isProduction ? 'common.map' : undefined
+    sourceMapFilename: isProduction ? undefined : 'common.map'
   }
 })
 
 // Webpack Default 設定
 const webpackDefault = merge(webpackConfig, {
-  entry: !webConfig.WEBPACK_ENTRIES ? undefined : defaultEntries,
+  entry: webConfig.WEBPACK_ENTRIES ? defaultEntries : undefined,
   output: {
-    filename: !webConfig.WEBPACK_ENTRIES ? paths.javascripts.concat : '[name]',
-    sourceMapFilename: !isProduction ? 'app.map' : undefined
+    filename: webConfig.WEBPACK_ENTRIES ? '[name]' : paths.javascripts.concat,
+    sourceMapFilename: isProduction ? undefined : 'app.map'
   }
 })
 
 // Webpack SP 設定
 const webpackSP = merge(webpackConfig, {
-  entry: !webConfig.WEBPACK_ENTRIES ? undefined : spEntries,
+  entry: webConfig.WEBPACK_ENTRIES ? spEntries : undefined,
   output: {
-    filename: !webConfig.WEBPACK_ENTRIES ? paths.javascripts.concat : '[name]',
-    sourceMapFilename: !isProduction ? 'app.map' : undefined
+    filename: webConfig.WEBPACK_ENTRIES ? '[name]' : paths.javascripts.concat,
+    sourceMapFilename: isProduction ? undefined : 'app.map'
   }
 })
 
@@ -388,52 +405,42 @@ const browserSyncConfig = {
 
 const browserSyncCallbacks = (err, bs) => {
   // サーバー URL 取得
-  const baseURL = bs.getOption('urls');
-  const localURL = url.parse(baseURL.get('local', false));
-  const externalURL = url.parse(baseURL.get('external', false));
+  const baseURL = bs.getOption('urls')
+  const localURL = url.parse(baseURL.get('local', false))
+  const externalURL = url.parse(baseURL.get('external', false))
 
   // API サーバー起動のログ出力
   if (webConfig.LOCAL_SERVER.API) {
-    console.log(`[${colors.green('API Mock Server')}] ${typeface.bold('Access URLs: ')}`);
-    console.log(` ${typeface.strong('---------------------------------------')}`);
-    console.log(`       Local: ${colors.magenta(`${localURL.protocol}//${localURL.hostname}:${paths.modules.api.port}${paths.modules.api.dest}/db`)}`);
-    console.log(`    External: ${colors.magenta(`${externalURL.protocol}//${externalURL.hostname}:${paths.modules.api.port}${paths.modules.api.dest}/db`)}`);
-    console.log(` ${typeface.strong('---------------------------------------')}`);
-    console.log(`[${colors.green('API Mock Server')}] Serving files from: ${colors.magenta(`${rootDir.src}${paths.modules.api.dest}`)}`);
-  }
-
-  // GSX サーバー起動のログ出力
-  if (webConfig.LOCAL_SERVER.GSX) {
-    console.log(`[${colors.green('GSX API Server')}] ${typeface.bold('Access URLs: ')}`);
-    console.log(` ${typeface.strong('---------------------------------------')}`);
-    console.log(`       Local: ${colors.magenta(`${localURL.protocol}//${localURL.hostname}:5000${paths.modules.api.dest}`)}`);
-    console.log(`    External: ${colors.magenta(`${externalURL.protocol}//${externalURL.hostname}:5000${paths.modules.api.dest}`)}`);
-    console.log(` ${typeface.strong('---------------------------------------')}`);
-    console.log(`[${colors.green('GSX API Server')}] Serving files from: ${colors.magenta(`${rootDir.src}/_modules/data/gsx.json`)}`);
+    console.log(`[${colors.green('API Mock Server')}] ${typeface.bold('Access URLs: ')}`)
+    console.log(` ${typeface.strong('---------------------------------------')}`)
+    console.log(`       Local: ${colors.magenta(`${localURL.protocol}//${localURL.hostname}:${paths.modules.api.port}${paths.modules.api.dest}/db`)}`)
+    console.log(`    External: ${colors.magenta(`${externalURL.protocol}//${externalURL.hostname}:${paths.modules.api.port}${paths.modules.api.dest}/db`)}`)
+    console.log(` ${typeface.strong('---------------------------------------')}`)
+    console.log(`[${colors.green('API Mock Server')}] Serving files from: ${colors.magenta(`${rootDir.src}${paths.modules.api.dest}`)}`)
   }
 
   // Git サーバー起動＆ログ出力
   if (webConfig.LOCAL_SERVER.GIT) {
     const repos = new gitServer(path.resolve(__dirname, paths.modules.git.src), {
       autoCreate: true
-    });
-    const port = process.env.PORT || paths.modules.git.port;
+    })
+    const port = process.env.PORT || paths.modules.git.port
     repos.on('push', push => {
-      console.log(`[${colors.yellow('Node Git Server')}] PUSH: ${colors.magenta(`${push.repo} / ${push.commit} ( ${push.branch} )`)}`);
-      push.accept();
-    });
+      console.log(`[${colors.yellow('Node Git Server')}] PUSH: ${colors.magenta(`${push.repo} / ${push.commit} ( ${push.branch} )`)}`)
+      push.accept()
+    })
     repos.on('fetch', fetch => {
-      console.log(`[${colors.yellow('Node Git Server')}] FETCH: ${colors.magenta(`${fetch.repo} / ${fetch.commit}`)}`);
-      fetch.accept();
-    });
+      console.log(`[${colors.yellow('Node Git Server')}] FETCH: ${colors.magenta(`${fetch.repo} / ${fetch.commit}`)}`)
+      fetch.accept()
+    })
     repos.listen(port, () => {
-      console.log(`[${colors.yellow('Node Git Server')}] ${typeface.bold('Repository Base URL: ')}`);
-      console.log(` ${typeface.strong('---------------------------------------')}`);
-      console.log(`       Local: ${colors.magenta(`${localURL.protocol}//${localURL.hostname}:${port}/develop`)}`);
-      console.log(`    External: ${colors.magenta(`${externalURL.protocol}//${externalURL.hostname}:${port}/develop`)}`);
-      console.log(` ${typeface.strong('---------------------------------------')}`);
-      console.log(`[${colors.yellow('Node Git Server')}] Serving files from: ${colors.magenta(`${paths.modules.git.src}`)}`);
-    });
+      console.log(`[${colors.yellow('Node Git Server')}] ${typeface.bold('Repository Base URL: ')}`)
+      console.log(` ${typeface.strong('---------------------------------------')}`)
+      console.log(`       Local: ${colors.magenta(`${localURL.protocol}//${localURL.hostname}:${port}/develop`)}`)
+      console.log(`    External: ${colors.magenta(`${externalURL.protocol}//${externalURL.hostname}:${port}/develop`)}`)
+      console.log(` ${typeface.strong('---------------------------------------')}`)
+      console.log(`[${colors.yellow('Node Git Server')}] Serving files from: ${colors.magenta(`${paths.modules.git.src}`)}`)
+    })
   }
 }
 
@@ -469,7 +476,8 @@ const plumberConfig = error => {
 
 // import settings
 const importData = done => {
-  const jsonData = JSON.parse(fs.readFileSync(paths.modules.import.json));
+  const jsonData = JSON.parse(readFileSync(paths.modules.import.json));
+  let jsonDataPath;
   jsonData.forEach((page, i) => {
     if (page.TYPE === 'dir') {
       jsonDataPath = `${paths.modules.import.src}/${page.DATA}/**/*`
@@ -478,10 +486,10 @@ const importData = done => {
     }
     return src(jsonDataPath, { allowEmpty: true })
     .pipe(plumber(plumberConfig))
-    .pipe(changed(page.OUTPUT, { hasChanged: changed.compareContents }))
-    .pipe(dest(`${rootDir.htdocs}/${page.OUTPUT}`));
+    .pipe(changed(page.OUTPUT, { hasChanged: compareContents }))
+    .pipe(dest(`${rootDir.htdocs}/${page.OUTPUT}`))
   });
-  return done();
+  return done()
 }
 
 // library settings
@@ -490,6 +498,13 @@ const libraryCopy = () =>
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.common.libraryCopy.dest))
   .pipe(dest(paths.common.libraryCopy.dest))
+
+// Stylesheets common settings
+const stylesheetsCommon = () =>
+  src(paths.common.stylesheets.src)
+  .pipe(header(stylesheetsConfig))
+  .pipe(concat('_variable.scss'))
+  .pipe(dest(paths.common.stylesheets.dest))
 
 // javascripts common settings
 const javascriptsCommon = () =>
@@ -504,7 +519,7 @@ const javascriptsCommon = () =>
 const imagesCommon = () =>
   src(paths.common.images.src)
   .pipe(plumber(plumberConfig))
-  .pipe(changed(paths.common.images.dest, { hasChanged: changed.compareContents }))
+  .pipe(changed(paths.common.images.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.common.images.dest))
 
 //------------------------------------------------------
@@ -522,13 +537,13 @@ const templates = () =>
 
 // Stylesheets Settings
 const stylesheets = () =>
-  src(paths.stylesheets.pc.src, !isProduction ? { sourcemaps: true } : undefined)
+  src(paths.stylesheets.pc.src, isProduction ? undefined : { sourcemaps: true })
   .pipe(plumber(plumberConfig))
   .pipe(header(stylesheetsConfig))
   .pipe(postcss(postcssConfig))
   .pipe(concat(paths.stylesheets.concat))
   .pipe(gulpIf(isProduction, header(commentsCss, {pkg: webConfig, filename: paths.stylesheets.concat})))
-  .pipe(dest(paths.stylesheets.pc.dest, !isProduction ? { sourcemaps: true } : undefined))
+  .pipe(dest(paths.stylesheets.pc.dest, isProduction ? undefined : { sourcemaps: true }))
   .pipe(bs.stream())
 
 // Javascripts Settings
@@ -544,18 +559,18 @@ const javascripts = () =>
 const images = () =>
   src(paths.images.pc.src)
   .pipe(plumber(plumberConfig))
-  .pipe(changed(paths.images.pc.dest, { hasChanged: changed.compareContents }))
+  .pipe(changed(paths.images.pc.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.images.pc.dest))
 
 // Stylesheets Settings SP
 const stylesheetsSP = () =>
-  src(paths.stylesheets.sp.src, !isProduction ? { sourcemaps: true } : undefined)
+  src(paths.stylesheets.sp.src, isProduction ? undefined : { sourcemaps: true })
   .pipe(plumber(plumberConfig))
   .pipe(header(stylesheetsConfig))
   .pipe(postcss(postcssConfig))
   .pipe(concat(paths.stylesheets.concat))
   .pipe(gulpIf(isProduction, header(commentsCss, {pkg: webConfig, filename: paths.stylesheets.concat})))
-  .pipe(dest(paths.stylesheets.sp.dest, !isProduction ? { sourcemaps: true } : undefined))
+  .pipe(dest(paths.stylesheets.sp.dest, isProduction ? undefined : { sourcemaps: true }))
   .pipe(bs.stream())
 
 // Javascripts Settings SP
@@ -571,7 +586,7 @@ const javascriptsSP = () =>
 const imagesSP = () =>
   src(paths.images.sp.src)
   .pipe(plumber(plumberConfig))
-  .pipe(changed(paths.images.sp.dest, { hasChanged: changed.compareContents }))
+  .pipe(changed(paths.images.sp.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.images.sp.dest))
 
 // Purge CSS
@@ -605,22 +620,11 @@ const purgeCSSsp = () =>
 const browserSyncInit = () => bs.init(null, browserSyncConfig, browserSyncCallbacks)
 
 // apiServer init
+let apiServer
 const apiServerInit = () => apiServer = jsonServer.create(apiServerConfig)
 
 // watch directory
 const apiDirectory = () => src(paths.modules.api.watch).pipe(apiServer.pipe())
-
-// gsxServer init
-const gsxServerInit = done => {
-  exec(`node ./${rootDir.tasks}/modules/gsx2json/app.js`, (err, stdout, stderr) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log(stdout);
-  });
-  return done();
-}
 
 //------------------------------------------------------
 // Other Settings
@@ -628,10 +632,10 @@ const gsxServerInit = done => {
 //------------------------------------------------------
 
 // remove directory
-const removeDirectory = cb => del([ rootDir.htdocs ], cb);
+const removeDirectory = done => deleteAsync([ rootDir.htdocs ], done);
 
 // remove git directory
-const removeGit = cb => del([ `${rootDir.git}`, `${rootDir.src}/.git` ], cb);
+const removeGit = done => deleteAsync([ `${rootDir.git}`, `${rootDir.src}/.git` ], done);
 
 // Git Repository
 const repositoryCopy = () =>
@@ -649,6 +653,9 @@ const repositoryHiddenCopy = () =>
 // Monitoring Task
 // 監視タスク
 //------------------------------------------------------
+
+// watch stylesheets common
+const watchStylesheetsCommon = () => watch(paths.common.stylesheets.watch, stylesheetsCommon)
 
 // watch javascripts common
 const watchJavascriptsCommon = () => watch(paths.common.javascripts.watch, javascriptsCommon)
@@ -689,52 +696,53 @@ const watchAPI = () => watch(paths.modules.api.watch, apiDirectory)
 //------------------------------------------------------
 
 // task setting
-const buildTaskPC = series(importData, libraryCopy, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, purgeCSSpc)
-const watchTaskPC = parallel(browserSyncInit, watchLibraryCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages)
-
-const buildTaskSP = series(importData, libraryCopy, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP, purgeCSSpc, purgeCSSsp)
-const watchTaskSP = parallel(browserSyncInit, watchLibraryCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages, watchStylesheetsSP, watchJavascriptsSP, watchImagesSP)
+let buildTaskPC, buildTaskSP, setupTask, taskDefault
+if(webConfig.PURGE_CSS) {
+  buildTaskPC = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, purgeCSSpc)
+  buildTaskSP = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP, purgeCSSpc, purgeCSSsp)
+} else {
+  buildTaskPC = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images)
+  buildTaskSP = series(importData, libraryCopy, stylesheetsCommon, javascriptsCommon, imagesCommon, templates, stylesheets, javascripts, images, stylesheetsSP, javascriptsSP, imagesSP)
+}
+const watchTaskPC = parallel(browserSyncInit, watchLibraryCommon, watchStylesheetsCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages)
+const watchTaskSP = parallel(browserSyncInit, watchLibraryCommon, watchStylesheetsCommon, watchJavascriptsCommon, watchImagesCommon, watchTemplates, watchStylesheets, watchJavascripts, watchImages, watchStylesheetsSP, watchJavascriptsSP, watchImagesSP)
 
 // task if else
 const buildTask = webConfig.ASSETS_DIR.SP.length ? buildTaskSP : buildTaskPC
 const watchTask = webConfig.ASSETS_DIR.SP.length ? watchTaskSP : watchTaskPC
 
-// build task
-exports.build = buildTask
-
 // clean task
-exports.clean = series(removeDirectory)
-
+const clean = series(removeDirectory)
 // clean git task
-exports.cleanGit = series(removeGit)
-
-// import task
-exports.import = series(importData)
-
+const cleanGit = series(removeGit)
+// imports task
+const imports = series(importData)
 // purgecss task
-exports.purgeCSSpc = series(purgeCSSpc)
-
+const purgeCSSpcTask = series(purgeCSSpc)
 // purgecss task
-exports.purgeCSSsp = series(purgeCSSsp)
+const purgeCSSspTask = series(purgeCSSsp)
 
 // setup task
-if (webConfig.LOCAL_SERVER.GIT) {
-  exports.setup = parallel(repositoryCopy, repositoryHiddenCopy, buildTask)
+if(webConfig.LOCAL_SERVER.GIT) {
+  setupTask = parallel(repositoryCopy, repositoryHiddenCopy, buildTask)
 } else {
-  exports.setup = buildTask
+  setupTask = buildTask
 }
 
 // default task
 if (webConfig.LOCAL_SERVER.API) {
-  if (webConfig.LOCAL_SERVER.GSX) {
-    exports.default = parallel(watchTask, apiServerInit, apiDirectory, watchAPI, gsxServerInit)
-  } else {
-    exports.default = parallel(watchTask, apiServerInit, apiDirectory, watchAPI)
-  }
+  taskDefault = parallel(watchTask, apiServerInit, apiDirectory, watchAPI)
 } else {
-  if (webConfig.LOCAL_SERVER.GSX) {
-    exports.default = parallel(watchTask, gsxServerInit)
-  } else {
-    exports.default = watchTask
-  }
+  taskDefault = watchTask
+}
+
+export {
+  taskDefault as default,
+  buildTask as build,
+  clean,
+  cleanGit,
+  imports as import,
+  purgeCSSpcTask as purgeCSSpc,
+  purgeCSSspTask as purgeCSSsp,
+  setupTask as setup
 }

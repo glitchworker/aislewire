@@ -3,18 +3,19 @@
 // 依存モジュール読み込み
 //------------------------------------------------------
 
-const { webpack } = require('webpack-stream'); // Webpack 読み込み
-const minimist = require('minimist'); // Gulp で引数を解析
-const IfPlugin = require('./modules/if-webpack-plugin'); // Webpack の 条件分岐
-const TerserPlugin = require('terser-webpack-plugin'); // Webpack の minify 設定
-const HardSourcePlugin = require('hard-source-webpack-plugin'); // 中間キャッシュでビルド時間を短縮
+import webpackStream from 'webpack-stream' // Webpack 読み込み
+const { webpack } = webpackStream
+import minimist from 'minimist' // Gulp で引数を解析
+import IfPlugin from './modules/if-webpack-plugin/index.js' // Webpack の 条件分岐
+import TerserPlugin from 'terser-webpack-plugin' // Webpack の minify 設定
+import HardSourcePlugin from 'hard-source-webpack-plugin' // 中間キャッシュでビルド時間を短縮
 
 //------------------------------------------------------
 // Load original module
 // 独自モジュール読み込み
 //------------------------------------------------------
 
-const webConfig = require('../src/config'); // サイト共通設定
+import webConfig from '../src/config.json' assert { type: 'json' } // サイト共通設定
 
 //------------------------------------------------------
 // Development & Production Environment Branch processing
@@ -24,20 +25,21 @@ const webConfig = require('../src/config'); // サイト共通設定
 const options = minimist(process.argv.slice(2), {
   string: 'env',
   default: { env: process.env.NODE_ENV || 'development' }
-});
+})
 
-const isProduction = (options.env === 'production') || (options.env === 'staging') ? true : false;
-const isStaging = options.env === 'staging' ? true : false;
-const isMode = (options.env === 'production') || (options.env === 'staging') ? 'production' : 'development';
+const isProduction = (options.env === 'production') || (options.env === 'staging') ? true : false
+const isStaging = options.env === 'staging' ? true : false
+const isMode = (options.env === 'production') || (options.env === 'staging') ? 'production' : 'development'
+let WEB_SITE_URL
 
-if (isProduction) {
-  if (isStaging) {
-    WEB_SITE_URL = webConfig.SITE_URL.STG;
+if(isProduction) {
+  if(isStaging) {
+    WEB_SITE_URL = webConfig.SITE_URL.STG
   } else {
-    WEB_SITE_URL = webConfig.SITE_URL.PROD;
+    WEB_SITE_URL = webConfig.SITE_URL.PROD
   }
 } else {
-  WEB_SITE_URL = webConfig.SITE_URL.DEV;
+  WEB_SITE_URL = webConfig.SITE_URL.DEV
 }
 
 //------------------------------------------------------
@@ -48,14 +50,14 @@ if (isProduction) {
 const config = {
   target: ['web', 'es5'],  // Webpack 5 からの ES5 ( IE11 等 ) 向け設定
   mode: isMode,
-  devtool: !isProduction ? 'inline-source-map' : undefined,
+  devtool: isProduction ? undefined : 'inline-source-map',
   resolve: {
-    extensions: ['.js'] // require する際に、拡張子を省略するための設定
+    extensions: ['.js', '.jsx', '.ts', '.tsx'] // import する際に、拡張子を省略するための設定
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: [
           {
             loader: 'babel-loader?optional=runtime&cacheDirectory',
@@ -109,4 +111,4 @@ const config = {
   }
 };
 
-module.exports = config;
+export default config

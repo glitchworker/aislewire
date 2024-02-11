@@ -1,13 +1,8 @@
-/**
- * POSTCSS-NODE-SASS
- * A PostCSS plugin to parse styles with node-sass
- */
+import postcss from 'postcss'
+import * as defaultNodeSass from 'sass'
 
-let postcss = require('postcss');
-let defaultNodeSass = require('node-sass');
-
-module.exports = opt => ({
-  postcssPlugin: 'postcss-node-sass',
+export default opt => ({
+  postcssPlugin: 'postcss-dart-sass',
   Once (root, { result }) {
     let sass = opt.sass || defaultNodeSass;
     let map = typeof result.opts.map === 'object' ? result.opts.map : {}
@@ -17,7 +12,8 @@ module.exports = opt => ({
         inline: false,
         sourcesContent: true
       }, map)
-    }));
+    }))
+
     opt = Object.assign({
       indentWidth: 4,
       omitSourceMapUrl: true,
@@ -28,7 +24,8 @@ module.exports = opt => ({
       data: css.css,
       file: result.opts.from,
       outFile: result.opts.to
-    });
+    })
+
     let includedFiles
     return new Promise((resolve, reject) => sass.render(
       opt,
@@ -42,10 +39,10 @@ module.exports = opt => ({
         }
       })
     }).then(res => {
-      result.root = res;
+      result.root = res
       result.messages = includedFiles.map(file => ({ type: 'dependency', parent: result.opts.from, file }))
-    });
+    })
   }
-});
+})
 
-module.exports.postcss = true;
+export { postcss }

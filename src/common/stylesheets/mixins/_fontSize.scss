@@ -1,25 +1,24 @@
+@use "sass:math";
+@use "../functions/viewport";
+
 // ------------------------------------------- SASS Information
 //  Name:      mixins/_fontSize.scss
 //  Author:    GlitchWorker
 // -----------------------------------------------------------
 
-@mixin fontSize($fontSize, $baseFontSize: $FONT_SIZE){
-  font-size: percentage($fontSize / $baseFontSize);
-}
-
-@function get_vw($size, $viewport: 750) {
-  @return $size / $viewport * 100 + vw;
+@mixin fontSize($fontSize, $baseFontSize: 16){
+  font-size: math.percentage($fontSize / $baseFontSize);
 }
 
 @mixin fontSize_vw($font_size: 16) {
-  font-size: $font_size / 2 + px;
-  font-size: get_vw($font_size);
+  font-size: math.div($font-size, 2) + px;
+  font-size: viewport.get_vw($font_size);
 }
 
 @mixin lineHeight($size: 32, $font_size: 16) {
-  line-height: $size / $font_size;
+  line-height: math.div($size, $font-size);
 }
 
 @mixin letterSpacing($size: 80) {
-  letter-spacing: $size / 1000 + em;
+  letter-spacing: math.div($size, 1000) + em;
 }

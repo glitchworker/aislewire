@@ -17,12 +17,12 @@ Wire は```《線》```や```《網》```などを意味します。
 
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
-- npm v7.10.0 over
-- node v16.0.0 over
+- node v20.11.0 over
+- npm v10.2.4 over
 
 ## 🔰 Usage
 
-1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする（最新版を推奨）
+1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする（最新版LTSを推奨）
 
 2. ```ターミナル```または```コマンドプロンプト```を```管理者権限```で開く
 
@@ -79,13 +79,13 @@ Wire は```《線》```や```《網》```などを意味します。
   },
   "LOCAL_SERVER": {
     "API": false,
-    "GIT": false,
-    "GSX": false
+    "GIT": false
   },
   "ASSETS_HOST": "",
   "CACHE_VERSION": "",
   "HTTPS_SERVER": false,
-  "WEBPACK_ENTRIES": false
+  "WEBPACK_ENTRIES": false,
+	"PURGE_CSS": false
 }
 ```
 
@@ -96,7 +96,7 @@ Wire は```《線》```や```《網》```などを意味します。
 | /src/templates/**/*.hbs | template 内で使う規定値 |
 | /src/common/stylesheets/_config.scss | stylesheet 内で使う規定値 |
 | /src/_modules/api/data.json | api で使う規定値 |
-| /src/_modules/data/**/* | 共通の規定値（ json, js, yml 読み込み可能） |
+| /src/_modules/data/**/* | 共通の規定値（ json, yml 読み込み可能） |
 | /src/_modules/import/data.json | import で使う規定値 |
 
 #### /api/data.json
@@ -146,7 +146,7 @@ META_APPLE_ICON: favicon.png
 META_ICON: favicon.png
 META_XHTML_ICON: favicon.ico
 META_FACEBOOK: true
-META_FACEBOOK_IMAGE: ogp_image.jpg
+META_FACEBOOK_IMAGE: ogp_image.png
 META_FACEBOOK_LOCALE: ja_JP
 META_FACEBOOK_ID:
 META_TWITTER: true
@@ -232,14 +232,20 @@ META_PWA_MODE: false
 
 | 記述 | 説明 |
 |----|---|
-| #{$WEB_BASE_URL} | サイトURL |
-| #{$WEB_SITE_URL} | サイトURL（カレントディレクトリを含む） |
-| #{$WEB_SITE_NAME} | サイト名 |
-| #{$WEB_AUTHOR} | サイト制作者 |
-| #{$WEB_MODIFIER} | サイト編集者 |
+| #{config.$WEB_BASE_URL} | サイトURL |
+| #{config.$WEB_SITE_URL} | サイトURL（カレントディレクトリを含む） |
+| #{config.$WEB_SITE_NAME} | サイト名 |
+| #{config.$WEB_AUTHOR} | サイト制作者 |
+| #{config.$WEB_MODIFIER} | サイト編集者 |
 
 > gulpfile.js に gulp-header を利用して渡しているので  
 ```#{$WEB_SITE_URL}``` 等で参照できます。
+
+<u>**v0.1.4 から NodeSass から DartSass 変更しました。**</u>
+
+> ※ v0.1.4 では NodeSass から DartSass への移行中のため  
+上記は app.scss でしか参照出来ません。  
+※ v0.1.5 以降では参照することが可能になりました。
 
 #### Javascriptの場合
 
@@ -294,7 +300,7 @@ META_PWA_MODE: false
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
-| yarn run clean | gulp clean | ビルドフォルダを削除 |
+| yarn run clear | gulp clear | ビルドフォルダを削除 |
 | yarn run clearGit | gulp clearGit | ローカルGitを削除 |
 
 ## 🌻 Structure
@@ -359,18 +365,17 @@ META_PWA_MODE: false
 	│   │   │   └── data.json
 	│   │   ├── data
 	│   │   │   ├── example.json
-	│   │   │   ├── exampleFour.yml
-	│   │   │   ├── exampleThree
-	│   │   │   │   └── exampleThree.json
-	│   │   │   ├── exampleTwo.js
-	│   │   │   └── gsx.json
+	│   │   │   ├── exampleTwo
+	│   │   │   │   └── exampleTwo.json
+	│   │   │   ├── exampleThree.yml
+	│   │   │   └── exampleFour.json
 	│   │   └── import
 	│   │       └── data.json
 	│   ├── common
 	│   │   ├── images
 	│   │   │   ├── favicon.ico
 	│   │   │   ├── favicon.png
-	│   │   │   ├── ogp_image.jpg
+	│   │   │   ├── ogp_image.png
 	│   │   │   └── tile_image.png
 	│   │   ├── scripts
 	│   │   │   ├── javascript
@@ -381,11 +386,12 @@ META_PWA_MODE: false
 	│   │   │   └── lib
 	│   │   │       ├── html5shiv.min.js
 	│   │   │       ├── jquery-1.12.4.min.js
-	│   │   │       ├── jquery-3.6.3.min.js
+	│   │   │       ├── jquery-3.7.1.min.js
 	│   │   │       ├── polyfill.js
 	│   │   │       └── selectivizr.min.js
 	│   │   └── stylesheets
 	│   │       ├── _config.scss
+	│   │       ├── _global.scss
 	│   │       ├── _reset.scss
 	│   │       ├── mixins
 	│   │       │   ├── _clearfix.scss
@@ -411,7 +417,8 @@ META_PWA_MODE: false
 	│   │       │   └── _width.scss
 	│   │       └── vars
 	│   │           ├── _color.scss
-	│   │           └── _easing.scss
+	│   │           ├── _easing.scss
+	│   │           └── _variable.scss
 	│   ├── config.json
 	│   ├── images
 	│   │   ├── pc
@@ -451,8 +458,7 @@ META_PWA_MODE: false
 	│   │   │   ├── components
 	│   │   │   ├── layouts
 	│   │   │   │   ├── _content.scss
-	│   │   │   │   ├── _default.scss
-	│   │   │   │   └── _wrapper.scss
+	│   │   │   │   └── _default.scss
 	│   │   │   ├── pages
 	│   │   │   │   ├── _hoge.scss
 	│   │   │   │   ├── _hoge_fuga.scss
@@ -465,8 +471,7 @@ META_PWA_MODE: false
 	│   │       ├── components
 	│   │       ├── layouts
 	│   │       │   ├── _content.scss
-	│   │       │   ├── _default.scss
-	│   │       │   └── _wrapper.scss
+	│   │       │   └── _default.scss
 	│   │       ├── pages
 	│   │       │   ├── _hoge.scss
 	│   │       │   ├── _hoge_fuga.scss
@@ -491,9 +496,6 @@ META_PWA_MODE: false
 	│           └── header.hbs
 	└── tasks
 	    ├── modules
-	    │   ├── gsx2json
-	    │   │   ├── api.js
-	    │   │   └── app.js
 	    │   ├── handlebars
 	    │   │   ├── config.js
 	    │   │   ├── errorMessage.js
@@ -503,10 +505,12 @@ META_PWA_MODE: false
 	    │   │   ├── index.js
 	    │   │   ├── registerPartials.js
 	    │   │   └── render.js
-	    │   ├── node-sass-functions
+	    │   ├── dart-sass-functions
 	    │   │   ├── index.js
 	    │   │   └── processor.js
-	    │   └── node-sass-glob
+	    │   ├── dart-sass-glob
+	    │   │   └── index.js
+	    │   └── postcss-dart-sass
 	    │       └── index.js
 	    └── webpack.config.js
 
@@ -714,19 +718,6 @@ http://localhost:5000/api?rows=false
 ```columns``` を true または false にすると項目の表示/非表示が可能になります。  
 http://localhost:5000/api?columns=false
 
-## ✨ GSX Server
-
-```config.json``` の ```LOCAL_SERVER``` の ```GSX``` を有効にすると起動します。
-
-> 機能としては GoogleSpreadsheet のシートを用意すれば API のリクエストを受け取り、  
-または返してくれるシンプルな RESTful API サーバーを用意することが出来ます。  
-> ※シートに関しては、```ウェブに公開``` を選択して外から閲覧出来る状態にしてください。
->
-> GSX Server をブラウザで開くと ```/src/_modules/data/``` に ```gsx.json``` という  
-ファイルが生成され、テンプレート内の共通変数としても呼び出す事が可能になります。  
-スプレッドシートを更新した場合、 ```gsx.json``` を更新したい場合は、同じように  
-ブラウザで開くと上書きされ、 watch が働くのでテンプレートには即座に自動で反映されます。
-
 ## 🚿 Browsers support
 
 通常の設定では比較的新しいブラウザで機能するようになっています。  
@@ -785,8 +776,8 @@ hbs 上に以下の記述を書くことによって出力することが可能�
 
 #### SCSS で画像パスを取得する方法
 
-node-sass の functions 機能を使い様々な関数を利用することが可能です。   
-※ /tasks/modules/node-sass-functions/ から読み込んでいます。   
+dart-sass の functions 機能を使い様々な関数を利用することが可能です。   
+※ /tasks/modules/dart-sass-functions/ から読み込んでいます。   
 
 例えば以下のような記述をすると、 ```/images/``` 配下の画像のURLを取得し   
 さらに高さと横幅を取得し、自動的に出力する事が可能です。   
@@ -797,8 +788,8 @@ node-sass の functions 機能を使い様々な関数を利用することが�
 ```scss
 $image: '（出力先）ディレクトリ名/ファイルパス';
 $source: '（出力元）ディレクトリ名/';
-$width: image-width($source + $image, true);
-$height: image-height($source + $image, true);
+$width: math.div(image-width($source + $image, true), 1);
+$height: math.div(image-height($source + $image, true), 1);
 
 background-image: image-url($image);
 width: $width;
@@ -812,12 +803,12 @@ height: $height;
 ```scss
 $image: '（出力先）ディレクトリ名/ファイルパス';
 $source: '（出力元）ディレクトリ名/';
-$width: image-width($source + $image, false);
-$height: image-height($source + $image, false);
+$width: math.div(image-width($source + $image, false), 2);
+$height: math.div(image-height($source + $image, false), 2);
 
 background-image: image-url($image);
 background-size: contain;
-@include elementSize_vw($width, $height);
+@include config.elementSize_vw($width, $height);
 ```
 
 #### SCSS でフォントサイズや余白のレスポンシブ対応
@@ -828,10 +819,10 @@ SP サイトなどを作成する際は、以下のように include する事�
 
 ```scss
 $size: 26;
-@include fontSize_vw($size);
-@include fontWeight('Medium');
-@include lineHeight(44, $size);
-@include letterSpacing(80);
+@include config.fontSize_vw($size);
+@include config.fontWeight('Medium');
+@include config.lineHeight(44, $size);
+@include config.letterSpacing(80);
 ```
 
 また、 ```margin``` や ```padding``` も同様で以下のように指定が可能です。   
@@ -839,20 +830,20 @@ $size: 26;
 
 ```scss
 // 一括の場合
-@include margin_vw(10, 20, 30, 40);
+@include config.margin_vw(10, 20, 30, 40);
 // それぞれの場合
-@include margin_top_vw(10);
-@include margin_right_vw(20);
-@include margin_bottom_vw(30);
-@include margin_left_vw(40);
+@include config.margin_top_vw(10);
+@include config.margin_right_vw(20);
+@include config.margin_bottom_vw(30);
+@include config.margin_left_vw(40);
 
 // 一括の場合
-@include padding_vw(10, 20, 30, 40);
+@include config.padding_vw(10, 20, 30, 40);
 // それぞれの場合
-@include padding_top_vw(10);
-@include padding_right_vw(20);
-@include padding_bottom_vw(30);
-@include padding_left_vw(40);
+@include config.padding_top_vw(10);
+@include config.padding_right_vw(20);
+@include config.padding_bottom_vw(30);
+@include config.padding_left_vw(40);
 ```
 
 ## 🎉 Dependencies
@@ -878,13 +869,93 @@ $size: 26;
 
 ## 🚀 Important Notices
 
-現在は重要なお知らせはありません。
+<u>**v0.1.5 以降 dart-sass で config.json の変数が参照可能になりました**</u>
+
+> Sass の function を使う方法は、やはり依存してしまうので今回も避けて   
+```_global.scss``` ファイルと ```config.json``` の変数を合わせたものを   
+```_variable.scss``` というファイルで出力し ```_config.scss``` から   
+参照出来るようにシンプルな設計で可能なように実装しました。   
+これにて他の変数と同じく ```config``` から呼び出すことが可能になりました。
+
+<u>**v0.1.4 で node-sass から dart-sass に移行**</u>
+
+> 2019年10月から ```Sass``` に [Sass Module System](https://sass-lang.com/blog/the-module-system-is-launched#future-plans) という機能追加が行われました。   
+大きな変更は ```@import``` に置き換わる [@use](https://sass-lang.com/blog/the-module-system-is-launched#use-the-heart-of-the-module-system) や [@forward](https://sass-lang.com/blog/the-module-system-is-launched#forward-for-library-authors) を用いたファイルの読み込み方法になり   
+別ファイルの変数などを使いたい場合 ```@import``` で可能だったグローバルスコープは使えなくなり   
+```@use``` ではファイルスコープへ変更され、ファイル単位で毎回呼び出す事が必要になりました。   
+2021年10月から ```@import``` は既に[非推奨](https://sass-lang.com/blog/libsass-is-deprecated)になっており ```LibSass``` はまだサポートされているが   
+公式が推奨している ```DartSass``` からは機能が廃止されている。   
+2022年10月には ```@import``` の完全廃止されサポートが終了してしまうので移行しました。   
+しかし厳格化されたことにより ```glob``` は実質不可 ```外部変数呼び出し``` 等が厳しくなったので   
+現在はそのあたりをどういう仕組みで運用していくべきか試行錯誤中です。
+
+<u>**v0.2.6 で CommonJS から ES Module に移行 ＆ GSX Server の削除**</u>
+
+> ECMA Script Modules の略で ECMA Script（エクマ スクリプト）は、 Ecma International のもとで標準化手続きが行われてい JavaScript の規格です。   
+近年多くのパッケージが [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) へ移行を始めており、   
+```CommonJS（require）``` から ```ES Module（import）``` へ変更されておりアップデートが出来なかったり、使用することが出来ない為すべての依存関係を修正いたしました。   
+そのため、Node.js のバージョンが最低でも v16 以降が必要になるが v18 以上が推奨されているため最新の安定版 v20 へアップデートしました。   
+詳細に関しては ESM に関しては [Node.js](https://nodejs.org/api/esm.html) 公式のドキュメントを参照ください。   
+また、バージョンが古くなり動作しない＆あまり使用されていなかったので GSX Server の機能を削除しました。
 
 ## 🆙 Version History
 
+### v0.2.6（2024年2月11日）
+
+- CommonJS から ES Module へ移行（require から import へ変更したため全てのファイルの依存関係を修正）
+- パッケージ更新に伴い node を v20.11.0 npm を v10.2.4 以上に変更
+- GSX Server の機能を削除（バージョンが古くなっており機能しなくなっていた＆あまり使用されていないため）
+- package.json の更新（del, gulp-changed, gulp-postcss, mime, slash）
+- README.md の変更
+
+### v0.2.5（2024年2月8日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, browser-sync, css-declaration-sorter, cssnano, image-size, postcss, sass, terser-webpack-plugin, webpack, webpack-merge）
+- config.json に PURGE_CSS の項目を追加（true で HTML 上で使用されていないスタイルを CSS ファイルから削除したものを出力することが出来るようになります。元々 true で書き出されていたが、デフォルトは false に変更され任意で設定が出来るように変更）
+- README.md の変更
+
+### v0.2.4（2023年9月27日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, ss-declaration-sorter, glob, postcss, sass）
+- jQuery のバージョンを最新の 3.7.1 に変更
+- README.md の変更
+
+### v0.2.3（2023年8月28日）
+
+- package.json の更新（@babel/core, postcss）
+- 一部 Windows でファイルパスが Undefined になっていたため registerPartial.js を更新
+- README.md の変更
+
+### v0.2.2（2023年8月15日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, glob, handlebars, postcss, sass, terser-webpack-plugin, webpack, webpack-cli, webpack-merge）
+- jQuery のバージョンを最新の 3.7.0 に変更
+- README.md の変更
+
+### v0.2.1（2023年4月24日）
+
+- package.json の更新（@babel/core, @babel/preset-env, css-declaration-sorter, cssnano, del, glob, postcss, sass, webpack, webpack-cli）
+- パッケージ更新に伴い node を v16.20.0 npm を v8.19.4 以上に変更
+- jQuery のバージョンを最新の 3.6.4 に変更
+- OGP 画像を jpg から png に変更
+- README.md の変更
+
+### v0.2.0（2023年3月23日）
+
+- package.json の更新（@babel/core, autoprefixer, browser-sync, glob, sass, webpack）
+- 2022年末頃から Twitter のシェア機能にて share を使った場合 Android の公式アプリが立ち上がらなくなる事象が起きているので intent/tweet を使用する方向性に暫定対応（src/common/scripts/javascript/common.js）
+- README.md の変更
+
+### v0.1.9（2023年3月9日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, browser-sync, cssnano, glob, sass, terser-webpack-plugin, webpack）
+- glob の仕様が変更されたので gulpfile.js と registerPartial.js を更新
+- css-declaration-sorter のソートの影響で一部の CSS3 が有効にならない場合があったので gulpfile.js の設定項目に keepOverrides を追加
+- README.md の変更
+
 ### v0.1.8（2023年2月13日）
 
-- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, directory-tree, glob, gulp-purgecss, image-size, minimist, node-git-server, node-sass, postcss, terser-webpack-plugin, webpack, webpack-cli）
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, directory-tree, glob, gulp-purgecss, image-size, minimist, node-git-server, postcss, sass, terser-webpack-plugin, webpack, webpack-cli）
 - handlebars にて変数定義を拡張するヘルパー関数を追加（include）
 - jQuery のバージョンを最新の 3.6.3 に変更
 - README.md の変更
@@ -897,24 +968,27 @@ $size: 26;
 - config.json に ASSETS_HOST の項目を追加（CSS 内のパスを別ドメインに向ける場合フルパスで入力する）
 - config.json に CACHE_VERSION の項目を追加（キャッシュ対策をするために数字を入力 20220426 みたいな感じをいれると ?v= パラメータとして付与される）
 - gulpfile.js に上記の機能実装を追加＆整理
+- dart-sass-functions の inline_image 関数の mime 修正（ バージョン2 から lookup() が廃止され getType() に変更になりエラーが出ていた為 ）
 - README.md の変更
 
-### v0.1.6（2022年3月14日）
+### v0.1.6（2022年2月25日）
 
-- package.json の更新（browser-sync, cssnano, postcss, webpack）
-- node-sass-functions の inline_image 関数の mime 修正（ バージョン2 から lookup() が廃止され getType() に変更になりエラーが出ていた為 ）
-- README.md の変更
-
-### v0.1.5（2022年2月25日）
-
-- package.json の更新（@babel/core, @babel/preset-env, cssnano, directory-tree, fancy-log, node-sass, postcss, terser-webpack-plugin, webpack, webpack-cli）
-- README.md の変更
-
-### v0.1.4（2022年1月17日）
-
-- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, css-declaration-sorter, cssnano, directory-tree, gulp-purgecss, image-size, postcss, terser-webpack-plugin, webpack）
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, css-declaration-sorter, node-css-mqpacker, cssnano, directory-tree, fancy-log, gulp-purgecss, image-size, postcss, sass, terser-webpack-plugin, webpack, webpack-cli）
 - package.json から css-mqpacker を削除し node-css-mqpacker を追加（非推奨でバージョンが止まっていた為）
 - 上記対応のため gulpfile.js の微修正
+- README.md の変更
+
+### v0.1.5（2021年11月12日）
+
+- gulpfile.js に DartSass 用の共通スタイルシートを出力するタスクを追加
+- 上記に伴い _global.scss ファイルと共通変数を合わせたものを _variable.scss に出力し参照出来るように変更
+- README.md の変更
+
+### v0.1.4（2021年11月11日）
+
+- node-sass から dart-sass に完全移行
+- package.json から node-sass を削除し sass ( Dart Sass ) を追加
+- 上記に伴い DartSass の仕様変更に基づき記述を全て見直し修正 ( Built-In Modules 対応 )
 - README.md の変更
 
 ### v0.1.3（2021年11月10日）

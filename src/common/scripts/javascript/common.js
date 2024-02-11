@@ -40,7 +40,7 @@
       // Common.enableBodyScroll(modal);
       //------------------------------------------------------
 
-      _toConsumableArray = function(arr) {
+      _toConsumableArray = (arr) => {
         if (Array.isArray(arr)) {
           let i = 0;
           const arr2 = Array(arr.length);
@@ -76,7 +76,7 @@
       previousBodyPaddingRight = undefined;
 
       allowTouchMove = el =>
-        locks.some(function(lock) {
+        locks.some((lock) => {
           if (lock.options.allowTouchMove && lock.options.allowTouchMove(el)) {
             return true;
           }
@@ -84,7 +84,7 @@
         })
       ;
 
-      preventDefault = function(rawEvent) {
+      preventDefault = (rawEvent) => {
         const e = rawEvent || window.event;
         if (allowTouchMove(e.target)) {
           return true;
@@ -98,8 +98,8 @@
         return false;
       };
 
-      setOverflowHidden = function(options) {
-        setTimeout(function() {
+      setOverflowHidden = (options) => {
+        setTimeout(() => {
           if (previousBodyPaddingRight === undefined) {
             const _reserveScrollBarGap = !!options && (options.reserveScrollBarGap === true);
             const scrollBarGap = window.innerWidth - (document.documentElement.clientWidth);
@@ -115,8 +115,8 @@
         });
       };
 
-      restoreOverflowSetting = function() {
-        setTimeout(function() {
+      restoreOverflowSetting = () => {
+        setTimeout(() => {
           if (previousBodyPaddingRight !== undefined) {
             document.body.style.paddingRight = previousBodyPaddingRight;
             previousBodyPaddingRight = undefined;
@@ -129,11 +129,11 @@
       };
 
       // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Problems_and_solutions
-      isTargetElementTotallyScrolled = function(targetElement) {
+      isTargetElementTotallyScrolled = (targetElement) => {
         if (targetElement) { return (targetElement.scrollHeight - (targetElement.scrollTop)) <= targetElement.clientHeight; } else { return false; }
       };
 
-      handleScroll = function(event, targetElement) {
+      handleScroll = (event, targetElement) => {
         const clientY = event.targetTouches[0].clientY - initialClientY;
         if (allowTouchMove(event.target)) {
           return false;
@@ -217,9 +217,11 @@
 
     static twitterShare(i_target, i_url, i_text) {
       if (document.querySelector(i_target) !== null) {
-        document.querySelector(i_target).addEventListener('click', (function(e) {
+        document.querySelector(i_target).addEventListener('click', ((e) => {
           e.preventDefault();
-          let url = 'http://twitter.com/share?url=';
+          // Android for Twitter App Bug fix.
+          // let url = 'http://twitter.com/share?url=';
+          let url = 'http://twitter.com/intent/tweet?url=';
           url += encodeURIComponent(i_url);
           url += `&text=${encodeURIComponent(i_text)}`;
           window.open(url, 'share', [
@@ -244,7 +246,7 @@
 
     static facebookShare(i_target, i_url) {
       if (document.querySelector(i_target) !== null) {
-        document.querySelector(i_target).addEventListener('click', (function(e) {
+        document.querySelector(i_target).addEventListener('click', ((e) => {
           e.preventDefault();
           let url = 'http://www.facebook.com/share.php?u=';
           url += encodeURIComponent(i_url);
@@ -270,7 +272,7 @@
 
     static lineShare(i_target, i_url, i_text) {
       if (document.querySelector(i_target) !== null) {
-        document.querySelector(i_target).addEventListener('click', (function(e) {
+        document.querySelector(i_target).addEventListener('click', ((e) => {
           let url;
           e.preventDefault();
           if (mobileType[0] === 'mobile') {
@@ -303,7 +305,7 @@
 
     static googleShare(i_target, i_url) {
       if (document.querySelector(i_target) !== null) {
-        document.querySelector(i_target).addEventListener('click', (function(e) {
+        document.querySelector(i_target).addEventListener('click', ((e) => {
           e.preventDefault();
           let url = 'https://plus.google.com/share?url=';
           url += encodeURIComponent(i_url);
@@ -405,12 +407,12 @@
             options: options || {}
           };
           locks = [].concat(_toConsumableArray(locks), [ lock ]);
-          targetElement.ontouchstart = function(event) {
+          targetElement.ontouchstart = (event) => {
             if (event.targetTouches.length === 1) {
               initialClientY = event.targetTouches[0].clientY;
             }
           };
-          targetElement.ontouchmove = function(event) {
+          targetElement.ontouchmove = (event) => {
             if (event.targetTouches.length === 1) {
               handleScroll(event, targetElement);
             }
@@ -432,7 +434,7 @@
 
     static clearAllBodyScrollLocks() {
       if (isIosDevice) {
-        locks.forEach(function(lock) {
+        locks.forEach((lock) => {
           lock.targetElement.ontouchstart = null;
           lock.targetElement.ontouchmove = null;
         });
@@ -474,4 +476,4 @@
   return CommonScript;
 })();
 
-module.exports = Common;
+export default Common
