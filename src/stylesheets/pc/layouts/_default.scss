@@ -11,11 +11,20 @@ body {
   font-size: config.$FONT_SIZE;
   font-family: config.$FONT_FAMILY;
 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+
   @include config.RESPONSIVE('PRINT', config.$MAX_WIDTH) {
     width: config.$MAX_WIDTH;
     transform: scale(.8);
     transform-origin: 0 0;
   }
+}
+
+main {
+  flex: 1;
 }
 
 a {

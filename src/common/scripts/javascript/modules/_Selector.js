@@ -24,7 +24,7 @@ class Selector {
       l = l.concat(screenInfo.getInfo());
       l = l.concat([ "js" ]);
 
-      const updateScreen = function() {
+      const updateScreen = () => {
         e.className = e.className.replace(RegExp(" ?orientation_\\w+", "g"), "").replace(RegExp(" [min|max|cl]+[w|h]_\\d+", "g"), "");
         return e.className = e.className + " " + screenInfo.getInfo().join(" ");
       };
@@ -67,7 +67,7 @@ class Selector {
       return e.className;
     };
 
-    var userAgent = {
+    let userAgent = {
       ua: "",
       is(t) {
         return RegExp(t, "i").test(userAgent.ua);
@@ -153,7 +153,7 @@ class Selector {
       }
     };
 
-    var screenInfo = {
+    let screenInfo = {
       width: (window.outerWidth || document.documentElement.clientWidth) - 15,
       height: window.outerHeight || document.documentElement.clientHeight,
       screens: [ 0, 768, 980, 1200 ],
@@ -199,7 +199,7 @@ class Selector {
       }
     };
 
-    var dataUriInfo = {
+    let dataUriInfo = {
       data: new Image(),
       div: document.createElement("div"),
       isIeLessThan9: false,
@@ -219,7 +219,7 @@ class Selector {
       }
     };
 
-    var selector_n = selector_n || "";
+    let selector_n = selector_n || "";
     selector(navigator.userAgent, selector_n);
 
     const _ua = userAgent.getBrowser().join(" ");
@@ -233,4 +233,4 @@ class Selector {
   }
 }
 
-module.exports = Selector;
+export default Selector;

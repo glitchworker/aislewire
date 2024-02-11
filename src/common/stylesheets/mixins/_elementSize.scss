@@ -1,61 +1,82 @@
 @use "sass:math";
-@use "fontSize";
+@use "../functions/viewport";
 
 // ------------------------------------------- SASS Information
 //  Name:      mixins/_elementSize.scss
 //  Author:    GlitchWorker
 // -----------------------------------------------------------
 
-@function element_get_vw($size, $viewport: 750) {
-  @return math.div($size, $viewport) * 100 + vw;
+@mixin elementSize_vw($elementSizeW: null, $elementSizeH: null, $viewport: null) {
+  @if $elementSizeW and $viewport {
+    width: viewport.get_vw($elementSizeW, $viewport);
+  } @else if $elementSizeW {
+    width: viewport.get_vw($elementSizeW);
+  }
+  @if $elementSizeH and $viewport {
+    height: viewport.get_vw($elementSizeH, $viewport);
+  } @else if $elementSizeH {
+    height: viewport.get_vw($elementSizeH);
+  }
 }
 
-@mixin elementSize_vw($elementSizeW, $elementSizeH) {
-  width: element_get_vw($elementSizeW);
-  height: element_get_vw($elementSizeH);
-}
-
-@mixin elementSize_cvw($elementSizeW, $elementSizeH, $viewport) {
-  width: element_get_vw($elementSizeW, $viewport);
-  height: element_get_vw($elementSizeH, $viewport);
-}
-
-@mixin padding_vw($paddingSizeT, $paddingSizeR, $paddingSizeB, $paddingSizeL) {
-  padding: fontSize.get_vw($paddingSizeT) fontSize.get_vw($paddingSizeR) fontSize.get_vw($paddingSizeB) fontSize.get_vw($paddingSizeL);
+@mixin padding_vw($paddingSizeT: null, $paddingSizeR: null, $paddingSizeB: null, $paddingSizeL: null) {
+  @if $paddingSizeT {
+    padding: viewport.get_vw($paddingSizeT);
+  }
+  @if $paddingSizeR {
+    padding: viewport.get_vw($paddingSizeT) viewport.get_vw($paddingSizeR);
+  }
+  @if $paddingSizeB {
+    padding: viewport.get_vw($paddingSizeT) viewport.get_vw($paddingSizeR) viewport.get_vw($paddingSizeB);
+  }
+  @if $paddingSizeL {
+    padding: viewport.get_vw($paddingSizeT) viewport.get_vw($paddingSizeR) viewport.get_vw($paddingSizeB) viewport.get_vw($paddingSizeL);
+  }
 }
 
 @mixin padding_top_vw($paddingSize) {
-  padding-top: fontSize.get_vw($paddingSize);
+  padding-top: viewport.get_vw($paddingSize);
 }
 
 @mixin padding_right_vw($paddingSize) {
-  padding-right: fontSize.get_vw($paddingSize);
+  padding-right: viewport.get_vw($paddingSize);
 }
 
 @mixin padding_bottom_vw($paddingSize) {
-  padding-bottom: fontSize.get_vw($paddingSize);
+  padding-bottom: viewport.get_vw($paddingSize);
 }
 
 @mixin padding_left_vw($paddingSize) {
-  padding-left: fontSize.get_vw($paddingSize);
+  padding-left: viewport.get_vw($paddingSize);
 }
 
-@mixin margin_vw($marginSizeT, $marginSizeR, $marginSizeB, $marginSizeL) {
-  margin: fontSize.get_vw($marginSizeT) fontSize.get_vw($marginSizeR) fontSize.get_vw($marginSizeB) fontSize.get_vw($marginSizeL);
+@mixin margin_vw($marginSizeT: null, $marginSizeR: null, $marginSizeB: null, $marginSizeL: null) {
+  @if $marginSizeT {
+    margin: viewport.get_vw($marginSizeT);
+  }
+  @if $marginSizeR {
+    margin: viewport.get_vw($marginSizeT) viewport.get_vw($marginSizeR);
+  }
+  @if $marginSizeB {
+    margin: viewport.get_vw($marginSizeT) viewport.get_vw($marginSizeR) viewport.get_vw($marginSizeB);
+  }
+  @if $marginSizeL {
+    margin: viewport.get_vw($marginSizeT) viewport.get_vw($marginSizeR) viewport.get_vw($marginSizeB) viewport.get_vw($marginSizeL);
+  }
 }
 
 @mixin margin_top_vw($marginSize) {
-  margin-top: fontSize.get_vw($marginSize);
+  margin-top: viewport.get_vw($marginSize);
 }
 
 @mixin margin_right_vw($marginSize) {
-  margin-right: fontSize.get_vw($marginSize);
+  margin-right: viewport.get_vw($marginSize);
 }
 
 @mixin margin_bottom_vw($marginSize) {
-  margin-bottom: fontSize.get_vw($marginSize);
+  margin-bottom: viewport.get_vw($marginSize);
 }
 
 @mixin margin_left_vw($marginSize) {
-  margin-left: fontSize.get_vw($marginSize);
+  margin-left: viewport.get_vw($marginSize);
 }

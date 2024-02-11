@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "title": "Example from exampleFour.json title1",
+      "text": "Example from exampleFour.json text1"
+    },
+    {
+      "title": "Example from exampleFour.json title2",
+      "text": "Example from exampleFour.json text2"
+    },
+    {
+      "title": "Example from exampleFour.json title3",
+      "text": "Example from exampleFour.json text3"
+    },
+    {
+      "title": "Example from exampleFour.json title4",
+      "text": "Example from exampleFour.json text4"
+    },
+    {
+      "title": "Example from exampleFour.json title5",
+      "text": "Example from exampleFour.json text5"
+    }
+  ]
+}

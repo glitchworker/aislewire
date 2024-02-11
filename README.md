@@ -17,12 +17,12 @@ Wire は```《線》```や```《網》```などを意味します。
 
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
-- npm v8.19.4 over
-- node v16.20.0 over
+- node v20.11.0 over
+- npm v10.2.4 over
 
 ## 🔰 Usage
 
-1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする（最新版を推奨）
+1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする（最新版LTSを推奨）
 
 2. ```ターミナル```または```コマンドプロンプト```を```管理者権限```で開く
 
@@ -79,8 +79,7 @@ Wire は```《線》```や```《網》```などを意味します。
   },
   "LOCAL_SERVER": {
     "API": false,
-    "GIT": false,
-    "GSX": false
+    "GIT": false
   },
   "ASSETS_HOST": "",
   "CACHE_VERSION": "",
@@ -97,7 +96,7 @@ Wire は```《線》```や```《網》```などを意味します。
 | /src/templates/**/*.hbs | template 内で使う規定値 |
 | /src/common/stylesheets/_config.scss | stylesheet 内で使う規定値 |
 | /src/_modules/api/data.json | api で使う規定値 |
-| /src/_modules/data/**/* | 共通の規定値（ json, js, yml 読み込み可能） |
+| /src/_modules/data/**/* | 共通の規定値（ json, yml 読み込み可能） |
 | /src/_modules/import/data.json | import で使う規定値 |
 
 #### /api/data.json
@@ -301,7 +300,7 @@ META_PWA_MODE: false
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
-| yarn run clean | gulp clean | ビルドフォルダを削除 |
+| yarn run clear | gulp clear | ビルドフォルダを削除 |
 | yarn run clearGit | gulp clearGit | ローカルGitを削除 |
 
 ## 🌻 Structure
@@ -366,11 +365,10 @@ META_PWA_MODE: false
 	│   │   │   └── data.json
 	│   │   ├── data
 	│   │   │   ├── example.json
-	│   │   │   ├── exampleFour.yml
-	│   │   │   ├── exampleThree
-	│   │   │   │   └── exampleThree.json
-	│   │   │   ├── exampleTwo.js
-	│   │   │   └── gsx.json
+	│   │   │   ├── exampleTwo
+	│   │   │   │   └── exampleTwo.json
+	│   │   │   ├── exampleThree.yml
+	│   │   │   └── exampleFour.json
 	│   │   └── import
 	│   │       └── data.json
 	│   ├── common
@@ -460,8 +458,7 @@ META_PWA_MODE: false
 	│   │   │   ├── components
 	│   │   │   ├── layouts
 	│   │   │   │   ├── _content.scss
-	│   │   │   │   ├── _default.scss
-	│   │   │   │   └── _wrapper.scss
+	│   │   │   │   └── _default.scss
 	│   │   │   ├── pages
 	│   │   │   │   ├── _hoge.scss
 	│   │   │   │   ├── _hoge_fuga.scss
@@ -474,8 +471,7 @@ META_PWA_MODE: false
 	│   │       ├── components
 	│   │       ├── layouts
 	│   │       │   ├── _content.scss
-	│   │       │   ├── _default.scss
-	│   │       │   └── _wrapper.scss
+	│   │       │   └── _default.scss
 	│   │       ├── pages
 	│   │       │   ├── _hoge.scss
 	│   │       │   ├── _hoge_fuga.scss
@@ -500,9 +496,6 @@ META_PWA_MODE: false
 	│           └── header.hbs
 	└── tasks
 	    ├── modules
-	    │   ├── gsx2json
-	    │   │   ├── api.js
-	    │   │   └── app.js
 	    │   ├── handlebars
 	    │   │   ├── config.js
 	    │   │   ├── errorMessage.js
@@ -725,19 +718,6 @@ http://localhost:5000/api?rows=false
 ```columns``` を true または false にすると項目の表示/非表示が可能になります。  
 http://localhost:5000/api?columns=false
 
-## ✨ GSX Server
-
-```config.json``` の ```LOCAL_SERVER``` の ```GSX``` を有効にすると起動します。
-
-> 機能としては GoogleSpreadsheet のシートを用意すれば API のリクエストを受け取り、  
-または返してくれるシンプルな RESTful API サーバーを用意することが出来ます。  
-> ※シートに関しては、```ウェブに公開``` を選択して外から閲覧出来る状態にしてください。
->
-> GSX Server をブラウザで開くと ```/src/_modules/data/``` に ```gsx.json``` という  
-ファイルが生成され、テンプレート内の共通変数としても呼び出す事が可能になります。  
-スプレッドシートを更新した場合、 ```gsx.json``` を更新したい場合は、同じように  
-ブラウザで開くと上書きされ、 watch が働くのでテンプレートには即座に自動で反映されます。
-
 ## 🚿 Browsers support
 
 通常の設定では比較的新しいブラウザで機能するようになっています。  
@@ -909,7 +889,24 @@ $size: 26;
 しかし厳格化されたことにより ```glob``` は実質不可 ```外部変数呼び出し``` 等が厳しくなったので   
 現在はそのあたりをどういう仕組みで運用していくべきか試行錯誤中です。
 
+<u>**v0.2.6 で CommonJS から ES Module に移行 ＆ GSX Server の削除**</u>
+
+> ECMA Script Modules の略で ECMA Script（エクマ スクリプト）は、 Ecma International のもとで標準化手続きが行われてい JavaScript の規格です。   
+近年多くのパッケージが [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) へ移行を始めており、   
+```CommonJS（require）``` から ```ES Module（import）``` へ変更されておりアップデートが出来なかったり、使用することが出来ない為すべての依存関係を修正いたしました。   
+そのため、Node.js のバージョンが最低でも v16 以降が必要になるが v18 以上が推奨されているため最新の安定版 v20 へアップデートしました。   
+詳細に関しては ESM に関しては [Node.js](https://nodejs.org/api/esm.html) 公式のドキュメントを参照ください。   
+また、バージョンが古くなり動作しない＆あまり使用されていなかったので GSX Server の機能を削除しました。
+
 ## 🆙 Version History
+
+### v0.2.6（2024年2月11日）
+
+- CommonJS から ES Module へ移行（require から import へ変更したため全てのファイルの依存関係を修正）
+- パッケージ更新に伴い node を v20.11.0 npm を v10.2.4 以上に変更
+- GSX Server の機能を削除（バージョンが古くなっており機能しなくなっていた＆あまり使用されていないため）
+- package.json の更新（del, gulp-changed, gulp-postcss, mime, slash）
+- README.md の変更
 
 ### v0.2.5（2024年2月8日）
 

@@ -35,15 +35,6 @@ tr, th, td {
   vertical-align: baseline;
 }
 
-// applet, object,
-// acronym, big,
-// kbd, s, samp,
-// tt, var,
-// b, u, i, center,
-// embed, menu, ruby {
-
-// }
-
 article, aside, details, figcaption, figure,
 footer, header, hgroup, main, menu, nav, section {
   display: block;
@@ -66,10 +57,10 @@ body {
 }
 
 a {
+  all: unset;
+  display: revert;
+  cursor: revert;
   text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -83,6 +74,7 @@ img {
 
 img, video {
   max-width: 100%;
+  height: auto;
 }
 
 ol, ul {
@@ -138,19 +130,18 @@ textarea {
   }
 }
 
-// input, select, button, textarea {
-//   appearance: none;
-//   border: none;
-//   border-radius: 0;
-//   outline: none;
-//   border: 1px solid #000;
-//   // padding: 0;
-//   // margin: 0;
-// }
-
-.clearfix {
-  @include config.clearfix;
+input, select, button, textarea {
+  padding: 0;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  background: none
 }
+
+// .clearfix {
+//   @include config.clearfix;
+// }
 
 // .inlinefix {
 //   @include inlinefix;
