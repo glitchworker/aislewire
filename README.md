@@ -85,7 +85,7 @@ Wire は```《線》```や```《網》```などを意味します。
   "CACHE_VERSION": "",
   "HTTPS_SERVER": false,
   "WEBPACK_ENTRIES": false,
-	"PURGE_CSS": false
+  "PURGE_CSS": false
 }
 ```
 
@@ -382,7 +382,7 @@ META_PWA_MODE: false
 	│   │   │   │   ├── common.js
 	│   │   │   │   ├── index.js
 	│   │   │   │   └── modules
-	│   │   │   │       └── _Selector.js
+	│   │   │   │       └── Selector.js
 	│   │   │   └── lib
 	│   │   │       ├── html5shiv.min.js
 	│   │   │       ├── jquery-1.12.4.min.js
@@ -446,12 +446,22 @@ META_PWA_MODE: false
 	│   │   │   ├── common.js
 	│   │   │   ├── hoge.js
 	│   │   │   ├── index.js
+	│   │       ├── sample.ts
 	│   │   │   └── modules
+	│   │   │       ├── Caller.ts
+	│   │   │       ├── interface.ts
+	│   │   │       ├── Man.ts
+	│   │   │       └── Woman.ts
 	│   │   └── sp
 	│   │       ├── common.js
 	│   │       ├── hoge.js
 	│   │       ├── index.js
+	│   │       ├── sample.ts
 	│   │       └── modules
+	│   │           ├── Caller.ts
+	│   │           ├── interface.ts
+	│   │           ├── Man.ts
+	│   │           └── Woman.ts
 	│   ├── stylesheets
 	│   │   ├── pc
 	│   │   │   ├── app.scss
@@ -496,6 +506,12 @@ META_PWA_MODE: false
 	│           └── header.hbs
 	└── tasks
 	    ├── modules
+	    │   ├── dart-sass-functions
+	    │   │   ├── index.js
+	    │   │   ├── processor.js
+	    │   │   └── roundPrecision.js
+	    │   ├── dart-sass-glob
+	    │   │   └── index.js
 	    │   ├── handlebars
 	    │   │   ├── config.js
 	    │   │   ├── errorMessage.js
@@ -505,10 +521,7 @@ META_PWA_MODE: false
 	    │   │   ├── index.js
 	    │   │   ├── registerPartials.js
 	    │   │   └── render.js
-	    │   ├── dart-sass-functions
-	    │   │   ├── index.js
-	    │   │   └── processor.js
-	    │   ├── dart-sass-glob
+	    │   ├── if-webpack-plugin
 	    │   │   └── index.js
 	    │   └── postcss-dart-sass
 	    │       └── index.js
@@ -889,20 +902,29 @@ $size: 26;
 しかし厳格化されたことにより ```glob``` は実質不可 ```外部変数呼び出し``` 等が厳しくなったので   
 現在はそのあたりをどういう仕組みで運用していくべきか試行錯誤中です。
 
-<u>**v0.2.6 で CommonJS から ES Module に移行 ＆ GSX Server の削除**</u>
+<u>**v0.2.6 で CommonJS から ES Modules に移行 ＆ GSX Server の削除**</u>
 
 > ECMA Script Modules の略で ECMA Script（エクマ スクリプト）は、 Ecma International のもとで標準化手続きが行われてい JavaScript の規格です。   
 近年多くのパッケージが [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) へ移行を始めており、   
-```CommonJS（require）``` から ```ES Module（import）``` へ変更されておりアップデートが出来なかったり、使用することが出来ない為すべての依存関係を修正いたしました。   
+```CommonJS（require）``` から ```ES Modules（import）``` へ変更されておりアップデートが出来なかったり、使用することが出来ない為すべての依存関係を修正いたしました。   
 そのため、Node.js のバージョンが最低でも v16 以降が必要になるが v18 以上が推奨されているため最新の安定版 v20 へアップデートしました。   
-詳細に関しては ESM に関しては [Node.js](https://nodejs.org/api/esm.html) 公式のドキュメントを参照ください。   
+その他 ESM の詳細に関しては [Node.js](https://nodejs.org/api/esm.html) 公式のドキュメントを参照ください。   
 また、バージョンが古くなり動作しない＆あまり使用されていなかったので GSX Server の機能を削除しました。
 
 ## 🆙 Version History
 
+### v0.2.7（2024年2月12日）
+
+- package.json から round-precision を削除しローカルモジュールに組み込み
+- package.json に追加（@babel/preset-typescript, @babel/plugin-proposal-class-properties）
+- TypeScript 等対応への変更にともない webpack.config.js に TypeScript 向け設定を追加（jsx, ts, tsx もトランスパイル対応）
+- gulpfile.js で JavaScript タスク周りで js 以外の拡張子以外も使えるように変更（jsx, ts, tsx も監視対象へ）
+- _Selector.js から Selector.js に変更（アンダースコアををつけて監視対象外にしていたが、特に不要だったため）
+- README.md の変更
+
 ### v0.2.6（2024年2月11日）
 
-- CommonJS から ES Module へ移行（require から import へ変更したため全てのファイルの依存関係を修正）
+- CommonJS から ES Modules へ移行（require から import へ変更したため全てのファイルの依存関係を修正）
 - パッケージ更新に伴い node を v20.11.0 npm を v10.2.4 以上に変更
 - GSX Server の機能を削除（バージョンが古くなっており機能しなくなっていた＆あまり使用されていないため）
 - package.json の更新（del, gulp-changed, gulp-postcss, mime, slash）

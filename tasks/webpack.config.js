@@ -62,9 +62,15 @@ const config = {
           {
             loader: 'babel-loader?optional=runtime&cacheDirectory',
             options: {
-              presets: ['@babel/preset-env'],
-              plugins: [
-                ['@babel/plugin-transform-classes', { 'loose': true }] // ES6 を ES5 に変換
+              // plugins の内容が先に実行され、presets の内容が後に実行される
+              // https://babeljs.io/docs/en/plugins/#plugin-ordering
+              presets: [ // presets は下から上に実行される
+                '@babel/preset-env', // (4)
+                '@babel/preset-typescript' // (3)
+              ],
+              plugins: [ // plugins は上から下に実行される
+                [ '@babel/plugin-proposal-class-properties' ], // (1)
+                [ '@babel/plugin-transform-classes', { 'loose': true } ] // (2) ES6 を ES5 に変換
               ],
               cacheDirectory: true
             }

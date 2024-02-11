@@ -1,4 +1,4 @@
-import Selector from './modules/_Selector.js';
+import Selector from './modules/Selector.js';
 
 class Index {
 
