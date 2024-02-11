@@ -44,11 +44,21 @@ META_PWA_MODE: false
 <main id="section-contents">
 <!-- Components Object -->
 {{> components/exampleComponent }}
-
 <!-- Data -->
 <p>{{ data.example.text }}</p>
-<p>{{ data.exampleTwo.text }}</p>
-<p>{{ data.exampleThree.exampleThree.text }}</p>
-<p>{{ data.exampleFour.text }}</p>
-<p>{{ data.exampleFour.test.text }}</p>
+<p>{{ data.exampleTwo.exampleTwo.text }}</p>
+<p>{{ data.exampleThree.text }}</p>
+<p>{{ data.exampleThree.test.text }}</p>
+<table>
+  <tbody>
+    {{#each data.exampleFour.data}}
+    <tr data-index="{{ @index }}">
+      {{#each this}}
+      <th>{{ @key }}</th>
+      <td>{{ this }}</td>
+      {{/each}}
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
 </main>

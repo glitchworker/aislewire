@@ -1,4 +1,4 @@
-import Selector from './modules/_Selector';
+import Selector from './modules/_Selector.js';
 
 class Index {
 
@@ -25,7 +25,7 @@ class Index {
     // DOMContentLoaded - 初回読み込み後に実行
     //------------------------------------------------------
 
-    return document.addEventListener('DOMContentLoaded', (function() {
+    return document.addEventListener('DOMContentLoaded', (() => {
 
       // Social Share - SNSシェアボタンの処理
       const SITE_URL = location.href.replace('#', '') + location.search;
@@ -37,7 +37,7 @@ class Index {
       Common.googleShare('.gp', SITE_URL);
 
       // Font Kerning - フォントのカーニング処理
-      Common.textKerning('.kerning');
+      // Common.textKerning('.kerning');
 
     }), false);
   }

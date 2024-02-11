@@ -1,21 +1,68 @@
+@use "sass:math";
+@use "../../../common/stylesheets/config";
+
 /* ------------------------------------------- SASS Information
  Name:      layouts/_default.scss
- Author:    #{$WEB_AUTHOR}
- Modifier:  #{$WEB_MODIFIER}
 ----------------------------------------------------------- */
 
 body {
-  background: $BASE_COLOR;
-  color: $FONT_COLOR;
-  font-size: $FONT_SIZE;
-  font-family: $FONT_FAMILY;
+  background: config.$BASE_COLOR;
+  color: config.$FONT_COLOR;
+  font-size: config.$FONT_SIZE;
+  font-family: config.$FONT_FAMILY;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  @include config.RESPONSIVE('PRINT', config.$MAX_WIDTH) {
+    width: config.$MAX_WIDTH;
+    transform: scale(.8);
+    transform-origin: 0 0;
+  }
+}
+
+main {
+  flex: 1;
 }
 
 a {
-  color: $LINK_COLOR;
-  line-height: $LINE_HEIGHT;
+  color: config.$LINK_COLOR;
+  line-height: config.$LINE_HEIGHT;
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  line-height: $LINE_HEIGHT;
+  line-height: config.$LINE_HEIGHT;
 }
+
+// html {
+//   &.iphoneX {
+//     padding-top: constant(safe-area-inset-top);
+//     padding-bottom: constant(safe-area-inset-bottom);
+//     padding-left: constant(safe-area-inset-left);
+//     padding-right: constant(safe-area-inset-right);
+
+//     padding-top: env(safe-area-inset-top);
+//     padding-bottom: env(safe-area-inset-bottom);
+//     padding-left: env(safe-area-inset-left);
+//     padding-right: env(safe-area-inset-right);
+//   }
+//   // UIWebkit では上記が聞かないので 使用する場合はコメントアウト解除
+//   @media screen and (orientation: portrait) {
+//     &.iphoneX {
+//       padding-top: 44px;
+//       padding-bottom: 34px;
+//       padding-left: 0px;
+//       padding-right: 0px;
+//     }
+//   }
+//   @media screen and (orientation: landscape) {
+//     &.iphoneX {
+//       padding-top: 0px;
+//       padding-bottom: 21px;
+//       padding-left: 44px;
+//       padding-right: 44px;
+//     }
+//   }
+// }

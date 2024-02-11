@@ -140,13 +140,11 @@
 
 <body class="page-{{ BODY_CLASS }}">
 
-<div id="section-wrapper">
 {{> partials/header }}
 
 {{ body }}
 
 {{> partials/footer }}
-</div>
 {{#if WEBPACK_ENTRIES}}
 <script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.SP }}js/common.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>
 <script defer src="{{#if ABSOLUTE_DIR}}/{{else}}{{ RELATIVE_PATH }}{{/if}}{{ ASSETS_DIR.SP }}js/{{ BODY_CLASS }}.js{{#if CACHE_VERSION.length}}?v={{ CACHE_VERSION }}{{/if}}"></script>

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // ------------------------------------------- SASS Information
 //  Name:      _config.scss
 //  Author:    GlitchWorker
@@ -7,61 +9,42 @@
 //  FUNCTIONS
 // -----------------------------------------------------------
 
-$BASE_COLOR: #fff;
-
-$MIN_WIDTH: 780px;
-
-$MAX_WIDTH: 1280px;
-
-$FONT_FAMILY: Hiragino Kaku Gothic Pro, "ヒラギノ角ゴ Pro W3", Meiryo, "メイリオ", Osaka, "ＭＳ Ｐゴシック", sans-serif;
-
-$FONT_SIZE: 16px;
-
-$LINE_HEIGHT: 1.8;
-
-$FONT_COLOR: #000;
-
-$LINK_COLOR: $FONT_COLOR;
+@forward 'functions/viewport';
 
 // -----------------------------------------------------------
 //  VARS
 // -----------------------------------------------------------
 
-// @import 'vars/color';
-// @import 'vars/easing';
+@forward 'vars/variable';
+// @forward 'vars/color';
+// @forward 'vars/easing';
 
 // -----------------------------------------------------------
 //  MIXINS
 // -----------------------------------------------------------
 
-@import 'mixins/fontSize';
-@import 'mixins/fontWeight';
-@import 'mixins/fontDecoration';
-@import 'mixins/elementSize';
-@import 'mixins/clearfix';
-@import 'mixins/hideaway';
-@import 'mixins/opacity';
-@import 'mixins/inlineBlock';
-@import 'mixins/mediaqueries';
-@import 'mixins/css3fix';
-// @import 'mixins/inlinefix';
+@forward 'mixins/fontSize';
+@forward 'mixins/fontWeight';
+@forward 'mixins/fontDecoration';
+@forward 'mixins/elementSize';
+@forward 'mixins/clearfix';
+@forward 'mixins/hideaway';
+@forward 'mixins/opacity';
+@forward 'mixins/inlineBlock';
+@forward 'mixins/mediaqueries';
+@forward 'mixins/css3fix';
+// @forward 'inlinefix';
 
 // -----------------------------------------------------------
 //  STYLES: utils
 // -----------------------------------------------------------
 
-// @import 'utils/font';
-// @import 'utils/align';
-// @import 'utils/float';
-// @import 'utils/margin';
-// @import 'utils/padding';
-// @import 'utils/width';
-// @import 'utils/display';
-// @import 'utils/visibility';
-// @import 'utils/tooltips';
-
-// -----------------------------------------------------------
-//  STYLES: reset
-// -----------------------------------------------------------
-
-@import 'reset';
+// @forward 'utils/font';
+// @forward 'utils/align';
+// @forward 'utils/float';
+// @forward 'utils/margin';
+// @forward 'utils/padding';
+// @forward 'utils/width';
+// @forward 'utils/display';
+// @forward 'utils/visibility';
+// @forward 'utils/tooltips';

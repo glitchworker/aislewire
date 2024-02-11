@@ -46,13 +46,19 @@ META_PWA_MODE: false
 {{> components/exampleComponent }}
 <!-- Data -->
 <p>{{ data.example.text }}</p>
-{{!-- {{#each data.gsx.rows}}
-  <p>{{ @index }}-{{ @key }}__{{ this }}</p>
-  {{#each this}}
-  <p>{{ @index }}-{{ @key }}__{{ this }}</p>
-  {{/each}}
-{{/each}} --}}
-<p>{{ data.exampleThree.exampleThree.text }}</p>
-<p>{{ data.exampleFour.text }}</p>
-<p>{{ data.exampleFour.test.text }}</p>
+<p>{{ data.exampleTwo.exampleTwo.text }}</p>
+<p>{{ data.exampleThree.text }}</p>
+<p>{{ data.exampleThree.test.text }}</p>
+<table>
+  <tbody>
+    {{#each data.exampleFour.data}}
+    <tr data-index="{{ @index }}">
+      {{#each this}}
+      <th>{{ @key }}</th>
+      <td>{{ this }}</td>
+      {{/each}}
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
 </main>

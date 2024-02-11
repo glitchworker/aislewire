@@ -16,8 +16,7 @@
   },
   "LOCAL_SERVER": {
     "API": false,
-    "GIT": false,
-    "GSX": false
+    "GIT": false
   },
   "ASSETS_HOST": "",
   "CACHE_VERSION": "",

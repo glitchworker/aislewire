@@ -1,0 +1,10 @@
+@use "sass:math";
+
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_viewport.scss
+//  Author:    GlitchWorker
+// -----------------------------------------------------------
+
+@function get_vw($size, $viewport: 750) {
+  @return math.div($size, $viewport) * 100 + vw;
+}
