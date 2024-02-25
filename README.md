@@ -913,13 +913,19 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.2.8（2024年2月26日）
+
+- package.json の更新（cssnano, sass, webpack）
+- postcss-dart-sass のロジックを微調整
+- README.md の変更
+
 ### v0.2.7（2024年2月12日）
 
 - package.json から round-precision を削除しローカルモジュールに組み込み
 - package.json に追加（@babel/preset-typescript, @babel/plugin-proposal-class-properties）
 - TypeScript 等対応への変更にともない webpack.config.js に TypeScript 向け設定を追加（jsx, ts, tsx もトランスパイル対応）
 - gulpfile.js で JavaScript タスク周りで js 以外の拡張子以外も使えるように変更（jsx, ts, tsx も監視対象へ）
-- _Selector.js から Selector.js に変更（アンダースコアををつけて監視対象外にしていたが、特に不要だったため）
+- _Selector.js から Selector.js に変更（アンダースコアをつけて監視対象外にしていたが、特に不要だったため）
 - README.md の変更
 
 ### v0.2.6（2024年2月11日）
