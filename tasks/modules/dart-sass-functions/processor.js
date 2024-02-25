@@ -4,7 +4,7 @@ import url from 'url'
 
 import mime from 'mime'
 import imageSize from 'image-size'
-import roundPrecision from 'round-precision'
+import roundPrecision from './roundPrecision.js'
 
 class Processor {
   constructor(options) {

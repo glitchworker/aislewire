@@ -113,8 +113,8 @@ const paths = {
     },
     javascripts: {
       concat: 'common.js',
-      src: `${rootDir.src}/common/scripts/javascript/**/!(_)*.js`,
-      watch: `${rootDir.src}/common/scripts/javascript/**/!(_)*.js`,
+      src: `${rootDir.src}/common/scripts/javascript/**/!(_)*.{js,jsx,ts,tsx}`,
+      watch: `${rootDir.src}/common/scripts/javascript/**/!(_)*.{js,jsx,ts,tsx}`,
       dest: `${rootDir.htdocs}/${rootDir.assets.common}common/js/`
     },
     images: {
@@ -136,7 +136,7 @@ const paths = {
       components: `${rootDir.src}/templates/components`
     },
     globals: webConfig,
-    watch: [`${rootDir.src}/templates/**/*.{hbs,html}`, `${rootDir.src}/_modules/data/**/*.{json,js,yml}`],
+    watch: [`${rootDir.src}/templates/**/*.{hbs,html}`, `${rootDir.src}/_modules/data/**/*.{json,yml}`],
     dest: `${rootDir.htdocs}`
   },
   stylesheets: {
@@ -166,14 +166,14 @@ const paths = {
     concat: 'app.js',
     pc: {
       entries: `${rootDir.src}/javascripts/pc`,
-      src: `${rootDir.src}/javascripts/pc/**/!(_)*.js`,
-      watch: `${rootDir.src}/javascripts/pc/**/!(_)*.js`,
+      src: `${rootDir.src}/javascripts/pc/**/!(_)*.{js,jsx,ts,tsx}`,
+      watch: `${rootDir.src}/javascripts/pc/**/!(_)*.{js,jsx,ts,tsx}`,
       dest: `${rootDir.htdocs}/${rootDir.assets.pc}js/`
     },
     sp: {
       entries: `${rootDir.src}/javascripts/sp`,
-      src: `${rootDir.src}/javascripts/sp/**/!(_)*.js`,
-      watch: `${rootDir.src}/javascripts/sp/**/!(_)*.js`,
+      src: `${rootDir.src}/javascripts/sp/**/!(_)*.{js,jsx,ts,tsx}`,
+      watch: `${rootDir.src}/javascripts/sp/**/!(_)*.{js,jsx,ts,tsx}`,
       dest: `${rootDir.htdocs}/${rootDir.assets.sp}js/`
     }
   },
@@ -192,7 +192,7 @@ const paths = {
   modules: {
     data: {
       src: `${rootDir.src}/_modules/data`,
-      watch: `${rootDir.src}/_modules/data/**/*.{json,js,yml}`
+      watch: `${rootDir.src}/_modules/data/**/*.{json,yml}`
     },
     import: {
       src: `${rootDir.src}/_modules/import`,

@@ -3,7 +3,7 @@ import * as defaultNodeSass from 'sass'
 
 export default opt => ({
   postcssPlugin: 'postcss-dart-sass',
-  Once (root, { result }) {
+  async Once (root, { result }) {
     let sass = opt.sass || defaultNodeSass;
     let map = typeof result.opts.map === 'object' ? result.opts.map : {}
     let css = root.toResult(Object.assign(result.opts, {
@@ -15,7 +15,7 @@ export default opt => ({
     }))
 
     opt = Object.assign({
-      indentWidth: 4,
+      indentWidth: 2,
       omitSourceMapUrl: true,
       outputStyle: 'expanded',
       sourceMap: true,
@@ -26,22 +26,22 @@ export default opt => ({
       outFile: result.opts.to
     })
 
-    let includedFiles
-    return new Promise((resolve, reject) => sass.render(
+    const renderSass = await new Promise((resolve, reject) => sass.render(
       opt,
       (err, res) => err ? reject(err) : resolve(res)
-    )).then(res => {
-      includedFiles = res.stats.includedFiles.filter((item, pos, array) => array.indexOf(item) === pos)
-      return postcss.parse(res.css.toString(), {
-        from: result.opts.from,
-        map: {
-          prev: res.map ? JSON.parse(res.map.toString()) : ''
-        }
-      })
-    }).then(res => {
-      result.root = res
-      result.messages = includedFiles.map(file => ({ type: 'dependency', parent: result.opts.from, file }))
-    })
+    ));
+
+    let includedFiles = renderSass.stats.includedFiles.filter((item, pos, array) => array.indexOf(item) === pos);
+
+    const parseSass = postcss.parse(renderSass.css.toString(), {
+      from: result.opts.from,
+      map: {
+        prev: renderSass.map ? JSON.parse(renderSass.map.toString()) : ''
+      }
+    });
+
+    result.root = parseSass;
+    result.messages = includedFiles.map(file => ({ type: 'dependency', parent: result.opts.from, file }));
   }
 })
 
