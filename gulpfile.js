@@ -493,34 +493,42 @@ const importData = done => {
 }
 
 // library settings
-const libraryCopy = () =>
+const libraryCopy = done => {
   src(paths.common.libraryCopy.lib)
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.common.libraryCopy.dest))
   .pipe(dest(paths.common.libraryCopy.dest))
+  return done()
+}
 
 // Stylesheets common settings
-const stylesheetsCommon = () =>
+const stylesheetsCommon = done => {
   src(paths.common.stylesheets.src)
   .pipe(header(stylesheetsConfig))
   .pipe(concat('_variable.scss'))
   .pipe(dest(paths.common.stylesheets.dest))
+  return done()
+}
 
 // javascripts common settings
-const javascriptsCommon = () =>
+const javascriptsCommon = done => {
   src(paths.common.javascripts.src)
   .pipe(plumber(plumberConfig))
   .pipe(webpackStream(webpackCommon, webpack))
   .pipe(gulpIf(isProduction, header(commentsJs, {pkg: webConfig, filename: paths.common.javascripts.concat})))
   .pipe(dest(paths.common.javascripts.dest))
   .pipe(bs.stream())
+  return done()
+}
 
 // images common settings
-const imagesCommon = () =>
+const imagesCommon = done => {
   src(paths.common.images.src)
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.common.images.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.common.images.dest))
+  return done()
+}
 
 //------------------------------------------------------
 // Build Settings
@@ -528,15 +536,17 @@ const imagesCommon = () =>
 //------------------------------------------------------
 
 // Templates Settings
-const templates = () =>
+const templates = done => {
   src(paths.templates.src)
   .pipe(plumber(plumberConfig))
   .pipe(handlebars(handlebarsConfig))
   .pipe(dest(paths.templates.dest))
   .pipe(bs.stream())
+  return done()
+}
 
 // Stylesheets Settings
-const stylesheets = () =>
+const stylesheets = done => {
   src(paths.stylesheets.pc.src, isProduction ? undefined : { sourcemaps: true })
   .pipe(plumber(plumberConfig))
   .pipe(header(stylesheetsConfig))
@@ -545,25 +555,31 @@ const stylesheets = () =>
   .pipe(gulpIf(isProduction, header(commentsCss, {pkg: webConfig, filename: paths.stylesheets.concat})))
   .pipe(dest(paths.stylesheets.pc.dest, isProduction ? undefined : { sourcemaps: true }))
   .pipe(bs.stream())
+  return done()
+}
 
 // Javascripts Settings
-const javascripts = () =>
+const javascripts = done => {
   src(paths.javascripts.pc.src)
   .pipe(plumber(plumberConfig))
   .pipe(webpackStream(webpackDefault, webpack))
   .pipe(gulpIf(isProduction, header(commentsJs, {pkg: webConfig, filename: paths.javascripts.concat})))
   .pipe(dest(paths.javascripts.pc.dest))
   .pipe(bs.stream())
+  return done()
+}
 
 // Images Settings
-const images = () =>
+const images = done => {
   src(paths.images.pc.src)
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.images.pc.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.images.pc.dest))
+  return done()
+}
 
 // Stylesheets Settings SP
-const stylesheetsSP = () =>
+const stylesheetsSP = done => {
   src(paths.stylesheets.sp.src, isProduction ? undefined : { sourcemaps: true })
   .pipe(plumber(plumberConfig))
   .pipe(header(stylesheetsConfig))
@@ -572,25 +588,31 @@ const stylesheetsSP = () =>
   .pipe(gulpIf(isProduction, header(commentsCss, {pkg: webConfig, filename: paths.stylesheets.concat})))
   .pipe(dest(paths.stylesheets.sp.dest, isProduction ? undefined : { sourcemaps: true }))
   .pipe(bs.stream())
+  return done()
+}
 
 // Javascripts Settings SP
-const javascriptsSP = () =>
+const javascriptsSP = done => {
   src(paths.javascripts.sp.src)
   .pipe(plumber(plumberConfig))
   .pipe(webpackStream(webpackSP, webpack))
   .pipe(gulpIf(isProduction, header(commentsJs, {pkg: webConfig, filename: paths.javascripts.concat})))
   .pipe(dest(paths.javascripts.sp.dest))
   .pipe(bs.stream())
+  return done()
+}
 
 // Images Settings SP
-const imagesSP = () =>
+const imagesSP = done => {
   src(paths.images.sp.src)
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.images.sp.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.images.sp.dest))
+  return done()
+}
 
 // Purge CSS
-const purgeCSSpc = () =>
+const purgeCSSpc = done => {
   src(paths.stylesheets.purge.pc.src)
   .pipe(
     purgecss({
@@ -599,9 +621,11 @@ const purgeCSSpc = () =>
   )
   .pipe(concat('app.purge.css'))
   .pipe(dest(paths.stylesheets.pc.dest))
+  return done()
+}
 
   // Purge CSS
-const purgeCSSsp = () =>
+const purgeCSSsp = done => {
   src(paths.stylesheets.purge.sp.src)
   .pipe(
     purgecss({
@@ -610,6 +634,8 @@ const purgeCSSsp = () =>
   )
   .pipe(concat('app.purge.css'))
   .pipe(dest(paths.stylesheets.sp.dest))
+  return done()
+}
 
 //------------------------------------------------------
 // Local & API & Git server Settings
@@ -638,16 +664,20 @@ const removeDirectory = done => deleteAsync([ rootDir.htdocs ], done);
 const removeGit = done => deleteAsync([ `${rootDir.git}`, `${rootDir.src}/.git` ], done);
 
 // Git Repository
-const repositoryCopy = () =>
+const repositoryCopy = done => {
   src(paths.modules.git.repository.src)
   .pipe(plumber(plumberConfig))
   .pipe(dest(paths.modules.git.repository.dest))
+  return done()
+}
 
 // Git Repository ( hidden )
-const repositoryHiddenCopy = () =>
+const repositoryHiddenCopy = done => {
   src(paths.modules.git.hidden.src)
   .pipe(plumber(plumberConfig))
   .pipe(dest(paths.modules.git.hidden.dest))
+  return done()
+}
 
 //------------------------------------------------------
 // Monitoring Task

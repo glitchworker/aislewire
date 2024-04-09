@@ -913,6 +913,12 @@ $size: 26;
 
 ## 🆙 Version History
 
+### v0.2.9（2024年4月9日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, @babel/preset-typescript, @babel/plugin-proposal-class-properties, autoprefixer, css-declaration-sorter, cssnano, glob, gulp-purgecss, postcss, sass, webpack）
+- gulpfile.js のタスク周りを v5 に向けて微調整
+- README.md の変更
+
 ### v0.2.8（2024年2月26日）
 
 - package.json の更新（cssnano, sass, webpack）
