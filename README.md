@@ -935,12 +935,13 @@ Microsoft が提供している [jsonc-parser](https://github.com/Microsoft/node
 
 ### v0.3.0（2024年4月10日）
 
-- package.json の更新（gulp）
+- package.json の更新（gulp, sass）
 - gulpfile.js で src にバイナリを取り扱っている箇所に { encoding: false } のオプションを追加（v5 以降はデフォルトで UTF-8 が指定されるようになった為対応）
 - /src/config.json のファイル拡張子を config.jsonc へ変更（JSON with Comments 対応でコメントがかけるようになりました）
 - /src/_modules/import/data.json のファイル拡張子を data.jsonc へ変更（JSON with Comments 対応でコメントがかけるようになりました）
 - 上記にともない gulpfile.js と webpack.config.js の該当箇所を修正
 - 不要な Javascript ライブラリが残っていたので削除しました
+- _default.scss に文章の折り返し指定の CSS を追加
 - README.md の変更
 
 ### v0.2.9（2024年4月9日）

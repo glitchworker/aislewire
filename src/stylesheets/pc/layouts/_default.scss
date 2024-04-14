@@ -16,6 +16,10 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
 
+  overflow-wrap: anywhere; // 収まらない場合に折り返す
+  word-break: normal; // 単語の分割はデフォルトに依存
+  line-break: strict; // 禁則処理を厳格に適用
+
   @include config.RESPONSIVE('PRINT', config.$MAX_WIDTH) {
     width: config.$MAX_WIDTH;
     transform: scale(.8);

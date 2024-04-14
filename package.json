@@ -88,7 +88,7 @@
     "node-git-server": "^1.0.0",
     "plugin-error": "^2.0.1",
     "postcss": "^8.4.38",
-    "sass": "^1.74.1",
+    "sass": "^1.75.0",
     "slash": "^5.1.0",
     "terser-webpack-plugin": "^5.3.10",
     "through2": "^4.0.2",
