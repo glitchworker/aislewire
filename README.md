@@ -17,7 +17,7 @@ Wire は```《線》```や```《網》```などを意味します。
 
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
-- node v20.11.0 over
+- node v20.12.2 over
 - npm v10.2.4 over
 
 ## 🔰 Usage
@@ -60,7 +60,7 @@ Wire は```《線》```や```《網》```などを意味します。
 
 #### config.jsonc
 
-```jsonc
+```json
 {
   "WEB_SITE_NAME": "これはサイト名です",
   "WEB_AUTHOR": "これは作成者です",
@@ -166,7 +166,7 @@ META_PWA_MODE: false
 
 #### /import/data.jsonc
 
-```jsonc
+```json
 [
   {
     "TYPE": "dir",
@@ -933,15 +933,17 @@ Microsoft が提供している [jsonc-parser](https://github.com/Microsoft/node
 
 ## 🆙 Version History
 
-### v0.3.0（2024年4月10日）
+### v0.3.0（2024年4月28日）
 
-- package.json の更新（gulp, sass）
+- Node.js の[脆弱性](https://jvn.jp/vu/JVNVU94343502/) に伴い node を v20.11.0 から v20.12.2 以上に変更
+- package.json の更新（cssnano, gulp, mime, sass）
 - gulpfile.js で src にバイナリを取り扱っている箇所に { encoding: false } のオプションを追加（v5 以降はデフォルトで UTF-8 が指定されるようになった為対応）
 - /src/config.json のファイル拡張子を config.jsonc へ変更（JSON with Comments 対応でコメントがかけるようになりました）
 - /src/_modules/import/data.json のファイル拡張子を data.jsonc へ変更（JSON with Comments 対応でコメントがかけるようになりました）
 - 上記にともない gulpfile.js と webpack.config.js の該当箇所を修正
 - 不要な Javascript ライブラリが残っていたので削除しました
 - _default.scss に文章の折り返し指定の CSS を追加
+- 共通 SCSS 周りの整理
 - README.md の変更
 
 ### v0.2.9（2024年4月9日）

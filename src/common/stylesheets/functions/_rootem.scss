@@ -1,8 +1,10 @@
+@use "sass:math";
+
 // ------------------------------------------- SASS Information
-//  Name:      utils/_align.scss
+//  Name:      mixins/_rootem.scss
 //  Author:    GlitchWorker
 // -----------------------------------------------------------
 
-.al { text-align: left !important; }
-.ac { text-align: center !important; }
-.ar { text-align: right !important; }
+@function rem($size, $base: 16) {
+  @return math.div($size, $base) * 1rem;
+}

@@ -33,11 +33,11 @@
     "build"
   ],
   "engines": {
-    "node": ">=20.11.0",
+    "node": ">=20.12.2",
     "npm": ">=10.2.4"
   },
   "volta": {
-    "node": "20.11.0",
+    "node": "20.12.2",
     "npm": "10.2.4",
     "yarn": "1.22.19"
   },
@@ -62,7 +62,7 @@
     "browser-sync": "^3.0.2",
     "connect-ssi": "^1.1.1",
     "css-declaration-sorter": "^7.2.0",
-    "cssnano": "^6.1.2",
+    "cssnano": "^7.0.1",
     "del": "^7.1.0",
     "directory-tree": "^3.5.1",
     "fancy-log": "^2.0.0",
@@ -82,7 +82,7 @@
     "image-size": "^1.1.1",
     "js-yaml": "^4.1.0",
     "jsonc-parser": "^3.2.1",
-    "mime": "^4.0.1",
+    "mime": "^4.0.3",
     "minimist": "^1.2.8",
     "node-css-mqpacker": "^9.0.0",
     "node-git-server": "^1.0.0",
