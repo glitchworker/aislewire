@@ -933,6 +933,11 @@ Microsoft が提供している [jsonc-parser](https://github.com/Microsoft/node
 
 ## 🆙 Version History
 
+### v0.3.1（2024年5月31日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, @babel/preset-typescript, glob, sass）
+- README.md の変更
+
 ### v0.3.0（2024年4月28日）
 
 - Node.js の[脆弱性](https://jvn.jp/vu/JVNVU94343502/) に伴い node を v20.11.0 から v20.12.2 以上に変更
