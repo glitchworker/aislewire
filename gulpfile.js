@@ -29,6 +29,7 @@ import minimist from 'minimist' // 引数を解析
 import plumber from 'gulp-plumber' // エラー回避
 import { readFileSync } from 'node:fs' // ファイル / ディレクトリ操作
 import { deleteAsync } from 'del' // ファイル / ディレクトリ削除
+import { parse } from 'jsonc-parser'; // JSONC ファイル読み込み
 
 // WebServer Module
 import browserSync from 'browser-sync'
@@ -48,7 +49,8 @@ import { glob, globSync, globStream, globStreamSync, Glob } from 'glob' // Glob 
 // 独自モジュール読み込み
 //------------------------------------------------------
 
-import webConfig from './src/config.json' assert { type: 'json' } // サイト共通設定
+// import webConfig from './src/config.json' assert { type: 'json' } // サイト共通設定（Experimental）
+const webConfig = parse(readFileSync('./src/config.jsonc').toString()) // サイト共通設定
 import handlebars from './tasks/modules/handlebars/index.js' // Handlebars 拡張
 import webpackConfig from './tasks/webpack.config.js' // Webpack 共通設定
 
@@ -83,8 +85,8 @@ if (isProduction) {
   WEB_SITE_URL = webConfig.SITE_URL.DEV
 }
 
-webConfig.WEB_BASE_URL = WEB_SITE_URL // config.json に WEB_BASE_URL 項目を追加
-webConfig.WEB_SITE_URL = WEB_SITE_URL + webConfig.CURRENT_DIR // config.json に WEB_SITE_URL 項目を追加
+webConfig.WEB_BASE_URL = WEB_SITE_URL // config.jsonc に WEB_BASE_URL 項目を追加
+webConfig.WEB_SITE_URL = WEB_SITE_URL + webConfig.CURRENT_DIR // config.jsonc に WEB_SITE_URL 項目を追加
 
 //------------------------------------------------------
 // Path Settings
@@ -196,7 +198,7 @@ const paths = {
     },
     import: {
       src: `${rootDir.src}/_modules/import`,
-      json: `${rootDir.src}/_modules/import/data.json`
+      json: `${rootDir.src}/_modules/import/data.jsonc`
     },
     api: {
       port: 9000,
@@ -476,51 +478,57 @@ const plumberConfig = error => {
 
 // import settings
 const importData = done => {
-  const jsonData = JSON.parse(readFileSync(paths.modules.import.json));
-  let jsonDataPath;
-  jsonData.forEach((page, i) => {
-    if (page.TYPE === 'dir') {
-      jsonDataPath = `${paths.modules.import.src}/${page.DATA}/**/*`
-    } else {
-      jsonDataPath = `${paths.modules.import.src}/${page.DATA}`
-    }
-    return src(jsonDataPath, { allowEmpty: true })
-    .pipe(plumber(plumberConfig))
-    .pipe(changed(page.OUTPUT, { hasChanged: compareContents }))
-    .pipe(dest(`${rootDir.htdocs}/${page.OUTPUT}`))
-  });
-  return done()
+  const jsonData = parse(readFileSync(paths.modules.import.json).toString());
+  if(jsonData) {
+    let jsonDataPath;
+    jsonData.forEach((page, i) => {
+      if (page.TYPE === 'dir') {
+        jsonDataPath = `${paths.modules.import.src}/${page.DATA}/**/*`
+      } else {
+        jsonDataPath = `${paths.modules.import.src}/${page.DATA}`
+      }
+      return src(jsonDataPath, { allowEmpty: true, encoding: false })
+      .pipe(plumber(plumberConfig))
+      .pipe(changed(page.OUTPUT, { hasChanged: compareContents }))
+      .pipe(dest(`${rootDir.htdocs}/${page.OUTPUT}`))
+    });
+  }
+  return done();
 }
 
 // library settings
-const libraryCopy = () =>
-  src(paths.common.libraryCopy.lib)
+const libraryCopy = () => {
+  return src(paths.common.libraryCopy.lib)
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.common.libraryCopy.dest))
   .pipe(dest(paths.common.libraryCopy.dest))
+}
 
 // Stylesheets common settings
-const stylesheetsCommon = () =>
-  src(paths.common.stylesheets.src)
+const stylesheetsCommon = () => {
+  return src(paths.common.stylesheets.src)
   .pipe(header(stylesheetsConfig))
   .pipe(concat('_variable.scss'))
   .pipe(dest(paths.common.stylesheets.dest))
+}
 
 // javascripts common settings
-const javascriptsCommon = () =>
-  src(paths.common.javascripts.src)
+const javascriptsCommon = () => {
+  return src(paths.common.javascripts.src)
   .pipe(plumber(plumberConfig))
   .pipe(webpackStream(webpackCommon, webpack))
-  .pipe(gulpIf(isProduction, header(commentsJs, {pkg: webConfig, filename: paths.common.javascripts.concat})))
+  .pipe(gulpIf(isProduction, header(commentsJs, { pkg: webConfig, filename: paths.common.javascripts.concat })))
   .pipe(dest(paths.common.javascripts.dest))
   .pipe(bs.stream())
+}
 
 // images common settings
-const imagesCommon = () =>
-  src(paths.common.images.src)
+const imagesCommon = () => {
+  return src(paths.common.images.src, { encoding: false })
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.common.images.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.common.images.dest))
+}
 
 //------------------------------------------------------
 // Build Settings
@@ -528,70 +536,77 @@ const imagesCommon = () =>
 //------------------------------------------------------
 
 // Templates Settings
-const templates = () =>
-  src(paths.templates.src)
+const templates = () => {
+  return src(paths.templates.src)
   .pipe(plumber(plumberConfig))
   .pipe(handlebars(handlebarsConfig))
   .pipe(dest(paths.templates.dest))
   .pipe(bs.stream())
+}
 
 // Stylesheets Settings
-const stylesheets = () =>
-  src(paths.stylesheets.pc.src, isProduction ? undefined : { sourcemaps: true })
+const stylesheets = () => {
+  return src(paths.stylesheets.pc.src, isProduction ? undefined : { sourcemaps: true })
   .pipe(plumber(plumberConfig))
   .pipe(header(stylesheetsConfig))
   .pipe(postcss(postcssConfig))
   .pipe(concat(paths.stylesheets.concat))
-  .pipe(gulpIf(isProduction, header(commentsCss, {pkg: webConfig, filename: paths.stylesheets.concat})))
+  .pipe(gulpIf(isProduction, header(commentsCss, { pkg: webConfig, filename: paths.stylesheets.concat })))
   .pipe(dest(paths.stylesheets.pc.dest, isProduction ? undefined : { sourcemaps: true }))
   .pipe(bs.stream())
+}
 
 // Javascripts Settings
-const javascripts = () =>
-  src(paths.javascripts.pc.src)
+const javascripts = () => {
+  return src(paths.javascripts.pc.src)
   .pipe(plumber(plumberConfig))
   .pipe(webpackStream(webpackDefault, webpack))
-  .pipe(gulpIf(isProduction, header(commentsJs, {pkg: webConfig, filename: paths.javascripts.concat})))
+  .pipe(gulpIf(isProduction, header(commentsJs, { pkg: webConfig, filename: paths.javascripts.concat })))
   .pipe(dest(paths.javascripts.pc.dest))
   .pipe(bs.stream())
+}
 
 // Images Settings
-const images = () =>
-  src(paths.images.pc.src)
+const images = () => {
+  return src(paths.images.pc.src, { encoding: false })
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.images.pc.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.images.pc.dest))
+}
 
 // Stylesheets Settings SP
-const stylesheetsSP = () =>
-  src(paths.stylesheets.sp.src, isProduction ? undefined : { sourcemaps: true })
+const stylesheetsSP = () => {
+  return src(paths.stylesheets.sp.src, isProduction ? undefined : { sourcemaps: true })
   .pipe(plumber(plumberConfig))
   .pipe(header(stylesheetsConfig))
   .pipe(postcss(postcssConfig))
   .pipe(concat(paths.stylesheets.concat))
-  .pipe(gulpIf(isProduction, header(commentsCss, {pkg: webConfig, filename: paths.stylesheets.concat})))
+  .pipe(gulpIf(isProduction, header(commentsCss, { pkg: webConfig, filename: paths.stylesheets.concat })))
   .pipe(dest(paths.stylesheets.sp.dest, isProduction ? undefined : { sourcemaps: true }))
   .pipe(bs.stream())
+}
 
 // Javascripts Settings SP
-const javascriptsSP = () =>
-  src(paths.javascripts.sp.src)
+const javascriptsSP = () => {
+  return src(paths.javascripts.sp.src)
   .pipe(plumber(plumberConfig))
   .pipe(webpackStream(webpackSP, webpack))
-  .pipe(gulpIf(isProduction, header(commentsJs, {pkg: webConfig, filename: paths.javascripts.concat})))
+  .pipe(gulpIf(isProduction, header(commentsJs, { pkg: webConfig, filename: paths.javascripts.concat })))
   .pipe(dest(paths.javascripts.sp.dest))
   .pipe(bs.stream())
+}
 
 // Images Settings SP
-const imagesSP = () =>
-  src(paths.images.sp.src)
+const imagesSP = () => {
+  return src(paths.images.sp.src, { encoding: false })
   .pipe(plumber(plumberConfig))
   .pipe(changed(paths.images.sp.dest, { hasChanged: compareContents }))
   .pipe(dest(paths.images.sp.dest))
+}
 
 // Purge CSS
-const purgeCSSpc = () =>
-  src(paths.stylesheets.purge.pc.src)
+const purgeCSSpc = () => {
+  return src(paths.stylesheets.purge.pc.src)
   .pipe(
     purgecss({
       content: [paths.stylesheets.purge.pc.dest]
@@ -599,10 +614,11 @@ const purgeCSSpc = () =>
   )
   .pipe(concat('app.purge.css'))
   .pipe(dest(paths.stylesheets.pc.dest))
+}
 
   // Purge CSS
-const purgeCSSsp = () =>
-  src(paths.stylesheets.purge.sp.src)
+const purgeCSSsp = () => {
+  return src(paths.stylesheets.purge.sp.src)
   .pipe(
     purgecss({
       content: [paths.stylesheets.purge.sp.dest]
@@ -610,6 +626,7 @@ const purgeCSSsp = () =>
   )
   .pipe(concat('app.purge.css'))
   .pipe(dest(paths.stylesheets.sp.dest))
+}
 
 //------------------------------------------------------
 // Local & API & Git server Settings
@@ -638,16 +655,18 @@ const removeDirectory = done => deleteAsync([ rootDir.htdocs ], done);
 const removeGit = done => deleteAsync([ `${rootDir.git}`, `${rootDir.src}/.git` ], done);
 
 // Git Repository
-const repositoryCopy = () =>
-  src(paths.modules.git.repository.src)
+const repositoryCopy = () => {
+  return src(paths.modules.git.repository.src)
   .pipe(plumber(plumberConfig))
   .pipe(dest(paths.modules.git.repository.dest))
+}
 
 // Git Repository ( hidden )
-const repositoryHiddenCopy = () =>
-  src(paths.modules.git.hidden.src)
+const repositoryHiddenCopy = () => {
+  return src(paths.modules.git.hidden.src)
   .pipe(plumber(plumberConfig))
   .pipe(dest(paths.modules.git.hidden.dest))
+}
 
 //------------------------------------------------------
 // Monitoring Task

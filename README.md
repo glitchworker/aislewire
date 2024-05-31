@@ -17,7 +17,7 @@ Wire は```《線》```や```《網》```などを意味します。
 
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
-- node v20.11.0 over
+- node v20.12.2 over
 - npm v10.2.4 over
 
 ## 🔰 Usage
@@ -30,7 +30,7 @@ Wire は```《線》```や```《網》```などを意味します。
 
 4. ```yarn install``` で必要なパッケージをインストール（npm の場合 ```npm install```）
 
-5. ```/src/config.json``` を開き各項目を編集しておく（後からも変更可能）
+5. ```/src/config.jsonc``` を開き各項目を編集しておく（後からも変更可能）
 
 6. ```yarn setup``` を初回に1度だけ実行する（npm の場合 ```npm run setup```）
 
@@ -56,9 +56,9 @@ Wire は```《線》```や```《網》```などを意味します。
 |----|---|
 | /gulpfile.js | gulp に関する設定ファイル |
 | /tasks/webpack.config.js | webpack に関する設定ファイル |
-| /src/config.json | 共通設定ファイル |
+| /src/config.jsonc | 共通設定ファイル |
 
-#### config.json
+#### config.jsonc
 
 ```json
 {
@@ -97,7 +97,7 @@ Wire は```《線》```や```《網》```などを意味します。
 | /src/common/stylesheets/_config.scss | stylesheet 内で使う規定値 |
 | /src/_modules/api/data.json | api で使う規定値 |
 | /src/_modules/data/**/* | 共通の規定値（ json, yml 読み込み可能） |
-| /src/_modules/import/data.json | import で使う規定値 |
+| /src/_modules/import/data.jsonc | import で使う規定値 |
 
 #### /api/data.json
 ```json
@@ -164,18 +164,18 @@ META_PWA_MODE: false
 ---
 ```
 
-#### /import/data.json
+#### /import/data.jsonc
 
 ```json
 [
   {
     "TYPE": "dir",
-    "DATA": "フォルダ名",
+    "DATA": "入力元フォルダ名",
     "OUTPUT": "出力先のパス"
   },
   {
     "TYPE": "file",
-    "DATA": "ファイル名",
+    "DATA": "入力元ファイル名",
     "OUTPUT": "出力先のパス"
   }
 ]
@@ -183,7 +183,7 @@ META_PWA_MODE: false
 
 ## 💁 How to use
 
-共通の規定値は ```config.json``` に定義してください。  
+共通の規定値は ```config.jsonc``` に定義してください。  
 規定値の参照方法などは以下をご覧ください。
 
 #### handlebarsの場合
@@ -370,7 +370,7 @@ META_PWA_MODE: false
 	│   │   │   ├── exampleThree.yml
 	│   │   │   └── exampleFour.json
 	│   │   └── import
-	│   │       └── data.json
+	│   │       └── data.jsonc
 	│   ├── common
 	│   │   ├── images
 	│   │   │   ├── favicon.ico
@@ -419,7 +419,7 @@ META_PWA_MODE: false
 	│   │           ├── _color.scss
 	│   │           ├── _easing.scss
 	│   │           └── _variable.scss
-	│   ├── config.json
+	│   ├── config.jsonc
 	│   ├── images
 	│   │   ├── pc
 	│   │   │   ├── common
@@ -585,7 +585,7 @@ META_PWA_MODE: false
 ## ✨ Import Copy Data
 
 > ```/src/_modules/import/``` にファイルを設置し、  
-同ディレクトリの ```data.json``` を編集することによって  
+同ディレクトリの ```data.jsonc``` を編集することによって  
 指定した先にコピーしてくれる機能です、外部ソースを取り込む時など  
 重宝するのでご利用ください。
 
@@ -611,7 +611,7 @@ META_PWA_MODE: false
 
 ## ✨ API Mock Server
 
-```config.json``` の ```LOCAL_SERVER``` の ```API``` を有効にすると起動します。
+```config.jsonc``` の ```LOCAL_SERVER``` の ```API``` を有効にすると起動します。
 
 > 機能としては JSON ファイルを用意しておけば API のリクエストを受け取り、  
 または返してくれるシンプルな RESTful API サーバーを用意することが出来ます。  
@@ -882,10 +882,10 @@ $size: 26;
 
 ## 🚀 Important Notices
 
-<u>**v0.1.5 以降 dart-sass で config.json の変数が参照可能になりました**</u>
+<u>**v0.1.5 以降 dart-sass で config.jsonc の変数が参照可能になりました**</u>
 
 > Sass の function を使う方法は、やはり依存してしまうので今回も避けて   
-```_global.scss``` ファイルと ```config.json``` の変数を合わせたものを   
+```_global.scss``` ファイルと ```config.jsonc``` の変数を合わせたものを   
 ```_variable.scss``` というファイルで出力し ```_config.scss``` から   
 参照出来るようにシンプルな設計で可能なように実装しました。   
 これにて他の変数と同じく ```config``` から呼び出すことが可能になりました。
@@ -911,7 +911,51 @@ $size: 26;
 その他 ESM の詳細に関しては [Node.js](https://nodejs.org/api/esm.html) 公式のドキュメントを参照ください。   
 また、バージョンが古くなり動作しない＆あまり使用されていなかったので GSX Server の機能を削除しました。
 
+<u>**v0.3.0 で Gulp 4 から Gulp 5 に移行**</u>
+
+> 2024年3月29日に5年ぶりに [Gulp v5.0.0](https://github.com/gulpjs/gulp/releases/tag/v5.0.0#individual-changelogs) のバージョンアップが公開されました。   
+破壊的な変更点も沢山あり、大きな変更点とすると ```Node.js``` の ```10.13``` 以前のバージョンのサポートが終了した点と   
+デフォルトのストリームエンコーディングが ```UTF-8``` に変更された事によって画像などバイナリデータを使用するためには   
+タスクの src オプションに対して ```{ encoding: false }``` を必ず指定する必要があり対応をいたしました。   
+基本的にタスクは非同期処理で書かなければいけないようでそのあたりに関しても修正しています。   
+その他 ESM 周りにも諸々対応をしたようで、細かい修正内容に関しては上記のリンクから参照ください。   
+また何故か今回のアップデートで scss の @use で一部アンダーバーの省略が出来なくなった箇所を修正しました。
+
+<u>**v0.3.0 で共通設定ファイルなど一部ファイル拡張子を変更**</u>
+
+> ```/src/config.json``` および ```/src/_modules/import/data.json``` のファイル拡張子を jsonc へ変更しました。   
+JSONC とは ```JSON with Comments``` の略で本来 JSON 形式ではコメントが書けない仕様となっていますが   
+JavaScript スタイルのコメントを記述できるようにしたデータフォーマットです。    
+Microsoft が提供している [jsonc-parser](https://github.com/Microsoft/node-jsonc-parser) を使用して実現しています。   
+この拡張子は [VSCode](https://code.visualstudio.com/docs/languages/json#_json-with-comments) の設定ファイルや TypeScript の tsconfig.json などでも幅広く利用されているものです。    
+そのため VSCode を使用していた場合自動的にコード補完が機能します。    
+※豆知識として [Babel](https://babeljs.io/docs/en/config-files#supported-file-extensions) の .babelrc は JSONC ではなく JSON5 である。
+
 ## 🆙 Version History
+
+### v0.3.1（2024年5月31日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, @babel/preset-typescript, glob, sass）
+- README.md の変更
+
+### v0.3.0（2024年4月28日）
+
+- Node.js の[脆弱性](https://jvn.jp/vu/JVNVU94343502/) に伴い node を v20.11.0 から v20.12.2 以上に変更
+- package.json の更新（cssnano, gulp, mime, sass）
+- gulpfile.js で src にバイナリを取り扱っている箇所に { encoding: false } のオプションを追加（v5 以降はデフォルトで UTF-8 が指定されるようになった為対応）
+- /src/config.json のファイル拡張子を config.jsonc へ変更（JSON with Comments 対応でコメントがかけるようになりました）
+- /src/_modules/import/data.json のファイル拡張子を data.jsonc へ変更（JSON with Comments 対応でコメントがかけるようになりました）
+- 上記にともない gulpfile.js と webpack.config.js の該当箇所を修正
+- 不要な Javascript ライブラリが残っていたので削除しました
+- _default.scss に文章の折り返し指定の CSS を追加
+- 共通 SCSS 周りの整理
+- README.md の変更
+
+### v0.2.9（2024年4月9日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, @babel/preset-typescript, @babel/plugin-proposal-class-properties, autoprefixer, css-declaration-sorter, cssnano, glob, gulp-purgecss, postcss, sass, webpack）
+- gulpfile.js のタスク周りを v5 に向けて微調整
+- README.md の変更
 
 ### v0.2.8（2024年2月26日）
 
@@ -939,7 +983,7 @@ $size: 26;
 ### v0.2.5（2024年2月8日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, autoprefixer, browser-sync, css-declaration-sorter, cssnano, image-size, postcss, sass, terser-webpack-plugin, webpack, webpack-merge）
-- config.json に PURGE_CSS の項目を追加（true で HTML 上で使用されていないスタイルを CSS ファイルから削除したものを出力することが出来るようになります。元々 true で書き出されていたが、デフォルトは false に変更され任意で設定が出来るように変更）
+- config.jsonc に PURGE_CSS の項目を追加（true で HTML 上で使用されていないスタイルを CSS ファイルから削除したものを出力することが出来るようになります。元々 true で書き出されていたが、デフォルトは false に変更され任意で設定が出来るように変更）
 - README.md の変更
 
 ### v0.2.4（2023年9月27日）
@@ -991,10 +1035,10 @@ $size: 26;
 ### v0.1.7（2022年4月27日）
 
 - package.json の更新（@babel/core, autoprefixer, babel-loader, browser-sync, css-declaration-sorter, cssnano, glob, minimist, postcss, webpack）
-- config.json に WEBPACK_ENTRIES の項目を追加（true で js ファイルを単体出力出来るようになります）
-- config.json に HTTPS_SERVER の項目を追加（SSL 環境が必要な場合に true にすると HTTPS でアクセスが可能になる）
-- config.json に ASSETS_HOST の項目を追加（CSS 内のパスを別ドメインに向ける場合フルパスで入力する）
-- config.json に CACHE_VERSION の項目を追加（キャッシュ対策をするために数字を入力 20220426 みたいな感じをいれると ?v= パラメータとして付与される）
+- config.jsonc に WEBPACK_ENTRIES の項目を追加（true で js ファイルを単体出力出来るようになります）
+- config.jsonc に HTTPS_SERVER の項目を追加（SSL 環境が必要な場合に true にすると HTTPS でアクセスが可能になる）
+- config.jsonc に ASSETS_HOST の項目を追加（CSS 内のパスを別ドメインに向ける場合フルパスで入力する）
+- config.jsonc に CACHE_VERSION の項目を追加（キャッシュ対策をするために数字を入力 20220426 みたいな感じをいれると ?v= パラメータとして付与される）
 - gulpfile.js に上記の機能実装を追加＆整理
 - dart-sass-functions の inline_image 関数の mime 修正（ バージョン2 から lookup() が廃止され getType() に変更になりエラーが出ていた為 ）
 - README.md の変更

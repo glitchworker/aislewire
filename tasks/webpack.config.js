@@ -5,6 +5,8 @@
 
 import webpackStream from 'webpack-stream' // Webpack 読み込み
 const { webpack } = webpackStream
+import { readFileSync } from 'node:fs' // ファイル / ディレクトリ操作
+import { parse } from 'jsonc-parser'; // JSONC ファイル読み込み
 import minimist from 'minimist' // Gulp で引数を解析
 import IfPlugin from './modules/if-webpack-plugin/index.js' // Webpack の 条件分岐
 import TerserPlugin from 'terser-webpack-plugin' // Webpack の minify 設定
@@ -15,7 +17,8 @@ import HardSourcePlugin from 'hard-source-webpack-plugin' // 中間キャッシ�
 // 独自モジュール読み込み
 //------------------------------------------------------
 
-import webConfig from '../src/config.json' assert { type: 'json' } // サイト共通設定
+// import webConfig from '../src/config.json' assert { type: 'json' } // サイト共通設定（Experimental）
+const webConfig = parse(readFileSync('./src/config.jsonc').toString()) // サイト共通設定
 
 //------------------------------------------------------
 // Development & Production Environment Branch processing

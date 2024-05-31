@@ -3,38 +3,38 @@
 //  Author:    GlitchWorker
 // -----------------------------------------------------------
 
-@mixin fontWeight($fontWeight) {
-  @if $fontWeight == "Thin" or $fontWeight == "Hairline" {
+@mixin fontWeight($weight) {
+  @if $weight == "Thin" or $weight == "Hairline" {
     font-weight: 100;
   }
-  @else if $fontWeight == "ExtraLight" or $fontWeight == "UltraLight" {
+  @else if $weight == "ExtraLight" or $weight == "UltraLight" {
     font-weight: 200;
   }
-  @else if $fontWeight == "Light" {
+  @else if $weight == "Light" {
     font-weight: 300;
   }
-  @else if $fontWeight == "DemiLight" {
+  @else if $weight == "DemiLight" {
     font-weight: 350;
   }
-  @else if $fontWeight == "Normal" or $fontWeight == "Regular" {
+  @else if $weight == "Normal" or $weight == "Regular" {
     font-weight: 400;
   }
-  @else if $fontWeight == "Medium" {
+  @else if $weight == "Medium" {
     font-weight: 500;
   }
-  @else if $fontWeight == "SemiBold" or $fontWeight == "DemiBold" {
+  @else if $weight == "SemiBold" or $weight == "DemiBold" {
     font-weight: 600;
   }
-  @else if $fontWeight == "Bold" {
+  @else if $weight == "Bold" {
     font-weight: 700;
   }
-  @else if $fontWeight == "ExtraBold" or $fontWeight == "UltraBold" {
+  @else if $weight == "ExtraBold" or $weight == "UltraBold" {
     font-weight: 800;
   }
-  @else if $fontWeight == "Black" or $fontWeight == "Heavy" {
+  @else if $weight == "Black" or $weight == "Heavy" {
     font-weight: 900;
   }
-  @else if $fontWeight == "ExtraBlack" or $fontWeight == "UltraBlack" {
+  @else if $weight == "ExtraBlack" or $weight == "UltraBlack" {
     font-weight: 950;
   }
 }

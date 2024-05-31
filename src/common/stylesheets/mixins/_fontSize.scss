@@ -6,17 +6,17 @@
 //  Author:    GlitchWorker
 // -----------------------------------------------------------
 
-@mixin fontSize($fontSize, $baseFontSize: 16){
-  font-size: math.percentage($fontSize / $baseFontSize);
+@mixin fontSize_per($size, $base: 16){
+  font-size: math.percentage(math.div($size, $base));
 }
 
-@mixin fontSize_vw($font_size: 16) {
-  font-size: math.div($font-size, 2) + px;
-  font-size: viewport.get_vw($font_size);
+@mixin fontSize_vw($base: 16) {
+  font-size: math.div($base, 2) + px;
+  font-size: viewport.vw($base);
 }
 
-@mixin lineHeight($size: 32, $font_size: 16) {
-  line-height: math.div($size, $font-size);
+@mixin lineHeight($size: 32, $base: 16) {
+  line-height: math.div($size, $base);
 }
 
 @mixin letterSpacing($size: 80) {

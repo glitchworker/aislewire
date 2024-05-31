@@ -6,77 +6,147 @@
 //  Author:    GlitchWorker
 // -----------------------------------------------------------
 
-@mixin elementSize_vw($elementSizeW: null, $elementSizeH: null, $viewport: null) {
-  @if $elementSizeW and $viewport {
-    width: viewport.get_vw($elementSizeW, $viewport);
-  } @else if $elementSizeW {
-    width: viewport.get_vw($elementSizeW);
+@mixin elementSize_vw($width: null, $height: null, $viewport: null) {
+  @if $width and $viewport {
+    width: viewport.vw($width, $viewport);
+  } @else if $width {
+    width: viewport.vw($width);
   }
-  @if $elementSizeH and $viewport {
-    height: viewport.get_vw($elementSizeH, $viewport);
-  } @else if $elementSizeH {
-    height: viewport.get_vw($elementSizeH);
-  }
-}
-
-@mixin padding_vw($paddingSizeT: null, $paddingSizeR: null, $paddingSizeB: null, $paddingSizeL: null) {
-  @if $paddingSizeT {
-    padding: viewport.get_vw($paddingSizeT);
-  }
-  @if $paddingSizeR {
-    padding: viewport.get_vw($paddingSizeT) viewport.get_vw($paddingSizeR);
-  }
-  @if $paddingSizeB {
-    padding: viewport.get_vw($paddingSizeT) viewport.get_vw($paddingSizeR) viewport.get_vw($paddingSizeB);
-  }
-  @if $paddingSizeL {
-    padding: viewport.get_vw($paddingSizeT) viewport.get_vw($paddingSizeR) viewport.get_vw($paddingSizeB) viewport.get_vw($paddingSizeL);
+  @if $height and $viewport {
+    height: viewport.vw($height, $viewport);
+  } @else if $height {
+    height: viewport.vw($height);
   }
 }
 
-@mixin padding_top_vw($paddingSize) {
-  padding-top: viewport.get_vw($paddingSize);
-}
-
-@mixin padding_right_vw($paddingSize) {
-  padding-right: viewport.get_vw($paddingSize);
-}
-
-@mixin padding_bottom_vw($paddingSize) {
-  padding-bottom: viewport.get_vw($paddingSize);
-}
-
-@mixin padding_left_vw($paddingSize) {
-  padding-left: viewport.get_vw($paddingSize);
-}
-
-@mixin margin_vw($marginSizeT: null, $marginSizeR: null, $marginSizeB: null, $marginSizeL: null) {
-  @if $marginSizeT {
-    margin: viewport.get_vw($marginSizeT);
+@mixin padding_vw($top: null, $right: null, $bottom: null, $left: null, $viewport: null) {
+  @if $top {
+    @if $right {
+      @if $bottom {
+        @if $left {
+          @if $viewport {
+            padding: viewport.vw($top, $viewport) viewport.vw($right, $viewport) viewport.vw($bottom, $viewport) viewport.vw($left, $viewport);
+          } @else {
+            padding: viewport.vw($top) viewport.vw($right) viewport.vw($bottom) viewport.vw($left);
+          }
+        } @else {
+          @if $viewport {
+            padding: viewport.vw($top, $viewport) viewport.vw($right, $viewport) viewport.vw($bottom, $viewport);
+          } @else {
+            padding: viewport.vw($top) viewport.vw($right) viewport.vw($bottom);
+          }
+        }
+      } @else {
+        @if $viewport {
+          padding: viewport.vw($top, $viewport) viewport.vw($right, $viewport);
+        } @else {
+          padding: viewport.vw($top) viewport.vw($right);
+        }
+      }
+    } @else {
+      @if $viewport {
+        padding: viewport.vw($top, $viewport);
+      } @else {
+        padding: viewport.vw($top);
+      }
+    }
   }
-  @if $marginSizeR {
-    margin: viewport.get_vw($marginSizeT) viewport.get_vw($marginSizeR);
+}
+
+@mixin padding_top_vw($size, $viewport: null) {
+  @if $viewport {
+    padding-top: viewport.vw($size, $viewport);
+  } @else {
+    padding-top: viewport.vw($size);
   }
-  @if $marginSizeB {
-    margin: viewport.get_vw($marginSizeT) viewport.get_vw($marginSizeR) viewport.get_vw($marginSizeB);
+}
+
+@mixin padding_right_vw($size, $viewport: null) {
+  @if $viewport {
+    padding-right: viewport.vw($size, $viewport);
+  } @else {
+    padding-right: viewport.vw($size);
   }
-  @if $marginSizeL {
-    margin: viewport.get_vw($marginSizeT) viewport.get_vw($marginSizeR) viewport.get_vw($marginSizeB) viewport.get_vw($marginSizeL);
+}
+
+@mixin padding_bottom_vw($size, $viewport: null) {
+  @if $viewport {
+    padding-bottom: viewport.vw($size, $viewport);
+  } @else {
+    padding-bottom: viewport.vw($size);
   }
 }
 
-@mixin margin_top_vw($marginSize) {
-  margin-top: viewport.get_vw($marginSize);
+@mixin padding_left_vw($size, $viewport: null) {
+  @if $viewport {
+    padding-left: viewport.vw($size, $viewport);
+  } @else {
+    padding-left: viewport.vw($size);
+  }
 }
 
-@mixin margin_right_vw($marginSize) {
-  margin-right: viewport.get_vw($marginSize);
+@mixin margin_vw($top: null, $right: null, $bottom: null, $left: null, $viewport: null) {
+  @if $top {
+    @if $right {
+      @if $bottom {
+        @if $left {
+          @if $viewport {
+            margin: viewport.vw($top, $viewport) viewport.vw($right, $viewport) viewport.vw($bottom, $viewport) viewport.vw($left, $viewport);
+          } @else {
+            margin: viewport.vw($top) viewport.vw($right) viewport.vw($bottom) viewport.vw($left);
+          }
+        } @else {
+          @if $viewport {
+            margin: viewport.vw($top, $viewport) viewport.vw($right, $viewport) viewport.vw($bottom, $viewport);
+          } @else {
+            margin: viewport.vw($top) viewport.vw($right) viewport.vw($bottom);
+          }
+        }
+      } @else {
+        @if $viewport {
+          margin: viewport.vw($top, $viewport) viewport.vw($right, $viewport);
+        } @else {
+          margin: viewport.vw($top) viewport.vw($right);
+        }
+      }
+    } @else {
+      @if $viewport {
+        margin: viewport.vw($top, $viewport);
+      } @else {
+        margin: viewport.vw($top);
+      }
+    }
+  }
 }
 
-@mixin margin_bottom_vw($marginSize) {
-  margin-bottom: viewport.get_vw($marginSize);
+@mixin margin_top_vw($size, $viewport: null) {
+  @if $viewport {
+    margin-top: viewport.vw($size, $viewport);
+  } @else {
+    margin-top: viewport.vw($size);
+  }
 }
 
-@mixin margin_left_vw($marginSize) {
-  margin-left: viewport.get_vw($marginSize);
+@mixin margin_right_vw($size, $viewport: null) {
+  @if $viewport {
+    margin-right: viewport.vw($size, $viewport);
+  } @else {
+    margin-right: viewport.vw($size);
+  }
+}
+
+@mixin margin_bottom_vw($size, $viewport: null) {
+  @if $viewport {
+    margin-bottom: viewport.vw($size, $viewport);
+  } @else {
+    margin-bottom: viewport.vw($size);
+  }
+}
+
+@mixin margin_left_vw($size, $viewport: null) {
+  @if $viewport {
+    margin-left: viewport.vw($size, $viewport);
+  } @else {
+    margin-left: viewport.vw($size);
+  }
 }
