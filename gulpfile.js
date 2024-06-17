@@ -466,7 +466,7 @@ const apiServerConfig = {
 // Plumber でエラーが出た時に止めないようにする
 //------------------------------------------------------
 
-const plumberConfig = error => {
+const plumberConfig = function(error) {
   console.log(error)
   this.emit('end')
 }
