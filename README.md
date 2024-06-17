@@ -933,9 +933,15 @@ Microsoft が提供している [jsonc-parser](https://github.com/Microsoft/node
 
 ## 🆙 Version History
 
+### v0.3.2（2024年6月17日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, @babel/preset-typescript, cssnano, sass, webpack）
+- README.md の変更
+
 ### v0.3.1（2024年5月31日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, @babel/preset-typescript, glob, sass）
+- gulpfile.js で Plumber の設定で一部記述が誤っていたのを修正
 - README.md の変更
 
 ### v0.3.0（2024年4月28日）
