@@ -23,6 +23,7 @@ export default opt => ({
     }, opt, {
       data: css.css,
       file: result.opts.from,
+      silenceDeprecations: ['legacy-js-api'],
       outFile: result.opts.to
     })
 
