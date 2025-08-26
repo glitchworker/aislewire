@@ -933,6 +933,11 @@ Microsoft が提供している [jsonc-parser](https://github.com/Microsoft/node
 
 ## 🆙 Version History
 
+### v0.3.7（2025年8月26日）
+
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, cssnano, sass, webpack）
+- README.md の変更
+
 ### v0.3.6（2025年7月14日）
 
 - package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, cssnano, glob, gulp, postcss, sass, webpack）
