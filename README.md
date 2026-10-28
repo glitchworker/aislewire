@@ -17,8 +17,8 @@ Wire は```《線》```や```《網》```などを意味します。
 
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
-- node v20.12.2 over
-- npm v10.2.4 over
+- node v26.12.1 over
+- npm v10.9.0 over
 
 ## 🔰 Usage
 
@@ -932,6 +932,11 @@ Microsoft が提供している [jsonc-parser](https://github.com/Microsoft/node
 ※豆知識として [Babel](https://babeljs.io/docs/en/config-files#supported-file-extensions) の .babelrc は JSONC ではなく JSON5 である。
 
 ## 🆙 Version History
+
+### v0.4.0（2026年10月21日）
+
+- Node.js の[脆弱性](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases) に伴い node を v20.12.2 から v26.12.1 以上に変更
+- README.md の変更
 
 ### v0.3.9（2026年3月2日）
 

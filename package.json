@@ -2,7 +2,7 @@
   "name": "aislewire",
   "description": "AisleWire StarterKit for front-end website.",
   "type": "module",
-  "version": "0.3.9",
+  "version": "0.4.0",
   "homepage": "https://github.com/glitchworker/aislewire#readme",
   "author": "GlitchWorker (http://loxis.jp/)",
   "license": "MIT",
@@ -33,13 +33,11 @@
     "build"
   ],
   "engines": {
-    "node": ">=20.12.2",
-    "npm": ">=10.2.4"
+    "node": ">=26.12.1",
+    "npm": ">=10.9.0"
   },
   "volta": {
-    "node": "20.12.2",
-    "npm": "10.2.4",
-    "yarn": "1.22.19"
+    "node": "26.12.1"
   },
   "scripts": {
     "start": "gulp",
@@ -51,7 +49,7 @@
     "clearGit": "gulp cleanGit",
     "import": "gulp import"
   },
-  "dependencies": {
+  "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/plugin-transform-classes": "^7.28.6",
     "@babel/preset-env": "^7.29.0",
