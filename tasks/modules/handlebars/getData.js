@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import directoryTree from 'directory-tree'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml'
 import { basename, resolve, extname } from 'path'
 import { allowedDataExtensions } from './config.js'
 import errorMessage from './errorMessage.js'

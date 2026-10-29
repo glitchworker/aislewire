@@ -1,4 +1,4 @@
-import { Humans } from './interface';
+import type { Humans } from './interface';
 
 export class Woman implements Humans {
   name = 'Catherine';

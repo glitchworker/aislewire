@@ -933,6 +933,14 @@ Microsoft が提供している [jsonc-parser](https://github.com/Microsoft/node
 
 ## 🆙 Version History
 
+### v0.4.1（2026年10月29日）
+
+- Babel 7 から 8 へアップデートしたので変換後のコードがモダンブラウザ（Browserslist の defaults）に変更されました（）
+- package.json の更新（@babel/core, @babel/plugin-transform-classes, @babel/preset-env, @babel/preset-typescript, autoprefixer, babel-loader, css-declaration-sorter, cssnano, del, glob, handlebars, image-size, js-yaml, mime, postcss, sass, terser-webpack-plugin, through2, webpack, webpack-cli）
+- @babel/plugin-proposal-class-properties を削除（@babel/preset-env に含まれたため）
+- 上記にともない該当するファイル群と webpack.config.js の該当箇所を修正
+- README.md の変更
+
 ### v0.4.0（2026年10月21日）
 
 - Node.js の[脆弱性](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases) に伴い node を v20.12.2 から v26.12.1 以上に変更

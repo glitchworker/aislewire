@@ -219,7 +219,7 @@ class Selector {
       }
     };
 
-    let selector_n = selector_n || "";
+    let selector_n = "";
     selector(navigator.userAgent, selector_n);
 
     const _ua = userAgent.getBrowser().join(" ");

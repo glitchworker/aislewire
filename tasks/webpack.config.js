@@ -65,16 +65,34 @@ const config = {
           {
             loader: 'babel-loader?optional=runtime&cacheDirectory',
             options: {
+              // Babel 8 系での plugins 個別オプション設定
+              assumptions: {
+                setPublicClassFields: true,
+                setClassMethods: true,
+                constantSuper: true,
+                noClassCalls: true
+              },
               // plugins の内容が先に実行され、presets の内容が後に実行される
               // https://babeljs.io/docs/en/plugins/#plugin-ordering
               presets: [ // presets は下から上に実行される
-                '@babel/preset-env', // (4)
-                '@babel/preset-typescript' // (3)
+                [
+                  '@babel/preset-env', // (4)
+                  // {
+                  //   targets: { ie: '11' } // Babel 7 と同様に ES5（var 等）へ変換する
+                  // }
+                ],
+                [
+                  '@babel/preset-typescript', // (3)
+                  // {
+                  //   onlyRemoveTypeImports: false // Babel 7 と同様に型のみの import を自動削除する
+                  // }
+                ]
               ],
-              plugins: [ // plugins は上から下に実行される
-                [ '@babel/plugin-proposal-class-properties' ], // (1)
-                [ '@babel/plugin-transform-classes', { 'loose': true } ] // (2) ES6 を ES5 に変換
-              ],
+              // Babel 8 系に組み込まれたのでコメントアウト
+              // plugins: [ // plugins は上から下に実行される
+              //   [ '@babel/plugin-proposal-class-properties' ], // (1)
+              //   [ '@babel/plugin-transform-classes', { 'loose': true } ] // (2) ES6 を ES5 に変換
+              // ],
               cacheDirectory: true
             }
           }
